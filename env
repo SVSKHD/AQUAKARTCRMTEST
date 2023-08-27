@@ -1,0 +1,2 @@
+DB = "mongodb+srv://Aqua:aqua@aqua.7xpb5.mongodb.net/aqua?retryWrites=true&w=majority"
+NEXT_PUBLIC_APP_API_ENDPOINT = "http://localhost:3000/api"
