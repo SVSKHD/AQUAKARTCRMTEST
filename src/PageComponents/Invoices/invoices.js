@@ -50,7 +50,7 @@ const AquaInvoiceComponent = () => {
                 AquaToast("fetched")
             })
             .catch(() => {
-
+                AquaToast("fetched", true)
             })
     }
 
@@ -85,7 +85,7 @@ const AquaInvoiceComponent = () => {
     const handleEdit = (i, data) => {
         setMode("Edit")
         setId(data._id)
-        console.log('edit', mode, i, data)
+        console.log('edit', mode, i, data , id)
     }
 
     const deleteInvoice = (i) => {
@@ -98,7 +98,7 @@ const AquaInvoiceComponent = () => {
                 <div className="row">
                     <div className="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                         {invoices.map((r, i) => (
-                            <InvoiceListCard handleEdit={handleEdit(i, r)} handleDelete={deleteInvoice(i)} />
+                            <InvoiceListCard handleEdit={()=>handleEdit(i, r)} handleDelete={()=>deleteInvoice(i)} r={r} />
                         ))}
 
                     </div>
