@@ -2,7 +2,7 @@ import { createRouter } from "next-connect";
 import db from "@/Backend/Db/mongoose";
 import moment from "moment";
 import { nanoid } from "nanoid";
-import AquaInvoices from "../../Models/Invoices";
+import AquaInvoices from "@/Backend/models/invoice";
 
 const router = createRouter();
 
@@ -46,11 +46,24 @@ router.get(async (req, res) => {
         let individualInvoice = await AquaInvoices.findById(invoice)
         res.status(200).json(individualInvoice)
         db.disconnectDb()
-    } else if(!invoice){
+    } else if (!invoice) {
         db.connectDb()
         let invoices = await AquaInvoices.find()
         res.status(200).json(invoices)
         db.disconnectDb()
+    }
+})
+
+router.delete(async (req, res) => {
+    const { invoice } = req.query
+    if (invoice) {
+        db.connectDb()
+        let individualInvoice = await AquaInvoices.findById(invoice)
+        res.status(200).json(individualInvoice)
+        db.disconnectDb()
+    } else if (!invoice) {
+        res.status(400).json({ success: false })
+
     }
 })
 

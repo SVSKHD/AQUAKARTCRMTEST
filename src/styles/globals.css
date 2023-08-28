@@ -14,3 +14,13 @@ body {
   border-radius: 5px;
   color: aliceblue;
 }
+
+:root{
+  
+}
+
+.btn-link{
+  text-decoration: none!important;
+  --bs-btn-color:slategrey;
+}
+
