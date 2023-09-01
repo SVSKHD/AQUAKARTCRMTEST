@@ -3,7 +3,9 @@ import InvoiceListCard from "@/components/cards/invoiceListCard";
 import AquaInvoiceForm from "@/components/forms/invoiceForm";
 import InvoiceOperations from "@/services/invoice";
 import { useState, useEffect } from "react";
+import { Button } from "react-bootstrap";
 import AquaToast from "@/components/reusables/toast";
+import { set } from "mongoose";
 
 const AquaInvoiceComponent = () => {
   let initialData = {
@@ -63,8 +65,14 @@ const AquaInvoiceComponent = () => {
     if (mode) {
       console.log("edit", formData);
       updateInvoice(id, formData)
-        .then(() => {})
-        .catch(() => {});
+        .then(() => {
+          setInvoices([]);
+          loadInvoices();
+        })
+        .catch(() => {
+          setInvoices([]);
+          loadInvoices();
+        });
     } else {
       createInvoice(formData)
         .then(() => {
@@ -104,7 +112,15 @@ const AquaInvoiceComponent = () => {
               </>
             ))}
           </div>
+          {edit === "Edit" ? (
+              <>
+                <Button onClick={() => setEdit("")}>Create Invoice</Button>
+              </>
+            ) : (
+              <></>
+            )}
           <div className="col-md-8 col-lg-8 col-xs-12 col-sm-12">
+            
             <AquaInvoiceForm
               initialData={initialData}
               mode={mode}

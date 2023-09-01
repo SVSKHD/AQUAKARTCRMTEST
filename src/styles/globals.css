@@ -1,12 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Roboto:wght@500&display=swap");
+
 body {
-  background-image: linear-gradient(
-    -225deg,
-    #69eacb 0%,
-    #eaccf8 48%,
-    #6654f1 100%
-  );
-  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#08203e", endColorstr="#557c93", GradientType=1 );
+  height: 99.3vh;
+  background-image: linear-gradient(-225deg,
+      #69eacb 0%,
+      #eaccf8 48%,
+      #6654f1 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#08203e", endColorstr="#557c93", GradientType=1);
   font-family: Poppins;
 }
 
@@ -15,16 +15,13 @@ body {
   color: aliceblue;
 }
 
-:root{
-  
+:root {}
+
+.btn-link {
+  text-decoration: none !important;
+  --bs-btn-color: slategrey;
 }
 
-.btn-link{
-  text-decoration: none!important;
-  --bs-btn-color:slategrey;
-}
-
-.custom-dynamic-invoice{
+.custom-dynamic-invoice {
   margin-bottom: 4rem;
 }
-
