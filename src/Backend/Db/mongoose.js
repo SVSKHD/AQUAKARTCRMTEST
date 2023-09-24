@@ -14,7 +14,7 @@ async function connectDb() {
     }
     await mongoose.disconnect();
   }
-  const db = await mongoose.connect(process.env.NEXT_PUBLIC_API_DB, {
+  const db = await mongoose.connect(process.env.NEXT_PUBLIC_API_DB , {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
