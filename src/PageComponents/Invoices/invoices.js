@@ -5,9 +5,10 @@ import InvoiceOperations from "@/services/invoice";
 import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import AquaToast from "@/components/reusables/toast";
-import { set } from "mongoose";
+import { useRouter } from "next/router";
 
 const AquaInvoiceComponent = () => {
+  const router = useRouter()
   let initialData = {
     customerDetails: {
       name: "",
@@ -97,6 +98,10 @@ const AquaInvoiceComponent = () => {
     console.log(i);
   };
 
+  const handleShare = (id) => {
+    router.push(`/invoice/${id}`)
+  }
+
   return (
     <>
       <AquaLayout>
@@ -107,20 +112,21 @@ const AquaInvoiceComponent = () => {
                 <InvoiceListCard
                   handleEdit={() => handleEdit(i, r)}
                   handleDelete={() => deleteInvoice(i)}
+                  handleShare={() => handleShare(r._id)}
                   r={r}
                 />
               </>
             ))}
           </div>
           {edit === "Edit" ? (
-              <>
-                <Button onClick={() => setEdit("")}>Create Invoice</Button>
-              </>
-            ) : (
-              <></>
-            )}
+            <>
+              <Button onClick={() => setEdit("")}>Create Invoice</Button>
+            </>
+          ) : (
+            <></>
+          )}
           <div className="col-md-8 col-lg-8 col-xs-12 col-sm-12">
-            
+
             <AquaInvoiceForm
               initialData={initialData}
               mode={mode}
