@@ -4,34 +4,24 @@ import AquaLists from "../../components/reusables/AquaLists";
 import AquaPlaceholder from "../../components/reusables/placeHolder";
 import InvoiceOperations from "../../services/invoice";
 import DynamicInvoiceCard from "@/components/cards/dynamicInvoiceCard";
+import axios from "axios";
 
 const AquaDyanamicInvoicesComponent = () => {
   const Router = useRouter();
   let id = Router.query.id;
   const [invoice, setInvoice] = useState("");
-  const [screen, setScreen] = useState(window.innerWidth)
 
+  let baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  const { getIndividualInvoice } = InvoiceOperations();
   const getInvoiceById = async (id) => {
-    await getIndividualInvoice(id).then((res) => {
+    await axios.get(`${baseUrl}/invoice?invoice=${id}`).then((res) => {
       setInvoice(res.data);
       if (res) {
         setGst(res.data.gst);
       }
     });
   };
-  useEffect(() => {
-    const handleResize = () => {
-      setScreen(window.innerWidth);
-    };
-    if (window !== undefined) {
-      window.addEventListener('resize', handleResize);
-    }
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+
   useEffect(() => {
     getInvoiceById(id);
   }, []);
@@ -72,8 +62,8 @@ const AquaDyanamicInvoicesComponent = () => {
 
   const BasePrice = (price) => {
     let basePrice = Math.floor(price * 0.8474594);
-    return basePrice
-  }
+    return basePrice;
+  };
 
   const gstValueGenerate = (price) => {
     let basePrice = Math.floor(price * 0.8474594);
@@ -83,12 +73,17 @@ const AquaDyanamicInvoicesComponent = () => {
   return (
     <>
       <div className="mb-5" />
-      <div className={screen < 725 ? "container-fluid" : "container"}>
-   <DynamicInvoiceCard>
+      <div className="container">
+        <DynamicInvoiceCard>
           <div className="row">
             <div className="col-md-6 col-lg-6 col-xs-12 col-sm-12">
               <div className="text-center">
-                <img src="https://res.cloudinary.com/aquakartproducts/image/upload/v1695408027/android-chrome-384x384_ijvo24.png" height="100" alt="Aquakart" />
+                <img
+                  src="https://res.cloudinary.com/aquakartproducts/image/upload/v1695408027/android-chrome-384x384_ijvo24.png"
+                  height="100"
+                  width="100"
+                  alt="Aquakart"
+                />
                 <h4>Kundana Enterprises</h4>
                 <h6>GST- 36AMUPB4451C1Z7</h6>
               </div>
@@ -173,17 +168,21 @@ const AquaDyanamicInvoicesComponent = () => {
               </tr>
             </thead>
             <tbody>
-              {invoice ? products.map((r, i) => (
-                <>
-                  <tr>
-                    <th scope="row">{i + 1}</th>
-                    <td>{r.productName}</td>
-                    <td className="text-success">{BasePrice(r.productPrice)}</td>
-                    <td>{gstValueGenerate(r.productPrice)}</td>
-                    <td className="text-success">₹{r.productPrice}</td>
-                  </tr>
-                </>
-              )) : ""}
+              {invoice
+                ? products.map((r, i) => (
+                    <>
+                      <tr>
+                        <th scope="row">{i + 1}</th>
+                        <td>{r.productName}</td>
+                        <td className="text-success">
+                          {BasePrice(r.productPrice)}
+                        </td>
+                        <td>{gstValueGenerate(r.productPrice)}</td>
+                        <td className="text-success">₹{r.productPrice}</td>
+                      </tr>
+                    </>
+                  ))
+                : ""}
             </tbody>
           </table>
           <hr />
@@ -195,7 +194,7 @@ const AquaDyanamicInvoicesComponent = () => {
               number={i + 1}
             />
           ))}
-    </DynamicInvoiceCard>
+        </DynamicInvoiceCard>
       </div>
     </>
   );

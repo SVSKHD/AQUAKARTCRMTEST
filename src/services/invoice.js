@@ -12,7 +12,7 @@ const updateInvoice = async (id, data) =>
 const getIndividualInvoice = async (id) =>
   await axios.get(`${baseUrl}/invoice?invoice=${id}`);
 
-const removeInvoice = async (id, data) =>
+const removeInvoice = async (id) =>
   await axios.put(`${baseUrl}/invoice?invoice=${id}`);
 
 const InvoiceOperations = () => {
