@@ -5,6 +5,8 @@ import AquaPlaceholder from "../../components/reusables/placeHolder";
 import InvoiceOperations from "../../services/invoice";
 import DynamicInvoiceCard from "@/components/cards/dynamicInvoiceCard";
 import axios from "axios";
+import { Button } from "react-bootstrap";
+
 
 const AquaDyanamicInvoicesComponent = () => {
   const Router = useRouter();
@@ -16,6 +18,7 @@ const AquaDyanamicInvoicesComponent = () => {
   const getInvoiceById = async (id) => {
     await axios.get(`${baseUrl}/invoice?invoice=${id}`).then((res) => {
       setInvoice(res.data);
+      console.log("data", res.data);
       if (res) {
         setGst(res.data.gst);
       }
@@ -28,6 +31,29 @@ const AquaDyanamicInvoicesComponent = () => {
 
   const [gst, setGst] = useState(false);
   const { customerDetails, products, gstDetails, date, invoiceNo } = invoice;
+
+  const DownloadButton = ({ data }) => {
+    const handleDownload = () => {
+      const jsonData = JSON.stringify(data, null, 2);
+      const blob = new Blob([jsonData], { type: "application/json" });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${data.customerDetails.name}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    };
+
+    return (
+      <div>
+        <button onClick={handleDownload}>Download JSON</button>
+      </div>
+    );
+  };
+
+  
 
   let termsAndConditions = [
     {
@@ -89,7 +115,7 @@ const AquaDyanamicInvoicesComponent = () => {
               </div>
             </div>
             <div className="col-md-6 col-lg-6 col-xs-12 col-sm-12 text-center">
-              <div>date : {date}</div>
+              <div>Date : {date}</div>
               <AquaPlaceholder type="Invoice-No" size={1.2} name={invoiceNo} />
             </div>
           </div>
@@ -194,6 +220,7 @@ const AquaDyanamicInvoicesComponent = () => {
               number={i + 1}
             />
           ))}
+          <Button>invoice</Button>
         </DynamicInvoiceCard>
       </div>
     </>
