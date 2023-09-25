@@ -1,31 +1,20 @@
-const pdf = require('html-pdf');
-import fs from "fs"
-const path = require('path');
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import pdf from 'html-pdf';
 
-function generatePdf(data) {
-  const pdfOptions = { format: 'Letter' };
+const InvoicePDF = ({ json }) => {
+  const html = renderToStaticMarkup(<MyInvoiceComponent json={json} />);
 
-  const pdfContent = `
-    <html>
-      <head>
-        <title>Invoice</title>
-      </head>
-      <body>
-        <h1>Invoice</h1>
-        <pre>${JSON.stringify(data, null, 2)}</pre>
-      </body>
-    </html>
-  `;
-
-  return new Promise((resolve, reject) => {
-    pdf.create(pdfContent, pdfOptions).toFile('public/invoice.pdf', (err, res) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(res);
-      }
-    });
+  pdf.create(html, {
+    header: {
+      height: '10mm',
+      contents: '<h1>Invoice</h1>',
+    },
+  }).toBuffer((err, buffer) => {
+    // Use the PDF buffer to download the file.
   });
-}
 
-export default generatePdf
+  return null;
+};
+
+export default InvoicePDF;
