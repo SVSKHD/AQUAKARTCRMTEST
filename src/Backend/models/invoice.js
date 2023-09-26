@@ -24,6 +24,15 @@ const AquaInvoiceSchema = new mongoose.Schema(
     },
     gst: {
       type: Boolean,
+      default: false
+    },
+    po: {
+      type: Boolean,
+      default: false
+    },
+    quotation: {
+      type: Boolean,
+      default: false
     },
     gstDetails: {
       gstName: {

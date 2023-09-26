@@ -8,9 +8,9 @@ const AquaLists = ({ title, description , number}) => {
                 as="li"
                 className="d-flex justify-content-between align-items-start m-1"
             >
-                 <Badge bg="danger" pill>
-                    {number}
-                </Badge>
+                
+                    {number}.
+             
                 <div className="ms-2 me-auto">
                     <div className="fw-bold text">{title}</div>
                      <div className='text-muted'>{description}</div>

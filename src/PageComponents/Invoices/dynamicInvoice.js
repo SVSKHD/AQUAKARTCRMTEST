@@ -41,6 +41,11 @@ const AquaDyanamicInvoicesComponent = () => {
         return gst;
     };
 
+    const BasePrice = (price) => {
+        let basePrice = Math.floor(price * 0.8474594);
+        return basePrice;
+    };
+
     const jsPdfButton = () => {
         const doc = new jsPDF();
 
@@ -138,10 +143,7 @@ const AquaDyanamicInvoicesComponent = () => {
         },
     ];
 
-    const BasePrice = (price) => {
-        let basePrice = Math.floor(price * 0.8474594);
-        return basePrice;
-    };
+
 
 
     return (
@@ -261,6 +263,8 @@ const AquaDyanamicInvoicesComponent = () => {
                             </tbody>
                         </table>
                         <hr />
+                        <h5 className="mb-3 text-danger">Terms & Conditions</h5>
+
                         {termsAndConditions.map((r, i) => (
                             <AquaLists
                                 key={i}
