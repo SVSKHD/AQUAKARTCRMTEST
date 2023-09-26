@@ -16,6 +16,8 @@
     "framer-motion": "^10.16.1",
     "fs": "^0.0.1-security",
     "html-pdf": "^3.0.1",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.6.0",
     "moment": "^2.29.4",
     "mongoose": "^7.4.5",
     "nanoid": "^4.0.2",
