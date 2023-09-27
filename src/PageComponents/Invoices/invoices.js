@@ -60,7 +60,7 @@ const AquaInvoiceComponent = () => {
 
   useEffect(() => {
     loadInvoices();
-  }, []);
+  }, [loadInvoices]);
 
   const handleFormSubmit = (formData) => {
     if (mode) {
