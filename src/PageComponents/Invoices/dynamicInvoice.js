@@ -8,7 +8,7 @@ import axios from "axios";
 import { Button } from "react-bootstrap";
 import jsPDF from "jspdf"
 import "jspdf-autotable";
-
+import Image from "next/image";
 
 const AquaDyanamicInvoicesComponent = () => {
     const Router = useRouter();
@@ -150,7 +150,7 @@ const AquaDyanamicInvoicesComponent = () => {
                         <div className="row">
                             <div className="col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 <div className="text-center">
-                                    <img
+                                    <Image
                                         src="https://res.cloudinary.com/aquakartproducts/image/upload/v1695408027/android-chrome-384x384_ijvo24.png"
                                         height="100"
                                         width="100"
