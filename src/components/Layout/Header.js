@@ -15,7 +15,6 @@ const AquaNav = () => {
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
-                            <Nav.Link href="/invoices">Invoices</Nav.Link>
                         </Nav>
                       
                     </Navbar.Collapse>

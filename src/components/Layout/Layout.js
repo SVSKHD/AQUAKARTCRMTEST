@@ -6,11 +6,12 @@ const AquaLayout = (props) => {
     return (
         <>
             <div className="container-fluid mb-1 mt-1">
-            <AquaNav />
+                <AquaNav />
                 <AquaCardLayover>
-                    {props.children}
+                    <div className="body-adjust">
+                        {props.children}
+                    </div>
                 </AquaCardLayover>
-
             </div>
         </>
     )

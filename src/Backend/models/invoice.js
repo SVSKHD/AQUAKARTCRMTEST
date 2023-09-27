@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 
 const AquaInvoiceSchema = new mongoose.Schema(
   {
@@ -78,6 +78,10 @@ const AquaInvoiceSchema = new mongoose.Schema(
     paidStatus: {
       type: String,
     },
+    productId: {
+      type: ObjectId,
+      ref: "AquaProduct"
+    },
     paymentType: {
       type: String,
     },
@@ -87,8 +91,8 @@ const AquaInvoiceSchema = new mongoose.Schema(
   }
 );
 
-const AquaInvoices =
-  mongoose.models.AquaInvoices ||
-  mongoose.model("AquaInvoices", AquaInvoiceSchema);
+const AquaInvoice =
+  mongoose.models.AquaInvoice ||
+  mongoose.model("AquaInvoice", AquaInvoiceSchema);
 
-export default AquaInvoices;
+export default AquaInvoice;
