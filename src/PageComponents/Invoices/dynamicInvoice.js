@@ -24,7 +24,7 @@ const AquaDyanamicInvoicesComponent = () => {
                 setGst(res.data.gst);
             }
         });
-    }, []);
+    }, [baseUrl, id]);
 
     const [gst, setGst] = useState(false);
     const { customerDetails, products, gstDetails, date, invoiceNo } = invoice;
