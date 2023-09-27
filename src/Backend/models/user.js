@@ -1,8 +1,13 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
+
+const addressSchema = new mongoose.Schema({
+    street: String,
+    city: String,
+    state: String,
+    postalCode: String,
+});
 
 const AquaUserSchema = new mongoose.Schema({
     name: {
@@ -16,6 +21,11 @@ const AquaUserSchema = new mongoose.Schema({
         validate: [validator.isEmail, "Please enter email in correct format"],
         unique: true,
     },
+    phone:{
+        type:Number,
+
+    },
+ 
     password: {
         type: String,
         required: [true, "Please provide a password"],
@@ -28,12 +38,10 @@ const AquaUserSchema = new mongoose.Schema({
     },
     photo: {
         id: {
-            type: String,
-            required: true,
+            type: String
         },
         secure_url: {
-            type: String,
-            required: true,
+            type: String
         },
     },
     forgotPasswordToken: String,
@@ -52,34 +60,7 @@ userSchema.pre("save", async function (next) {
     this.password = await bcrypt.hash(this.password, 10);
 });
 
-// validate the password with passed on user password
-userSchema.methods.isValidatedPassword = async function (usersendPassword) {
-    return await bcrypt.compare(usersendPassword, this.password);
-};
 
-//create and return jwt token
-userSchema.methods.getJwtToken = function () {
-    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRY,
-    });
-};
-
-//generate forgot password token (string)
-userSchema.methods.getForgotPasswordToken = function () {
-    // generate a long and randomg string
-    const forgotToken = crypto.randomBytes(20).toString("hex");
-
-    // getting a hash - make sure to get a hash on backend
-    this.forgotPasswordToken = crypto
-        .createHash("sha256")
-        .update(forgotToken)
-        .digest("hex");
-
-    //time of token
-    this.forgotPasswordExpiry = Date.now() + 20 * 60 * 1000;
-
-    return forgotToken;
-};
 
 const AquaUser =
     mongoose.models.AquaUser ||
