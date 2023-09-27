@@ -17,18 +17,13 @@ const AquaDyanamicInvoicesComponent = () => {
 
     let baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
-    const getInvoiceById = async (id) => {
-        await axios.get(`${baseUrl}/invoice?invoice=${id}`).then((res) => {
+    useEffect(() => {
+        axios.get(`${baseUrl}/invoice?invoice=${id}`).then((res) => {
             setInvoice(res.data);
-            console.log("data", res.data);
             if (res) {
                 setGst(res.data.gst);
             }
         });
-    };
-
-    useEffect(() => {
-        getInvoiceById(id);
     }, []);
 
     const [gst, setGst] = useState(false);
