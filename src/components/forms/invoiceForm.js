@@ -15,7 +15,7 @@ const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData }) => {
     } else {
       setFormData(initialData);
     }
-  }, [editData , initialData  , mode]);
+  }, [initialData , editData , mode]);
 
   const handleInputChange = (e, section, field, index) => {
     const updatedFormData = { ...formData };
