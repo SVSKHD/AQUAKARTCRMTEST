@@ -2,7 +2,7 @@ import AquaLayout from "@/components/Layout/Layout";
 import InvoiceListCard from "@/components/cards/invoiceListCard";
 import AquaInvoiceForm from "@/components/forms/invoiceForm";
 import InvoiceOperations from "@/services/invoice";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "react-bootstrap";
 import AquaToast from "@/components/reusables/toast";
 import { useRouter } from "next/router";
@@ -47,7 +47,7 @@ const AquaInvoiceComponent = () => {
   const { getInvoices, createInvoice, updateInvoice, removeInvoice } =
     InvoiceOperations();
 
-  const loadInvoices = () => {
+  const loadInvoices = useCallback(() => {
     getInvoices()
       .then((res) => {
         setInvoices(res.data);
@@ -56,7 +56,7 @@ const AquaInvoiceComponent = () => {
       .catch(() => {
         AquaToast("fetched", true);
       });
-  };
+  })
 
   useEffect(() => {
     loadInvoices();
