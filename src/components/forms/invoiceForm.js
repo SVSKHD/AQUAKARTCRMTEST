@@ -6,16 +6,6 @@ import AquaPlaceHolderInput from "../reusables/placeHolderInput";
 const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData }) => {
   const [formData, setFormData] = useState(initialData);
 
-  // const handleInputChange = (section, field, value) => {
-  //     setFormData(prevData => ({
-  //         ...prevData,
-  //         [section]: {
-  //             ...prevData[section],
-  //             [field]: value,
-  //         },
-  //     }));
-  // };
-
   useEffect(() => {
     setFormData(initialData);
     if (mode === "Edit") {
@@ -24,7 +14,7 @@ const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData }) => {
     } else {
       setFormData(initialData);
     }
-  }, [editData , formData]);
+  }, [editData , formData , mode]);
 
   const handleInputChange = (e, section, field, index) => {
     const updatedFormData = { ...formData };
