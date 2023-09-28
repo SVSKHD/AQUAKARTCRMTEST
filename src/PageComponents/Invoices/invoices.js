@@ -56,7 +56,7 @@ const AquaInvoiceComponent = () => {
       .catch(() => {
         AquaToast("fetched", true);
       });
-  })
+  },[getInvoices])
 
   useEffect(() => {
     loadInvoices();
