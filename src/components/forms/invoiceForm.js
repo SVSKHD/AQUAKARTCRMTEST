@@ -12,11 +12,10 @@ const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData }) => {
     setFormData(initialData);
     if (mode === "Edit") {
       setFormData(editData);
-      console.log("edit data from form", formData);
     } else {
       setFormData(initialData);
     }
-  }, [editData , formData , mode]);
+  }, [editData , initialData  , mode]);
 
   const handleInputChange = (e, section, field, index) => {
     const updatedFormData = { ...formData };
