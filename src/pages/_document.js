@@ -8,9 +8,6 @@ export default function Document() {
           rel="icon"
           href="https://res.cloudinary.com/aquakartproducts/image/upload/v1695408028/favicon_b3l7y1.ico" // Replace with the path to your favicon image
         />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin={true} />
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
       </Head>
       <body>
         <Toaster />
