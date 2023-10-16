@@ -54,9 +54,9 @@ const AquaInvoiceComponent = () => {
         AquaToast("fetched");
       })
       .catch(() => {
-        AquaToast("fetched", true);
+        AquaToast("not-fetched", true);
       });
-  },[getInvoices , setInvoices])
+  }, [getInvoices, setInvoices])
 
   useEffect(() => {
     loadInvoices();
@@ -107,16 +107,20 @@ const AquaInvoiceComponent = () => {
       <AquaLayout>
         <div className="row">
           <div className="col-md-4 col-lg-4 col-xs-12 col-sm-12">
-            {invoices.map((r, i) => (
-              <>
-                <InvoiceListCard
-                  handleEdit={() => handleEdit(i, r)}
-                  handleDelete={() => deleteInvoice(i)}
-                  handleShare={() => handleShare(r._id)}
-                  r={r}
-                />
-              </>
-            ))}
+            {!invoices.length ? <h3>No invoices yet</h3> : (
+              <div>
+                {invoices.map((r, i) => (
+                  <>
+                    <InvoiceListCard
+                      handleEdit={() => handleEdit(i, r)}
+                      handleDelete={() => deleteInvoice(i)}
+                      handleShare={() => handleShare(r._id)}
+                      r={r}
+                    />
+                  </>
+                ))}
+              </div>
+            )}
           </div>
           {edit === "Edit" ? (
             <>

@@ -78,6 +78,10 @@ const AquaInvoiceSchema = new mongoose.Schema(
     paidStatus: {
       type: String,
     },
+    aquakartInvoice: {
+      type: Boolean,
+      default: false
+    },
     productId: {
       type: ObjectId,
       ref: "AquaProduct"

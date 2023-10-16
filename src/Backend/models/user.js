@@ -23,9 +23,7 @@ const AquaUserSchema = new mongoose.Schema({
     },
     phone:{
         type:Number,
-
     },
- 
     password: {
         type: String,
         required: [true, "Please provide a password"],

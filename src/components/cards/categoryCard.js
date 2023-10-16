@@ -1,25 +1,41 @@
 
 import Image from "next/image"
+import { Card, ButtonGroup, Button } from "react-bootstrap";
+import { FaTrash, FaEdit, FaShare } from "react-icons/fa";
 
-const AquaCategoryCard = (props) => {
-    const { title, description, images } = props
+const AquaCategoryCard = ({ handleEdit, handleShare, handleDelete, r }) => {
+    const { title, description, photos } = r
     return (
         <>
             <div className="card mb-3 shadow-lg" styles={{ maxWidth: "540px;" }}>
                 <div className="row g-0">
                     <div className="col-md-4">
+                        <div className="category-card shadow-lg">
                         <Image
-                            src={images?images[0].url:"https://res.cloudinary.com/aquakartproducts/image/upload/v1695408027/android-chrome-384x384_ijvo24.png"}
-                            height="200"
-                            width="200"
+                            src={photos ? photos[0].secure_url : "https://res.cloudinary.com/aquakartproducts/image/upload/v1695408027/android-chrome-384x384_ijvo24.png"}
+                            height="150"
+                            width="150"
                             alt="Aquakart"
                         />
+                        </div>
                     </div>
                     <div className="col-md-8">
                         <div className="card-body">
-                            <h5 className="card-title">Card title</h5>
-                            <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
+                            <h5 className="card-title">{title}</h5>
+                            <p className="card-text">{description.substring(0, 50)}</p>
+                        </div>
+                        <div className="col d-flex justify-content-end">
+                            <ButtonGroup size="sm">
+                                <Button variant="link" onClick={handleEdit}>
+                                    <FaEdit size={25} />
+                                </Button>
+                                <Button variant="link" onClick={handleShare}>
+                                    <FaShare size={25} />
+                                </Button>
+                                <Button variant="link" onClick={handleDelete}>
+                                    <FaTrash size={25} />
+                                </Button>
+                            </ButtonGroup>
                         </div>
                     </div>
                 </div>

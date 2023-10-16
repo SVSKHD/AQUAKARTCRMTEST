@@ -20,6 +20,16 @@ const AquaCategoryForm = ({ onSave, data }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const formDataToSend = new FormData();
+        formDataToSend.append("title", formData.title);
+        formDataToSend.append("description", formData.description);
+        formDataToSend.append("keywords", formData.keywords);
+  
+        // Append image files to FormData
+        photos.forEach((file, index) => {
+          formDataToSend.append(`images[${index}]`, file);
+        });
+  
         onSave(formData);
     };
 

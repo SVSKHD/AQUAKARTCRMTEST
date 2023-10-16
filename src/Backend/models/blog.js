@@ -12,6 +12,9 @@ const BlogSchema = new mongoose.Schema({
         type: String,
         required: [true, "please provide product description"],
     },
+    keywords: {
+        type: String
+    },
     notes: {
         type: String,
         maxlength: [300, "Product Notes must not exceed 300"]
@@ -89,5 +92,5 @@ const BlogSchema = new mongoose.Schema({
     },
 });
 
-module.exports =  mongoose.models.AquaBlog ||
-mongoose.model("AquaBlog", AquaInvoiceSchema);
+module.exports = mongoose.models.AquaBlog ||
+    mongoose.model("AquaBlog", AquaInvoiceSchema);

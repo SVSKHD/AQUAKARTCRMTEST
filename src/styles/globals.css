@@ -29,3 +29,8 @@ body {
 .custom-dynamic-invoice {
   margin-bottom: 4rem;
 }
+
+.category-card{
+  padding: 4px;
+  border-radius: 1rem;
+}
