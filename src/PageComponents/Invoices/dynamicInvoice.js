@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import AquaLists from "../../components/reusables/AquaLists";
 import AquaPlaceholder from "../../components/reusables/placeHolder";
-import { FaDownload } from "react-icons/fa"
+import { FaDownload, FaEnvelope, FaPhone, FaWhatsapp } from "react-icons/fa"
 import DynamicInvoiceCard from "@/components/cards/dynamicInvoiceCard";
 import axios from "axios";
-import { Button } from "react-bootstrap";
+import { Button, OverlayTrigger, ButtonGroup } from "react-bootstrap";
 import jsPDF from "jspdf"
 import "jspdf-autotable";
 import Image from "next/image";
@@ -16,6 +16,7 @@ const AquaDyanamicInvoicesComponent = () => {
     const [invoice, setInvoice] = useState("");
 
     let baseUrl = process.env.NEXT_PUBLIC_API_URL;
+    let URL = process.env.NEXT_PUBLIC_URL
 
     useEffect(() => {
         axios.get(`${baseUrl}/invoice?invoice=${id}`).then((res) => {
@@ -146,7 +147,16 @@ const AquaDyanamicInvoicesComponent = () => {
             <div className="mb-5" />
             <div className="container">
                 <div className="invoice">
-                    <DynamicInvoiceCard buttons={<Button onClick={jsPdfButton}><FaDownload size={40} /></Button>}>
+                    <DynamicInvoiceCard buttons={
+                        <div className="row">
+                            <div className="col"><Button onClick={jsPdfButton}><FaDownload size={40} /></Button></div>
+                            <div className="col text-end"> <ButtonGroup aria-label="Basic example">
+                                <Button variant="primary" href="mailto:customercare@aquakart.co.in"><FaEnvelope size={40} /></Button>
+                                <Button variant="primary" href="phone:9014774667"><FaPhone size={40} /></Button>
+                                <Button variant="primary" href={id ? `https://wa.me/91${invoice ? customerDetails.phone : ""}?text=${URL}/invoice/${id}` : ""} > <FaWhatsapp size={40} /></Button>
+                            </ButtonGroup></div>
+                        </div>
+                    }>
                         <div className="row">
                             <div className="col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 <div className="text-center">
