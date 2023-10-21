@@ -271,7 +271,7 @@ const AquaDyanamicInvoicesComponent = () => {
             <table className="table table-borderless text-center">
               <thead>
                 <tr>
-                  <th scope="col">Quantity</th>
+                  <th scope="col text-start">Quantity</th>
                   <th scope="col">Name</th>
                   <th scope="col">Base-Price</th>
                   {gstvalue ? (

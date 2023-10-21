@@ -1,6 +1,6 @@
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-
+import Image from 'next/image';
 
 const AquaNav = () => {
     return (
@@ -8,7 +8,11 @@ const AquaNav = () => {
             <Navbar expand="lg" className='custom-nav bg-body-tertiary' >
                 <div className='container-fluid'>
                     <Navbar.Brand href="/">
-                        
+                        <Image
+                            src="https://res.cloudinary.com/aquakartproducts/image/upload/v1695408027/apple-touch-icon_zzuye9.png"
+                            height="50"
+                            width="50"
+                        />
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse id="navbarScroll">
@@ -18,7 +22,7 @@ const AquaNav = () => {
                             navbarScroll
                         >
                         </Nav>
-                      
+
                     </Navbar.Collapse>
                 </div>
             </Navbar>
