@@ -1,31 +1,36 @@
 import mongoose from "mongoose";
+import AquaCategory from "./category";
+
 const AquaSubCategorySchema = new mongoose.Schema(
-    {
-        title: {
-            type: String,
-        },
-        description: {
-            type: String,
-        },
-        images: [{
-            publicId: String,  // Public ID of the image in Cloudinary
-            url: String,       // URL of the image in Cloudinary
-        }],
-        keywords: {
-            type: String
-        },
-        category: {
-            type: mongoose.Schema.ObjectId,
-            ref: "AquaCategory"
-        }
+  {
+    title: {
+      type: String,
     },
-    {
-        timestamps: true,
-    }
+    description: {
+      type: String,
+    },
+    photos: [
+      {
+        id: String,
+        secure_url: String,
+      },
+    ],
+    keywords: {
+      type: String,
+    },
+    category: {
+      type: mongoose.Schema.ObjectId,
+      ref: "AquaCategory",
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
 );
 
-const AquaCategory =
-    mongoose.models.AquaSubCategory ||
-    mongoose.model("AquaSubCategory", AquaSubCategorySchema);
+const AquaSubCategory =
+  mongoose.models.AquaSubCategory ||
+  mongoose.model("AquaSubCategory", AquaSubCategorySchema);
 
-export default AquaCategory;
+export default AquaSubCategory;

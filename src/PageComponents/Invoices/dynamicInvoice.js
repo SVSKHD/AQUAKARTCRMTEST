@@ -301,7 +301,7 @@ const AquaDyanamicInvoicesComponent = () => {
                     </th>
                   )}
 
-                  <th scope="col">Total Price</th>
+                  <th scope="col text-success">Total Price(₹)</th>
                 </tr>
               </thead>
               <tbody>
@@ -312,7 +312,7 @@ const AquaDyanamicInvoicesComponent = () => {
                           <th scope="row">{i + 1}</th>
                           <td>{r.productName}</td>
                           <td className="text-success">
-                            {BasePrice(r.productPrice)}
+                            ₹{BasePrice(r.productPrice)}
                           </td>
                           {gstvalue ? (
                             <>

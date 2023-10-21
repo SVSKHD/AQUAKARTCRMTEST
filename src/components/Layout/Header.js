@@ -4,10 +4,12 @@ import Navbar from 'react-bootstrap/Navbar';
 
 const AquaNav = () => {
     return (
-        <div className='mt-2 custom-nav shadow-lg mb-3'>
+        <div className='custom-nav shadow-lg mb-3'>
             <Navbar expand="lg" className='custom-nav bg-body-tertiary' >
                 <div className='container-fluid'>
-                    <Navbar.Brand href="/">AquaKart</Navbar.Brand>
+                    <Navbar.Brand href="/">
+                        
+                    </Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse id="navbarScroll">
                         <Nav
