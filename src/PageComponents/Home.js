@@ -22,7 +22,7 @@ const HomeComponent = () => {
         },
         {
             name: "Products",
-            path: "/products",
+            path: "/product",
             icon: <FaBarsStaggered size={30} />
         },
         {
