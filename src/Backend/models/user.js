@@ -1,67 +1,45 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
-const bcrypt = require("bcryptjs");
+import mongoose from 'mongoose';
 
-const addressSchema = new mongoose.Schema({
+
+// Address Sub-document Schema
+const AddressSchema = new Schema({
     street: String,
     city: String,
     state: String,
-    postalCode: String,
+    zip: String,
+    country: String
 });
 
-const AquaUserSchema = new mongoose.Schema({
-    name: {
+const UserSchema = new Schema({
+    name:{
+     type:String
+    },
+    username: {
         type: String,
-        required: [true, "Please provide a name"],
-        maxlength: [40, "Name should be under 40 characters"],
+    },
+    role: {
+        type: "String",
+        default: "user"
     },
     email: {
         type: String,
-        required: [true, "Please provide an email"],
-        validate: [validator.isEmail, "Please enter email in correct format"],
-        unique: true,
+        required: true,
+        unique: true
     },
-    phone:{
-        type:Number,
-    },
-    password: {
+    password: { // Store a hashed password, never store plain text passwords
         type: String,
-        required: [true, "Please provide a password"],
-        minlength: [6, "password should be atleast 6 char"],
-        select: false,
+        required: true
     },
-    role: {
+    phone: {
         type: String,
-        default: "user",
     },
-    photo: {
-        id: {
-            type: String
-        },
-        secure_url: {
-            type: String
-        },
-    },
-    forgotPasswordToken: String,
-    forgotPasswordExpiry: Date,
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
+    addresses: [AddressSchema],
+    referral: String,
+    profilePic: String
 });
-
-//encrypt password before save - HOOKS
-userSchema.pre("save", async function (next) {
-    if (!this.isModified("password")) {
-        return next();
-    }
-    this.password = await bcrypt.hash(this.password, 10);
-});
-
-
 
 const AquaUser =
     mongoose.models.AquaUser ||
-    mongoose.model("AquaUser", AquaUserSchema);
+    mongoose.model("AquaUser", UserSchema);
 
 export default AquaUser

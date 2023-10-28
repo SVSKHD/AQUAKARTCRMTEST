@@ -78,6 +78,10 @@ const AquaInvoiceSchema = new mongoose.Schema(
     paidStatus: {
       type: String,
     },
+    aquakartOnlineUser:{
+     type:Boolean,
+     default:false
+    },
     aquakartInvoice: {
       type: Boolean,
       default: false

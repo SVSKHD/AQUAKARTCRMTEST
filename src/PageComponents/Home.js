@@ -1,7 +1,7 @@
 import AquaLayout from "@/components/Layout/Layout"
 import AquaRegularCard from "@/components/reusables/card"
 import AquaPlaceholder from "@/components/reusables/placeHolder"
-import { FaFile, FaList, FaListCheck, FaBarsStaggered, FaHeart, FaBagShopping } from "react-icons/fa6"
+import { FaFile, FaList, FaListCheck, FaBarsStaggered, FaHeart, FaBagShopping, FaUsers } from "react-icons/fa6"
 
 const HomeComponent = () => {
     const onlineMenu = [
@@ -34,6 +34,11 @@ const HomeComponent = () => {
             name: "Wish-List",
             path: "/wishlist",
             icon: <FaHeart size={30} />
+        },
+        {
+            name: "Users",
+            path: "/users",
+            icon: <FaUsers size={30} />
         }
     ]
     return (
