@@ -1,9 +1,13 @@
 import axios from "axios"
+import getConfig from 'next/config';
 
-let baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
+const { publicRuntimeConfig } = getConfig();
+const basePath = publicRuntimeConfig;
+
+let baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/${basePath}`;
 
 const createCategory = async (data) => (
-    await axios.post(`${baseUrl}/category`, data)
+    await axios.post(`/api/category`, data)
 )
 
 const updatedCategory = async (data, id) => (
@@ -11,11 +15,11 @@ const updatedCategory = async (data, id) => (
 )
 
 const getCategories = async () => (
-    await axios.get(`${baseUrl}/category/get`)
+ await axios.get(`/admin/crm/api/category/get`)
 )
 
 const getCategoryById = async (query) => (
-    await axios.get(`${baseUrl}/category/get?id=${query}`)
+    await axios.get(`admin/crm/api/category/get?id=${query}`)
 )
 
 
