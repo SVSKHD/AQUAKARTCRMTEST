@@ -1,5 +1,5 @@
 import AquaUser from "@/Backend/models/user"
-import brcypt from "bcrypt"
+import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken"
 
 const userLogin = async () => {

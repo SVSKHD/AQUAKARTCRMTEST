@@ -1,5 +1,6 @@
 const withFonts = require('next-fonts');
 const nextConfig = {
+  basePath:"/admin/crm",
   reactStrictMode: true,
   images: {
     domains: ['res.cloudinary.com'],
