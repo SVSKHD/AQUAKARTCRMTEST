@@ -12,6 +12,7 @@ const AquaNav = () => {
                             src="https://res.cloudinary.com/aquakartproducts/image/upload/v1695408027/apple-touch-icon_zzuye9.png"
                             height="50"
                             width="50"
+                            alt="Aquakart"
                         />
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll" />
