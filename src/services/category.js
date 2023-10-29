@@ -1,6 +1,6 @@
 import axios from "axios"
 
-let baseUrl = `https://aquakart.co.in/admin/crm/api`;
+let baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 const createCategory = async (data) => (
     await axios.post(`${baseUrl}/category`, data)
