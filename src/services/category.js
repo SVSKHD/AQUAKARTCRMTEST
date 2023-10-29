@@ -7,11 +7,11 @@ const basePath = publicRuntimeConfig;
 let baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/${basePath}`;
 
 const createCategory = async (data) => (
-    await axios.post(`/api/category`, data)
+    await axios.post(`admin/crm/api/category`, data)
 )
 
 const updatedCategory = async (data, id) => (
-    await axios.post(`${baseUrl}/category?id=${id}`, data)
+    await axios.post(`admin/crm/api/category?id=${id}`, data)
 )
 
 const getCategories = async () => (
