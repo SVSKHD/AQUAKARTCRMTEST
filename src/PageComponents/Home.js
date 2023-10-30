@@ -1,6 +1,7 @@
 import AquaLayout from "@/components/Layout/Layout"
 import AquaRegularCard from "@/components/reusables/card"
 import AquaPlaceholder from "@/components/reusables/placeHolder"
+import Link from "next/link"
 import { FaFile, FaList, FaListCheck, FaBarsStaggered, FaHeart, FaBagShopping, FaUsers } from "react-icons/fa6"
 
 const HomeComponent = () => {
@@ -27,7 +28,7 @@ const HomeComponent = () => {
         },
         {
             name: "Orders",
-            path: "/orders",
+            path: "/admin/crm/orders",
             icon: <FaBagShopping size={30} />
         },
         {
@@ -56,7 +57,9 @@ const HomeComponent = () => {
                                 {onlineMenu.map((r, i) => (
                                     <div key={i} className="col-md-4 col-lg-4 col-xs-12 col-sm-12 mb-2">
                                         <AquaRegularCard title={r.name} >
-                                            <a type="button" class="btn" href={r.path}>{r.icon}</a>
+                                            <Link href={r.path}>
+                                                <button type="button" className="btn">{r.icon}</button>
+                                            </Link>
                                         </AquaRegularCard>
                                     </div>
                                 ))}
