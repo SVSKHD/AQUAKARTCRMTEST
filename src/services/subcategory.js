@@ -2,19 +2,19 @@ import axios from "axios"
 
 
 const createSubCategory = async (data) => (
-    await axios.post(`admin/crm/api/subcategory`, data)
+    await axios.post(`${process.env.apiKey}/subcategory`, data)
 )
 
 const updatedSubCategory = async (data, id) => (
-    await axios.post(`admin/crm/api/subcategory?id=${id}`, data)
+    await axios.post(`${process.env.apiKey}/subcategory?id=${id}`, data)
 )
 
 const getSubCategories = async () => (
-    await axios.get(`admin/crm/api/subcategory/get`)
+    await axios.get(`${process.env.apiKey}/subcategory/get`)
 )
 
 const getSubCategoryById = async (query) => (
-    await axios.get(`admin/crm/api/subcategory/get?id=${query}`)
+    await axios.get(`${process.env.apiKey}/subcategory/get?id=${query}`)
 )
 
 
