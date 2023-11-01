@@ -1,10 +1,5 @@
 import axios from "axios"
-import getConfig from 'next/config';
 
-const { publicRuntimeConfig } = getConfig();
-const basePath = publicRuntimeConfig;
-
-let baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/${basePath}`;
 
 const createCategory = async (data) => (
     await axios.post(`${process.env.apiKey}/category`, data)

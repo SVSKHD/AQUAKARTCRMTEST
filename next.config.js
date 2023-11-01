@@ -5,7 +5,8 @@ const nextConfig = {
     domains: ['res.cloudinary.com'],
   },
   env: {
-    apiKey: "https://aquakart.co.in/admin/crm/api"
+    db:"mongodb+srv://Aqua:aqua@aqua.7xpb5.mongodb.net/aquaecom?retryWrites=true&w=majority",
+    apiKey: "http://localhost:4000/admin/crm/api"
   }
 }
 

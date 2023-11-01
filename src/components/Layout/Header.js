@@ -7,7 +7,7 @@ const AquaNav = () => {
         <div className='custom-nav shadow-lg mb-3'>
             <Navbar expand="lg" className='custom-nav bg-body-tertiary' >
                 <div className='container-fluid'>
-                    <Navbar.Brand href="/">
+                    <Navbar.Brand href="/admin/crm">
                         <Image
                             src="https://res.cloudinary.com/aquakartproducts/image/upload/v1695408027/apple-touch-icon_zzuye9.png"
                             height="50"

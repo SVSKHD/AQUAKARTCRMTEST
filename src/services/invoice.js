@@ -1,19 +1,19 @@
 import axios from "axios";
 
-let baseUrl = process.env.NEXT_PUBLIC_API_URL;
+const getInvoices = async () =>
+  await axios.get(`${process.env.apiKey}/invoice`);
 
-const getInvoices = async () => await axios.get(`${baseUrl}/invoice`);
-
-const createInvoice = async (data) => await axios.post(`${baseUrl}/invoice`, data)
+const createInvoice = async (data) =>
+  await axios.post(`${process.env.apiKey}/invoice`, data);
 
 const updateInvoice = async (id, data) =>
-  await axios.put(`${baseUrl}/invoice?invoice=${id}`, data);
+  await axios.put(`${process.env.apiKey}/invoice?invoice=${id}`, data);
 
 const getIndividualInvoice = async (id) =>
-  await axios.get(`${baseUrl}/invoice?invoice=${id}`);
+  await axios.get(`${process.env.apiKey}/invoice?invoice=${id}`);
 
 const removeInvoice = async (id) =>
-  await axios.put(`${baseUrl}/invoice?invoice=${id}`);
+  await axios.put(`${process.env.apiKey}/invoice?invoice=${id}`);
 
 const InvoiceOperations = () => {
   return {
@@ -21,7 +21,7 @@ const InvoiceOperations = () => {
     getIndividualInvoice,
     updateInvoice,
     createInvoice,
-    removeInvoice
+    removeInvoice,
   };
 };
 

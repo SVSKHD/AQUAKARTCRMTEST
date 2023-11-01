@@ -9,18 +9,20 @@ import { Button, OverlayTrigger, ButtonGroup } from "react-bootstrap";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Image from "next/image";
+import InvoiceOperations from "@/services/invoice";
 
 const AquaDyanamicInvoicesComponent = () => {
   const Router = useRouter();
   let id = Router.query.id;
   const [invoice, setInvoice] = useState("");
   const [gstvalue, setGstValue] = useState(false);
+  const { getIndividualInvoice } = InvoiceOperations();
 
   let baseUrl = process.env.NEXT_PUBLIC_API_URL;
   let URL = process.env.NEXT_PUBLIC_URL;
 
   useEffect(() => {
-    axios.get(`${baseUrl}/invoice?invoice=${id}`).then((res) => {
+    getIndividualInvoice(id).then((res) => {
       setInvoice(res.data);
       if (res) {
         setGst(res.data.gst);
