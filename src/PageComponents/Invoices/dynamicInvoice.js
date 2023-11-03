@@ -18,9 +18,6 @@ const AquaDyanamicInvoicesComponent = () => {
   const [gstvalue, setGstValue] = useState(false);
   const { getIndividualInvoice } = InvoiceOperations();
 
-  let baseUrl = process.env.NEXT_PUBLIC_API_URL;
-  let URL = process.env.NEXT_PUBLIC_URL;
-
   useEffect(() => {
     getIndividualInvoice(id).then((res) => {
       setInvoice(res.data);
@@ -28,7 +25,7 @@ const AquaDyanamicInvoicesComponent = () => {
         setGst(res.data.gst);
       }
     });
-  }, [baseUrl, id]);
+  }, []);
 
   const [gst, setGst] = useState(false);
   const { customerDetails, products, gstDetails, date, invoiceNo } = invoice;
@@ -47,64 +44,64 @@ const AquaDyanamicInvoicesComponent = () => {
   const jsPdfButton = () => {
     const doc = new jsPDF();
 
-    doc.setFontSize(16);
-    doc.text("AquaKart", 25, 20);
+    // Logo
     doc.addImage(
       "https://res.cloudinary.com/aquakartproducts/image/upload/v1695408027/android-chrome-384x384_ijvo24.png",
       "PNG",
-      5,
       10,
-      20,
-      20
+      10,
+      30,
+      30
     );
-    // Customer Details
-    doc.setFontSize(12);
-    doc.text("Customer Details:", 10, 50);
-    doc.setFontSize(10);
-    doc.text(`Name: ${invoice.customerDetails.name}`, 20, 60);
-    doc.text(`Email: ${invoice.customerDetails.email}`, 20, 70);
-    doc.text(`Phone: ${invoice.customerDetails.phone}`, 20, 80);
-    doc.text(`Address: ${invoice.customerDetails.address}`, 20, 90);
 
-    // Invoice Details
-    doc.setFontSize(12);
-    doc.text("Invoice Details:", 10, 100);
-    doc.setFontSize(10);
-    doc.text(`Invoice No: ${invoice.invoiceNo}`, 20, 110);
-    doc.text(`Date: ${invoice.date}`, 20, 120);
+    // Title: "Invoice"
+    doc.setFontSize(20);
+    doc.text(`Invoice - ${invoiceNo}}`, 50, 20);
 
-    // Product Details Table
-    doc.setFontSize(12);
-    doc.text("Product Details:", 10, 130);
+    // Company (Seller) Details
+    doc.setFontSize(10);
+    doc.text("Kantech Solutions Private Limited", 10, 40);
+    doc.text("Ground Floor, Building 2A, 23 & 24", 10, 45);
+    // ... Add more lines as necessary
+
+    // Buyer Details
+    doc.setFontSize(10);
+    doc.text("Vijaya Traders Private Limited", 110, 40);
+    doc.text("5/1, Penthouse 01, 6th Floor, Rich", 110, 45);
+    // ... Add more lines as necessary
+
+    // Invoice metadata
+    doc.setFontSize(10);
+    doc.text("Invoice date: 30/06/2017", 10, 60);
+    doc.text("Due date: 14/07/2017", 10, 65);
+    doc.text("Invoice number: 1", 10, 70);
+
+    // Products/Services table
     const products = invoice.products;
-    const tableData = [["Product Name", "Quantity", "GST(18%)", "Total-Price"]];
+    const tableData = [
+      ["Description", "HSN", "Qty", "Unit price", "Tax", "Amount"],
+    ];
     products.forEach((product) => {
       tableData.push([
         product.productName,
-        product.productQuantity.toString(),
-        `${gstValueGenerate(product.productPrice)}/-`, // Assuming GST is always 18%
-        ` ${product.productPrice}/-`,
+        `${gstValueGenerate(product.productPrice)}/-`,
+        `${product.productPrice}/-`,
       ]);
     });
 
     doc.autoTable({
       head: [tableData[0]],
       body: tableData.slice(1),
-      startY: 135, // Position the table below the previous content
+      startY: 80,
     });
 
-    doc.setFontSize(12);
-    doc.text("Terms & Conditions:", 10, 155);
-
-    const termData = [["terms", "description"]];
-    termsAndConditions.forEach((t) => {
-      termData.push([t.title, t.description]);
-    });
-    doc.autoTable({
-      head: [termData[0]],
-      body: termData.slice(1),
-      startY: 160,
-    });
+    // Total in words
+    doc.setFontSize(10);
+    doc.text(
+      "Total in words: Rupees One Lakh Fifty Seven Thousand Five Hundred",
+      10,
+      150
+    );
 
     // Save the PDF with a specific name
     doc.save(`${invoice.customerDetails.name}.pdf`);
@@ -310,7 +307,7 @@ const AquaDyanamicInvoicesComponent = () => {
                 {invoice
                   ? products.map((r, i) => (
                       <>
-                        <tr>
+                        <tr key={i}>
                           <th scope="row">{i + 1}</th>
                           <td>{r.productName}</td>
                           <td className="text-success">
