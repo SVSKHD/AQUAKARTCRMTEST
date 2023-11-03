@@ -5,7 +5,7 @@ import AquaPlaceholder from "../../components/reusables/placeHolder";
 import { FaDownload, FaEnvelope, FaPhone, FaWhatsapp } from "react-icons/fa";
 import DynamicInvoiceCard from "@/components/cards/dynamicInvoiceCard";
 import axios from "axios";
-import { Button, OverlayTrigger, ButtonGroup } from "react-bootstrap";
+import { Button, OverlayTrigger, ButtonGroup, Tooltip } from "react-bootstrap";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Image from "next/image";
@@ -163,19 +163,24 @@ const AquaDyanamicInvoicesComponent = () => {
                     <Button variant="primary" href="phone:9014774667">
                       <FaPhone size={40} />
                     </Button>
-                    <Button
-                      variant="primary"
-                      href={
-                        id
-                          ? `https://wa.me/91${
-                              invoice ? customerDetails.phone : ""
-                            }?text=${process.env.url}/admin/crm/invoice/${id}`
-                          : ""
-                      }
+                    <OverlayTrigger
+                      placement="top"
+                      overlay={<Tooltip>click here to send invoice</Tooltip>}
                     >
-                      {" "}
-                      <FaWhatsapp size={40} />
-                    </Button>
+                      <Button
+                        variant="primary"
+                        href={
+                          id
+                            ? `https://wa.me/91${
+                                invoice ? customerDetails.phone : ""
+                              }?text=${process.env.url}/admin/crm/invoice/${id}`
+                            : ""
+                        }
+                      >
+                        {" "}
+                        <FaWhatsapp size={40} />
+                      </Button>
+                    </OverlayTrigger>
                   </ButtonGroup>
                 </div>
               </div>
@@ -276,27 +281,49 @@ const AquaDyanamicInvoicesComponent = () => {
                   {gstvalue ? (
                     <>
                       <th scope="col">
-                        <Button
-                          variant="link"
-                          onClick={() => setGstValue(false)}
+                        <OverlayTrigger
+                          placement="top"
+                          overlay={<Tooltip>click to make it to 18%</Tooltip>}
                         >
-                          CGST(9%)
-                        </Button>
+                          <Button
+                            variant="link"
+                            onClick={() => setGstValue(false)}
+                          >
+                            CGST(9%)
+                          </Button>
+                        </OverlayTrigger>
                       </th>
                       <th scope="col">
-                        <Button
-                          variant="link"
-                          onClick={() => setGstValue(false)}
+                        <OverlayTrigger
+                          placement="top"
+                          overlay={<Tooltip>click to make it to 18%</Tooltip>}
                         >
-                          SGST(9%)
-                        </Button>
+                          <Button
+                            variant="link"
+                            onClick={() => setGstValue(false)}
+                          >
+                            SGST(9%)
+                          </Button>
+                        </OverlayTrigger>
                       </th>
                     </>
                   ) : (
                     <th scope="col">
-                      <Button variant="link" onClick={() => setGstValue(true)}>
-                        GST(18%)
-                      </Button>
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={
+                          <Tooltip>
+                            click to clear break up for CGST(9%) and SGST(9%)
+                          </Tooltip>
+                        }
+                      >
+                        <Button
+                          variant="link"
+                          onClick={() => setGstValue(true)}
+                        >
+                          GST(18%)
+                        </Button>
+                      </OverlayTrigger>
                     </th>
                   )}
 
