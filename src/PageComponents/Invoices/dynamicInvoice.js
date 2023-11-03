@@ -169,7 +169,7 @@ const AquaDyanamicInvoicesComponent = () => {
                         id
                           ? `https://wa.me/91${
                               invoice ? customerDetails.phone : ""
-                            }?text=${URL}/invoice/${id}`
+                            }?text=${process.env.url}/admin/crm/invoice/${id}`
                           : ""
                       }
                     >
