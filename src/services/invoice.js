@@ -1,19 +1,17 @@
 import axios from "axios";
 
-const getInvoices = async () =>
-  await axios.get(`${process.env.apiKey}/invoice`);
+const getInvoices = async () => await axios.get(`/admin/crm/api/invoice`);
 
-const createInvoice = async (data) =>
-  await axios.post(`${process.env.apiKey}/invoice`, data);
+const createInvoice = async (data) => await axios.post(`/admin/crm/api/invoice`, data);
 
 const updateInvoice = async (id, data) =>
-  await axios.put(`${process.env.apiKey}/invoice?invoice=${id}`, data);
+  await axios.put(`/admin/crm/api/invoice?invoice=${id}`, data);
 
 const getIndividualInvoice = async (id) =>
-  await axios.get(`${process.env.apiKey}/invoice?invoice=${id}`);
+  await axios.get(`/admin/crm/api/invoice?invoice=${id}`);
 
 const removeInvoice = async (id) =>
-  await axios.put(`${process.env.apiKey}/invoice?invoice=${id}`);
+  await axios.put(`/admin/crm/api/invoice?invoice=${id}`);
 
 const InvoiceOperations = () => {
   return {

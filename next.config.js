@@ -3,9 +3,6 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     domains: ['res.cloudinary.com'],
-  },
-  env: {
-    apiKey: "https:aquakart.co.in/admin/crm/api"
   }
 }
 
