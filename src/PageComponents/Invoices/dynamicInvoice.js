@@ -27,6 +27,12 @@ const AquaDyanamicInvoicesComponent = () => {
     });
   }, []);
 
+  const IndianCurrencySumbol = (number) =>
+    new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+    }).format(number);
+
   const [gst, setGst] = useState(false);
   const { customerDetails, products, gstDetails, date, invoiceNo } = invoice;
 
@@ -44,67 +50,66 @@ const AquaDyanamicInvoicesComponent = () => {
   const jsPdfButton = () => {
     const doc = new jsPDF();
 
-    // Logo
-    doc.addImage(
-      "https://res.cloudinary.com/aquakartproducts/image/upload/v1695408027/android-chrome-384x384_ijvo24.png",
-      "PNG",
-      10,
-      10,
-      30,
-      30
-    );
+    // Set the font size for headers
+    doc.setFontSize(18);
+    doc.text("INVOICE", 105, 30, null, null, "center");
 
-    // Title: "Invoice"
-    doc.setFontSize(20);
-    doc.text(`Invoice - ${invoiceNo}}`, 50, 20);
-
-    // Company (Seller) Details
+    // Set the font size for body
     doc.setFontSize(10);
-    doc.text("Kantech Solutions Private Limited", 10, 40);
-    doc.text("Ground Floor, Building 2A, 23 & 24", 10, 45);
-    // ... Add more lines as necessary
+    doc.text(`Aquakart`, 20, 50);
+    doc.text(`Your address`, 20, 60);
+    doc.text(`Your phone number`, 20, 70);
+    doc.text(`Your email`, 20, 80);
 
-    // Buyer Details
-    doc.setFontSize(10);
-    doc.text("Vijaya Traders Private Limited", 110, 40);
-    doc.text("5/1, Penthouse 01, 6th Floor, Rich", 110, 45);
-    // ... Add more lines as necessary
+    // Buyer details
+    doc.text(`Bill to:`, 20, 100);
+    doc.text(customerDetails.name, 20, 110);
+    doc.text(`Buyer phone number: ${customerDetails.phone}`, 20, 120);
+    doc.text(`Buyer email: ${customerDetails.email}`, 20, 130);
+    doc.text(`Buyer address: ${customerDetails.address}`, 20, 140);
 
-    // Invoice metadata
-    doc.setFontSize(10);
-    doc.text("Invoice date: 30/06/2017", 10, 60);
-    doc.text("Due date: 14/07/2017", 10, 65);
-    doc.text("Invoice number: 1", 10, 70);
+    // Invoice details on the right
+    doc.text(`Invoice number: ${invoiceNo}`, 120, 100);
+    doc.text(`Invoice date: ${date}`, 120, 110);
 
-    // Products/Services table
-    const products = invoice.products;
-    const tableData = [
-      ["Description", "HSN", "Qty", "Unit price", "Tax", "Amount"],
-    ];
-    products.forEach((product) => {
-      tableData.push([
-        product.productName,
-        `${gstValueGenerate(product.productPrice)}/-`,
-        `${product.productPrice}/-`,
-      ]);
-    });
-
+    // Products Table
+    let startY = 160;
     doc.autoTable({
-      head: [tableData[0]],
-      body: tableData.slice(1),
-      startY: 80,
+      head: [["Item", "Quantity", "Base Price", "GST-(18%)", "Amount"]],
+      body: products.map((p) => [
+        p.productName,
+        p.productQuantity,
+        `₹ ${BasePrice(p.productPrice)}`,
+        `₹ ${gstValueGenerate(p.productPrice)}`,
+        `₹ ${(p.productQuantity * p.productPrice).toFixed(2)}`,
+      ]),
+      startY: startY,
+      theme: "grid",
     });
 
-    // Total in words
-    doc.setFontSize(10);
-    doc.text(
-      "Total in words: Rupees One Lakh Fifty Seven Thousand Five Hundred",
-      10,
-      150
+    // Calculate totals
+    const total = products.reduce(
+      (sum, p) => sum + p.productQuantity * p.productPrice,
+      0
     );
+
+    // Totals
+    startY = doc.autoTable.previous.finalY + 10;
+    doc.text(`Subtotal: $${total.toFixed(2)}`, 120, startY);
+    doc.text(
+      `GST : ${IndianCurrencySumbol(gstValueGenerate(total))}`,
+      120,
+      startY + 10
+    );
+    doc.setFontSize(12);
+    doc.text(`TOTAL: ₹${total.toFixed(2)}`, 120, startY + 30);
+
+    // Terms and conditions
+    doc.setFontSize(10);
+    doc.text(`Terms and conditions go here`, 20, startY + 50);
 
     // Save the PDF with a specific name
-    doc.save(`${invoice.customerDetails.name}.pdf`);
+    doc.save(`${customerDetails.name}.pdf`);
   };
 
   let termsAndConditions = [
@@ -336,7 +341,9 @@ const AquaDyanamicInvoicesComponent = () => {
                       <>
                         <tr key={i}>
                           <th scope="row">{i + 1}</th>
-                          <td>{r.productName}</td>
+                          <td className="col-sm-12 col-xs-12">
+                            {r.productName}
+                          </td>
                           <td className="text-success">
                             ₹{BasePrice(r.productPrice)}
                           </td>

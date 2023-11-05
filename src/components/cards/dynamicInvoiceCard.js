@@ -2,7 +2,7 @@ import { Card } from "react-bootstrap"
 const DynamicInvoiceCard = (props) => {
     return (
         <>
-            <Card className="shadow-lg">
+            <Card className="container-fluid shadow-lg">
                 <Card.Body>{props.buttons}</Card.Body>
                 <Card.Body>{props.children}</Card.Body>
             </Card>

@@ -1,45 +1,51 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-
-// Address Sub-document Schema
-const AddressSchema = new Schema({
-    street: String,
-    city: String,
-    state: String,
-    zip: String,
-    country: String
+const UserSchema = new mongoose.Schema({
+  name: {
+    type: String,
+  },
+  username: {
+    type: String,
+  },
+  role: {
+    type: "String",
+    default: "user",
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    // Store a hashed password, never store plain text passwords
+    type: String,
+    required: true,
+  },
+  phone: {
+    type: String,
+  },
+  addresses: [
+    {
+      street: String,
+      city: String,
+      state: String,
+      zip: String,
+      country: String,
+    },
+  ],
+  referral: String,
+  profilePic: String,
 });
 
-const UserSchema = new Schema({
-    name:{
-     type:String
-    },
-    username: {
-        type: String,
-    },
-    role: {
-        type: "String",
-        default: "user"
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    password: { // Store a hashed password, never store plain text passwords
-        type: String,
-        required: true
-    },
-    phone: {
-        type: String,
-    },
-    addresses: [AddressSchema],
-    referral: String,
-    profilePic: String
+UserSchema.pre("save", function (next) {
+  // Check if the email is set and the username is not set
+  if (this.email && !this.username) {
+    const parts = this.email.split("@");
+    this.username = parts[0]; // Set the username to the part before the '@'
+  }
+  next();
 });
-
 const AquaUser =
-    mongoose.models.AquaUser ||
-    mongoose.model("AquaUser", UserSchema);
+  mongoose.models.AquaUser || mongoose.model("AquaUser", UserSchema);
 
-export default AquaUser
+export default AquaUser;
