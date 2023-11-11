@@ -52,21 +52,108 @@ const AquaDyanamicInvoicesComponent = () => {
 
     // Set the font size for headers
     doc.setFontSize(18);
-    doc.text("INVOICE", 105, 30, null, null, "center");
+    doc.text("KUNDANA ENTERPRISES", 105, 30, null, null, "center");
+
+    // Set the font size for body
+    doc.setFontSize(10);
+    doc.text(`GST: 36AMUPB4451C1Z7`, 20, 50);
+    doc.text(
+      `Authorized Dealers of: Kent, Grundfos Pressure Pumps, Hitech Solar systems, Solar Power systems`,
+      20,
+      60
+    );
+    doc.text(`Pillar no:72, Mehdipatnam, Hyderabad,Telangana,500028`, 20, 70);
+    doc.text(`Call us at: 9812118942`, 20, 80);
+    doc.text(`Email us at: kundanakent@gmail.com`, 20, 90);
+
+    // Buyer details
+    doc.text(`Customer Details`, 20, 110);
+    doc.text(`Billing Address:`, 20, 120);
+    doc.text(gstDetails.gstAddress, 20, 130);
+    doc.text(`Shipping Address:`, 20, 140);
+    doc.text(customerDetails.address, 20, 150);
+    doc.text(`Phone: ${customerDetails.phone}`, 20, 160);
+
+    // Invoice details on the right
+    doc.text(`Invoice number: ${invoiceNo}`, 150, 100);
+    doc.text(`Date: ${date}`, 150, 120);
+
+    // Products Table
+    let startY = 180;
+    doc.autoTable({
+      head: [["Item Description", "QTY", "BASE-PRICE", "GST(18%)", "TOTAL"]],
+      body: products.map((p) => [
+        p.productName,
+        p.productQuantity,
+        `₹ ${BasePrice(p.productPrice)}`,
+        `₹ ${gstValueGenerate(p.productPrice)}`,
+        `₹ ${(p.productQuantity * p.productPrice).toFixed(2)}`,
+      ]),
+      startY: startY,
+      theme: "grid",
+    });
+
+    // Grand total
+    startY = doc.autoTable.previous.finalY + 10;
+    doc.setFontSize(12);
+    doc.text(
+      `Grand Total: ₹${products.reduce(
+        (sum, p) => sum + p.productQuantity * p.productPrice,
+        0
+      )}`,
+      150,
+      startY
+    );
+
+    // Terms and Conditions
+    doc.setFontSize(10);
+    let termsStartY = startY + 20;
+    doc.text(`Terms & Conditions`, 20, termsStartY);
+    doc.text(
+      `1. TRANSPORT/LIFTING CHARGES WILL BE BORN BY THE CUSTOMER.`,
+      20,
+      termsStartY + 10
+    );
+    // ... Add all terms and conditions
+
+    // Contact details at the bottom
+    doc.setFontSize(10);
+    let contactStartY = termsStartY + 60; // adjust according to the length of the terms and conditions
+    doc.text(`Kent Customer Care`, 20, contactStartY);
+    doc.text(`9278912345`, 20, contactStartY + 10);
+    doc.text(`Grundfos Customer Care`, 20, contactStartY + 20);
+    doc.text(`1800 102 2535`, 20, contactStartY + 30);
+
+    // Save the PDF with a specific name
+    doc.save(`${customerDetails.name}_invoice.pdf`);
+  };
+
+  const jsPdfButton1 = () => {
+    const doc = new jsPDF();
+
+    // Set the font size for headers
+    doc.setFontSize(18);
+    doc.text("AQUAKART", 105, 30, null, null, "center");
 
     // Set the font size for body
     doc.setFontSize(10);
     doc.text(`Aquakart`, 20, 50);
-    doc.text(`Your address`, 20, 60);
-    doc.text(`Your phone number`, 20, 70);
-    doc.text(`Your email`, 20, 80);
+    doc.text(`GST: 36AMUPB4451C1Z7`, 20, 50);
+    doc.text(
+      `Authorized Dealers of: Kent, Grundfos Pressure Pumps, Hitech Solar systems, Solar Power systems`,
+      20,
+      60
+    );
+    doc.text(`Pillar no:72, Mehdipatnam, Hyderabad,Telangana,500028`, 20, 70);
+    doc.text(`contact-us : 9014774667`, 20, 70);
+    doc.text(`email-us : customercare@aquakart.co.in`, 20, 80);
 
     // Buyer details
-    doc.text(`Bill to:`, 20, 100);
-    doc.text(customerDetails.name, 20, 110);
-    doc.text(`Buyer phone number: ${customerDetails.phone}`, 20, 120);
-    doc.text(`Buyer email: ${customerDetails.email}`, 20, 130);
-    doc.text(`Buyer address: ${customerDetails.address}`, 20, 140);
+
+    doc.text(`Billing Address:`, 20, 120);
+    doc.text(`Shipping Address:`, 20, 140);
+    doc.text(customerDetails.address, 20, 150);
+    doc.text(`Phone: ${customerDetails.phone}`, 20, 160);
 
     // Invoice details on the right
     doc.text(`Invoice number: ${invoiceNo}`, 120, 100);
