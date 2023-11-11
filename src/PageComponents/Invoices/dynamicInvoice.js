@@ -234,7 +234,7 @@ const AquaDyanamicInvoicesComponent = () => {
     <>
       <div className="mb-5" />
       <div className="container">
-        <div className="invoice">
+        <div className="invoice p-3">
           <DynamicInvoiceCard
             buttons={
               <div className="row">
@@ -367,9 +367,9 @@ const AquaDyanamicInvoicesComponent = () => {
             <table className="table table-borderless text-center">
               <thead>
                 <tr>
-                  <th scope="col text-start">Quantity</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Base-Price</th>
+                  <th>Quantity</th>
+                  <th>Name</th>
+                  <th>Base Price</th>
                   {gstvalue ? (
                     <>
                       <th scope="col">
@@ -418,36 +418,38 @@ const AquaDyanamicInvoicesComponent = () => {
                       </OverlayTrigger>
                     </th>
                   )}
-
-                  <th scope="col text-success">Total Price(₹)</th>
+                  <th>Total-Price</th>
                 </tr>
               </thead>
               <tbody>
-                {invoice
-                  ? products.map((r, i) => (
-                      <>
-                        <tr key={i}>
-                          <th scope="row">{i + 1}</th>
-                          <td className="col-sm-12 col-xs-12">
-                            {r.productName}
-                          </td>
+                <tr>
+                  {invoice
+                    ? products.map((r, i) => (
+                        <>
+                          <td>{r.productQuantity}</td>
+                          <td>{r.productName}</td>
                           <td className="text-success">
                             ₹{BasePrice(r.productPrice)}
                           </td>
                           {gstvalue ? (
                             <>
-                              <td>{gstValueGenerate(r.productPrice) / 2}</td>
-                              <td>{gstValueGenerate(r.productPrice) / 2}</td>
+                              <td className="text-gst">
+                                ₹{gstValueGenerate(r.productPrice) / 2}
+                              </td>
+                              <td className="text-gst">
+                                ₹{gstValueGenerate(r.productPrice) / 2}
+                              </td>
                             </>
                           ) : (
-                            <td>{gstValueGenerate(r.productPrice)}</td>
+                            <td className="text-gst">
+                              ₹{gstValueGenerate(r.productPrice)}
+                            </td>
                           )}
-
                           <td className="text-success">₹{r.productPrice}</td>
-                        </tr>
-                      </>
-                    ))
-                  : ""}
+                        </>
+                      ))
+                    : ""}
+                </tr>
               </tbody>
             </table>
             <hr />

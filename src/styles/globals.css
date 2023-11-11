@@ -1,12 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Roboto:wght@500&display=swap");
 
 body {
-  height: 100vh;
+  height: 100%;
   background-repeat: no-repeat;
-  background-size: cover;
-  background: rgb(131,58,180);
-background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+  background-size: 400% 400%;
+  background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364);
+  animation: gradientBG 15s ease infinite;
   font-family: Poppins !important;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .body-adjust {
@@ -22,7 +28,8 @@ background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%,
   color: aliceblue;
 }
 
-:root {}
+:root {
+}
 
 .btn-link {
   text-decoration: none !important;
@@ -38,8 +45,15 @@ background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%,
   border-radius: 1rem;
 }
 
-
 .nav-adjust {
   margin-left: 2px;
   margin-right: 2px;
+}
+
+.text-gst {
+  color: #D83F31 !important;
+}
+
+.text-gst-title {
+  color: #D83F31 !important;
 }
