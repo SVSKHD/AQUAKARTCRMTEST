@@ -25,7 +25,7 @@ const AquaDyanamicInvoicesComponent = () => {
         setGst(res.data.gst);
       }
     });
-  }, []);
+  }, [getIndividualInvoice, id]);
 
   const IndianCurrencySumbol = (number) =>
     new Intl.NumberFormat("en-IN", {
