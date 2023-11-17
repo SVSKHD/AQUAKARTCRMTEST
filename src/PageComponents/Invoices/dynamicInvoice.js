@@ -128,77 +128,6 @@ const AquaDyanamicInvoicesComponent = () => {
     doc.save(`${customerDetails.name}_invoice.pdf`);
   };
 
-  const jsPdfButton1 = () => {
-    const doc = new jsPDF();
-
-    // Set the font size for headers
-    doc.setFontSize(18);
-    doc.text("AQUAKART", 105, 30, null, null, "center");
-
-    // Set the font size for body
-    doc.setFontSize(10);
-    doc.text(`Aquakart`, 20, 50);
-    doc.text(`GST: 36AMUPB4451C1Z7`, 20, 50);
-    doc.text(
-      `Authorized Dealers of: Kent, Grundfos Pressure Pumps, Hitech Solar systems, Solar Power systems`,
-      20,
-      60
-    );
-    doc.text(`Pillar no:72, Mehdipatnam, Hyderabad,Telangana,500028`, 20, 70);
-    doc.text(`contact-us : 9014774667`, 20, 70);
-    doc.text(`email-us : customercare@aquakart.co.in`, 20, 80);
-
-    // Buyer details
-
-    doc.text(`Billing Address:`, 20, 120);
-    doc.text(`Shipping Address:`, 20, 140);
-    doc.text(customerDetails.address, 20, 150);
-    doc.text(`Phone: ${customerDetails.phone}`, 20, 160);
-
-    // Invoice details on the right
-    doc.text(`Invoice number: ${invoiceNo}`, 120, 100);
-    doc.text(`Invoice date: ${date}`, 120, 110);
-
-    // Products Table
-    let startY = 160;
-    doc.autoTable({
-      head: [["Item", "Quantity", "Base Price", "GST-(18%)", "Amount"]],
-      body: products.map((p) => [
-        p.productName,
-        p.productQuantity,
-        `₹ ${BasePrice(p.productPrice)}`,
-        `₹ ${gstValueGenerate(p.productPrice)}`,
-        `₹ ${(p.productQuantity * p.productPrice).toFixed(2)}`,
-      ]),
-      startY: startY,
-      theme: "grid",
-    });
-
-    // Calculate totals
-    const total = products.reduce(
-      (sum, p) => sum + p.productQuantity * p.productPrice,
-      0
-    );
-
-    // Totals
-    startY = doc.autoTable.previous.finalY + 10;
-    doc.text(`Subtotal: $${total.toFixed(2)}`, 120, startY);
-    doc.text(
-      `GST : ${IndianCurrencySumbol(gstValueGenerate(total))}`,
-      120,
-      startY + 10
-    );
-    doc.setFontSize(12);
-    doc.text(`TOTAL: ₹${total.toFixed(2)}`, 120, startY + 30);
-
-    // Terms and conditions
-    doc.setFontSize(10);
-    doc.text(`Terms and conditions go here`, 20, startY + 50);
-
-    // Save the PDF with a specific name
-    doc.save(`${customerDetails.name}.pdf`);
-  };
-
   let termsAndConditions = [
     {
       title: "Transport",
@@ -421,11 +350,12 @@ const AquaDyanamicInvoicesComponent = () => {
                   <th>Total-Price</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  {invoice
-                    ? products.map((r, i) => (
-                        <>
+
+              {invoice
+                ? products.map((r, i) => (
+                    <>
+                      <tbody>
+                        <tr>
                           <td>{r.productQuantity}</td>
                           <td>{r.productName}</td>
                           <td className="text-success">
@@ -446,11 +376,11 @@ const AquaDyanamicInvoicesComponent = () => {
                             </td>
                           )}
                           <td className="text-success">₹{r.productPrice}</td>
-                        </>
-                      ))
-                    : ""}
-                </tr>
-              </tbody>
+                        </tr>
+                      </tbody>
+                    </>
+                  ))
+                : ""}
             </table>
             <hr />
             <h5 className="mb-3 text-danger">Terms & Conditions</h5>
