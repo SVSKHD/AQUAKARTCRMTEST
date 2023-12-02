@@ -15,9 +15,7 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-.body-adjust {
-  height: 99vh !important;
-}
+
 
 .custom-nav {
   border-top-right-radius: 0px !important;
@@ -56,4 +54,8 @@ body {
 
 .text-gst-title {
   color: #D83F31 !important;
+}
+
+.card-layover-align{
+  height: auto;
 }

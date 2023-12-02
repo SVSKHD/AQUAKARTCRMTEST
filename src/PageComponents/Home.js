@@ -60,7 +60,7 @@ const HomeComponent = () => {
                             <hr />
                             <div className="row mb-4">
                                 {onlineMenu.map((r, i) => (
-                                    <div key={i} className="col-md-4 col-lg-4 col-xs-12 col-sm-12 mb-2">
+                                    <div key={i} className="col-md-6 col-lg-4 col-xs-12 col-sm-12 m-2 p-2">
                                         <AquaRegularCard title={r.name} >
                                             <Link href={r.path}>
                                                 <button type="button" className="btn">{r.icon}</button>
