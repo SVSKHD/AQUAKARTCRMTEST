@@ -9,16 +9,21 @@ const router = createRouter();
 const invoiceId = nanoid(5);
 const date = moment(new Date()).format("DD/MM/YYYY");
 
+function convertDateFormat(dateString) {
+  return moment(dateString, "MM/DD/YYYY").format("DD/MM/YYYY");
+}
+
 router.post(async (req, res) => {
   try {
     db.connectDb();
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-    let currentDate = `${day}-${month}-${year}`;
     const body = req.body;
-    body.invoiceNo = `AQB-${date}-${invoiceId}`;
-    body.date = currentDate;
+    body.date = convertDateFormat(body.trasnport.deliveryDate);
+    body.trasnport.deliveryDate = convertDateFormat(
+      body.trasnport.deliveryDate
+    );
+    body.invoiceNo = `AQB-${convertDateFormat(
+      body.trasnport.deliveryDate
+    )}-${invoiceId}`;
     const invoice = new AquaInvoices(body);
     await invoice.save();
     res.status(200).json(invoice);

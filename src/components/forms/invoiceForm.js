@@ -258,7 +258,7 @@ const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData }) => {
             <AquaInput
               label={"Delivery Status"}
               placeholder={"Enter Delivery Status"}
-              type={"name"}
+              type={"date"}
               value={formData.transport.deliveredBy}
               handleChange={(e) =>
                 handleInputChange(e, "transport", "deliveredBy")
