@@ -52,17 +52,17 @@ const AquaDyanamicInvoicesComponent = () => {
 
     // Set the font size for headers
     doc.setFontSize(18);
-    doc.text("KUNDANA ENTERPRISES", 105, 30, null, null, "center");
+    doc.text("AQUAKART ENTERPRISES", 105, 30, null, null, "center");
 
     // Set the font size for body
     doc.setFontSize(10);
-    doc.text(`GST: 36AMUPB4451C1Z7`, 20, 50);
+    doc.text(`GST- 36AJOPH6387A1Z2`, 20, 50);
     doc.text(
       `Authorized Dealers of: Kent, Grundfos Pressure Pumps, Hitech Solar systems, Solar Power systems`,
       20,
       60
     );
-    doc.text(`Pillar no:72, Mehdipatnam, Hyderabad,Telangana,500028`, 20, 70);
+    doc.text(`Gandhamguda ,kokapet`, 20, 70);
     doc.text(`Call us at: 9812118942`, 20, 80);
     doc.text(`Email us at: kundanakent@gmail.com`, 20, 90);
 
@@ -210,14 +210,8 @@ const AquaDyanamicInvoicesComponent = () => {
             <div className="row">
               <div className="col-md-6 col-lg-6 col-xs-12 col-sm-12">
                 <div className="text-center">
-                  <Image
-                    src="https://res.cloudinary.com/aquakartproducts/image/upload/v1695408027/android-chrome-384x384_ijvo24.png"
-                    height="100"
-                    width="100"
-                    alt="Aquakart"
-                  />
-                  <h4>Kundana Enterprises</h4>
-                  <h6>GST- 36AMUPB4451C1Z7</h6>
+                  <h4>Aquakart Enterprises</h4>
+                  <h6>GST- 36AJOPH6387A1Z2</h6>
                 </div>
               </div>
               <div className="col-md-6 col-lg-6 col-xs-12 col-sm-12 text-center">
