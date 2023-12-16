@@ -85,9 +85,9 @@ const AquaDyanamicInvoicesComponent = () => {
       body: products.map((p) => [
         p.productName,
         p.productQuantity,
-        `₹ ${BasePrice(p.productPrice)}`,
-        `₹ ${gstValueGenerate(p.productPrice)}`,
-        `₹ ${(p.productQuantity * p.productPrice).toFixed(2)}`,
+        `${BasePrice(p.productPrice)}`,
+        `${gstValueGenerate(p.productPrice)}`,
+        `${(p.productQuantity * p.productPrice).toFixed(2)}`,
       ]),
       startY: startY,
       theme: "grid",
@@ -97,7 +97,7 @@ const AquaDyanamicInvoicesComponent = () => {
     startY = doc.autoTable.previous.finalY + 10;
     doc.setFontSize(12);
     doc.text(
-      `Grand Total: ₹${products.reduce(
+      `Grand Total: ${products.reduce(
         (sum, p) => sum + p.productQuantity * p.productPrice,
         0
       )}`,
@@ -131,22 +131,21 @@ const AquaDyanamicInvoicesComponent = () => {
   let termsAndConditions = [
     {
       title: "Transport",
-      description: "TRANSPORT / LIFTING CHARGES WILL BE BORN BY THE CUSTOMER.",
+      description: "TRANSPORT / LIFTING CHARGES WILL BE BORNE BY THE CUSTOMER.",
     },
     {
       title: "Plumber",
       description:
-        " PLUMBER SHOULD BE PROVIDED AT THE TIME OF INSTALLATION (OR) OUR PLUMBERS MIGHT ATTRACT PLUMBING CHARGES.",
+        " PLUMBER SHOULD BE PROVIDED AT THE TIME OF PLUMBING (OR) OUR PLUMBING CONTRACTORS WILL ATTRACT PLUMBING CHARGES.",
     },
     {
       title: "Plumbing Material",
       description:
-        "PLUMBING MATERIALS / ELECTRICAL CONNECTION BY CUSTOMER, Plumbing MATERIAL.",
+        "PLUMBING MATERIALS / ELECTRICAL CONNECTION BY CUSTOMER , IF THE PRESSURE BOOSTER PUMP PLUMBING WILL ATTRACT EXTRA CHARGES ",
     },
     {
-      title: "Electric Socket If purchased Auto Softener",
-      description:
-        "ONE ELECTRIC SOCKET HAS TO BE PROVIDED AT THE TIME OF INSTALLATION, IF PRESSURE BOOSTER THEN TWO ELECTRIC SOCKETS.",
+      title: "SALES RETURN",
+      description: "IF THE UNIT IS UNBOXED MACHINE WILL NOT BE TAKEN BACK",
     },
     {
       title: "Delivery and Installation policy",
@@ -155,7 +154,7 @@ const AquaDyanamicInvoicesComponent = () => {
     { title: "Advance policy", description: "100% ADVANCE ALONG WITH PO." },
     {
       title: "Work Monitoring",
-      description: "PLUMBING WORK MONITORING WILL BE DONE BY OUR ENGINEERS",
+      description: "PLUMBING WORK VERIFICATION , PROGRAMMING AND TRAINING AND WARRANTY UPLOAD WILL BE DONE BY OUR SERVICE ENGINEERS",
     },
   ];
 
@@ -209,12 +208,13 @@ const AquaDyanamicInvoicesComponent = () => {
           >
             <div className="row">
               <div className="col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                <div className="text-center">
-                  <h4>Aquakart Enterprises</h4>
-                  <h6>GST- 36AJOPH6387A1Z2</h6>
+                <div className="text-start">
+                  <h4>Aquakart</h4>
+                  <h5>GST- 36AJOPH6387A1Z2</h5>
+                  <h6>Adddress : Gandhamguda , kokapet</h6>
                 </div>
               </div>
-              <div className="col-md-6 col-lg-6 col-xs-12 col-sm-12 text-center">
+              <div className="col-md-6 col-lg-6 col-xs-12 col-sm-12 text-start">
                 <div>Date : {date}</div>
                 <AquaPlaceholder
                   type="Invoice-No"
@@ -382,7 +382,7 @@ const AquaDyanamicInvoicesComponent = () => {
             {termsAndConditions.map((r, i) => (
               <AquaLists
                 key={i}
-                title={r.title}
+                title={r.title.toUpperCase()}
                 description={r.description}
                 number={i + 1}
               />
