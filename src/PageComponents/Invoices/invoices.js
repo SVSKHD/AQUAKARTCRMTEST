@@ -8,7 +8,7 @@ import AquaToast from "@/components/reusables/toast";
 import { useRouter } from "next/router";
 
 const AquaInvoiceComponent = () => {
-  const router = useRouter()
+  const router = useRouter();
   let initialData = {
     customerDetails: {
       name: "",
@@ -44,8 +44,12 @@ const AquaInvoiceComponent = () => {
   const [mode, setMode] = useState("");
   const [invoices, setInvoices] = useState([]);
   const [editInitData, setEditInitData] = useState({});
-  const { getInvoices, createInvoice, updateInvoice, removeInvoice } =
-    InvoiceOperations();
+  const {
+    getInvoices,
+    createInvoice,
+    updateInvoice,
+    removeInvoice,
+  } = InvoiceOperations();
 
   const loadInvoices = useCallback(() => {
     getInvoices()
@@ -56,7 +60,7 @@ const AquaInvoiceComponent = () => {
       .catch(() => {
         AquaToast("not-fetched", true);
       });
-  }, [getInvoices, setInvoices])
+  }, [getInvoices, setInvoices]);
 
   useEffect(() => {
     loadInvoices();
@@ -75,12 +79,15 @@ const AquaInvoiceComponent = () => {
           loadInvoices();
         });
     } else {
+      console.log(formData);
       createInvoice(formData)
         .then(() => {
+          AquaToast("created");
           setInvoices([]);
           loadInvoices();
         })
         .catch(() => {
+          AquaToast("please try again", "error");
           setInvoices([]);
           loadInvoices();
         });
@@ -99,15 +106,17 @@ const AquaInvoiceComponent = () => {
   };
 
   const handleShare = (id) => {
-    router.push(`/invoice/${id}`)
-  }
+    router.push(`/invoice/${id}`);
+  };
 
   return (
     <>
       <AquaLayout>
         <div className="row">
           <div className="col-md-4 col-lg-4 col-xs-12 col-sm-12">
-            {!invoices.length ? <h3>No invoices yet</h3> : (
+            {!invoices.length ? (
+              <h3>No invoices yet</h3>
+            ) : (
               <div>
                 {invoices.map((r, i) => (
                   <>
@@ -130,7 +139,6 @@ const AquaInvoiceComponent = () => {
             <></>
           )}
           <div className="col-md-8 col-lg-8 col-xs-12 col-sm-12">
-
             <AquaInvoiceForm
               initialData={initialData}
               mode={mode}

@@ -24,15 +24,15 @@ const AquaInvoiceSchema = new mongoose.Schema(
     },
     gst: {
       type: Boolean,
-      default: false
+      default: false,
     },
     po: {
       type: Boolean,
-      default: false
+      default: false,
     },
     quotation: {
       type: Boolean,
-      default: false
+      default: false,
     },
     gstDetails: {
       gstName: {
@@ -78,17 +78,17 @@ const AquaInvoiceSchema = new mongoose.Schema(
     paidStatus: {
       type: String,
     },
-    aquakartOnlineUser:{
-     type:Boolean,
-     default:false
+    aquakartOnlineUser: {
+      type: Boolean,
+      default: false,
     },
     aquakartInvoice: {
       type: Boolean,
-      default: false
+      default: false,
     },
     productId: {
       type: ObjectId,
-      ref: "AquaProduct"
+      ref: "AquaProduct",
     },
     paymentType: {
       type: String,

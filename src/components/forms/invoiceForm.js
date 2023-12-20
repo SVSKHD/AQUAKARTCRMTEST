@@ -3,7 +3,7 @@ import { Button, ButtonGroup } from "react-bootstrap";
 import AquaInput from "../reusables/input";
 import { FaTrash, FaEdit, FaPlus } from "react-icons/fa";
 import AquaPlaceHolderInput from "../reusables/placeHolderInput";
-
+import moment from "moment";
 
 const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData }) => {
   const [formData, setFormData] = useState(initialData);
@@ -15,15 +15,24 @@ const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData }) => {
     } else {
       setFormData(initialData);
     }
-  }, [initialData , editData , mode]);
+  }, [initialData, editData, mode]);
 
   const handleInputChange = (e, section, field, index) => {
     const updatedFormData = { ...formData };
+    console.log("data", updatedFormData);
+    let value = e.target.value;
+    // Check if the input is a date and format it
+
+    formData.transport.deliveryDate = moment(
+      formData.transport.deliveryDate
+    ).format("DD/MM/YYYY");
+
     if (section === "products") {
-      updatedFormData[section][index][field] = e.target.value;
+      updatedFormData[section][index][field] = value;
     } else {
-      updatedFormData[section][field] = e.target.value;
+      updatedFormData[section][field] = value;
     }
+
     setFormData(updatedFormData);
   };
 

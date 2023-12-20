@@ -15,21 +15,30 @@ function convertDateFormat(dateString) {
 
 router.post(async (req, res) => {
   try {
+    // Connect to the database
     db.connectDb();
+
+    console.log("req.body", req.body);
     const body = req.body;
-    body.date = convertDateFormat(body.trasnport.deliveryDate);
-    body.trasnport.deliveryDate = convertDateFormat(
-      body.trasnport.deliveryDate
-    );
-    body.invoiceNo = `AQB-${convertDateFormat(
-      body.trasnport.deliveryDate
-    )}-${invoiceId}`;
+    // Convert the date format
+    const formattedDate = convertDateFormat(body.transport.deliveryDate);
+    body.date = formattedDate;
+    const invoiceId = nanoid(5);
+    body.invoiceNo = `AQB-${formattedDate}-${invoiceId}`;
+
+    // Create a new invoice document
     const invoice = new AquaInvoices(body);
     await invoice.save();
+
+    // Send the response
     res.status(200).json(invoice);
-    db.disconnectDb();
+
   } catch (error) {
+    console.error("Error in invoice creation:", error);
     res.status(400).json({ message: error.message });
+  } finally {
+    // Optionally, disconnect the database if you're managing connections per request
+    db.disconnectDb();
   }
 });
 
