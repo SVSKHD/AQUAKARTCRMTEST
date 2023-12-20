@@ -6,11 +6,14 @@ import AquaInvoices from "@/Backend/models/invoice";
 
 const router = createRouter();
 
-const invoiceId = nanoid(5);
-const date = moment(new Date()).format("DD/MM/YYYY");
 
 function convertDateFormat(dateString) {
-  return moment(dateString, "MM/DD/YYYY").format("DD/MM/YYYY");
+  // Check if dateString is valid. If not, use current date
+  const date = moment(dateString, "MM/DD/YYYY").isValid() 
+               ? moment(dateString, "MM/DD/YYYY") 
+               : moment();
+
+  return date.format("DD/MM/YYYY");
 }
 
 router.post(async (req, res) => {
