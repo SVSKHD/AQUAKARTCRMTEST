@@ -6,6 +6,8 @@ import { useState, useEffect, useCallback } from "react";
 import { Button } from "react-bootstrap";
 import AquaToast from "@/components/reusables/toast";
 import { useRouter } from "next/router";
+import AquaCrmTabs from "@/components/reusables/tabs";
+import CustomNav from "@/components/reusables/customNav";
 
 const AquaInvoiceComponent = () => {
   const router = useRouter();
@@ -109,25 +111,42 @@ const AquaInvoiceComponent = () => {
     router.push(`/invoice/${id}`);
   };
 
+  const Tabs = [
+    {
+      title: "customers",
+      component: (
+        <>
+          {invoices.map((r, i) => (
+            <InvoiceListCard
+              handleEdit={() => handleEdit(i, r)}
+              handleDelete={() => deleteInvoice(i)}
+              handleShare={() => handleShare(r._id)}
+              r={r}
+            />
+          ))}
+        </>
+      ),
+      height: "600px",
+    },
+    {
+      title: "GST Customers",
+      component: <h1>hello GST</h1>,
+    },
+  ];
+
   return (
     <>
       <AquaLayout>
+        <CustomNav>
+          <h1>date filter</h1>
+          </CustomNav>
         <div className="row">
           <div className="col-md-4 col-lg-4 col-xs-12 col-sm-12">
             {!invoices.length ? (
               <h3>No invoices yet</h3>
             ) : (
               <div>
-                {invoices.map((r, i) => (
-                  <>
-                    <InvoiceListCard
-                      handleEdit={() => handleEdit(i, r)}
-                      handleDelete={() => deleteInvoice(i)}
-                      handleShare={() => handleShare(r._id)}
-                      r={r}
-                    />
-                  </>
-                ))}
+                <AquaCrmTabs tabs={Tabs} />
               </div>
             )}
           </div>

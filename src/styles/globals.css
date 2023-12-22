@@ -68,3 +68,9 @@ body {
 .invoice-condition-title{
   font-size: 12px;
 }
+
+.custom-nav-app{
+  border-radius: 10px;
+  color: #203a43;
+  background-color: slategrey;
+}
