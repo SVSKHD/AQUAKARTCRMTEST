@@ -287,6 +287,7 @@ const AquaDyanamicInvoicesComponent = () => {
               <h3>Product Details</h3>
             </div>
             <hr />
+            <div className="table-responsive">
             <table className="table table-borderless text-center">
               <thead>
                 <tr>
@@ -376,6 +377,7 @@ const AquaDyanamicInvoicesComponent = () => {
                   ))
                 : ""}
             </table>
+            </div>
             <hr />
             <h5 className="mb-3 text-danger">Terms & Conditions</h5>
 
