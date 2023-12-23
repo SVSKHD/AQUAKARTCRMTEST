@@ -45,9 +45,11 @@ const AquaInvoiceComponent = () => {
   const [id, setId] = useState("");
   const [mode, setMode] = useState("");
   const [invoices, setInvoices] = useState([]);
+  const [gstInvoices, setGstInvoices] = useState([]);
   const [editInitData, setEditInitData] = useState({});
   const {
     getInvoices,
+    getGstInvoices,
     createInvoice,
     updateInvoice,
     removeInvoice,
@@ -57,16 +59,28 @@ const AquaInvoiceComponent = () => {
     getInvoices()
       .then((res) => {
         setInvoices(res.data);
-        AquaToast("fetched");
+        AquaToast("fetched Invoices");
       })
       .catch(() => {
         AquaToast("not-fetched", true);
       });
   }, [getInvoices, setInvoices]);
 
+  const loadGstInvoices = useCallback(() => {
+    getGstInvoices(true)
+      .then((res) => {
+        setGstInvoices(res.data);
+        AquaToast("fetched Gst Invoices");
+      })
+      .catch(() => {
+        AquaToast("not-fetched", true);
+      });
+  },[getGstInvoices , setGstInvoices]);
+
   useEffect(() => {
     loadInvoices();
-  }, [loadInvoices]);
+    loadGstInvoices();
+  }, [loadInvoices, loadGstInvoices]);
 
   const handleFormSubmit = (formData) => {
     if (mode) {
@@ -129,10 +143,25 @@ const AquaInvoiceComponent = () => {
         </>
       ),
       height: "600px",
+      active:true
     },
     {
       title: "GST Customers",
-      component: <h1>hello GST</h1>,
+      height: "600px",
+      component: (
+        <>
+          {gstInvoices.map((r, i) => (
+            <div key={i}>
+              <InvoiceListCard
+                handleEdit={() => handleEdit(i, r)}
+                handleDelete={() => deleteInvoice(i)}
+                handleShare={() => handleShare(r._id)}
+                r={r}
+              />
+            </div>
+          ))}
+        </>
+      ),
     },
   ];
 
@@ -148,7 +177,7 @@ const AquaInvoiceComponent = () => {
               <h3>No invoices yet</h3>
             ) : (
               <div>
-                <AquaCrmTabs tabs={Tabs} />
+                <AquaCrmTabs tabs={Tabs}/>
               </div>
             )}
           </div>

@@ -10,13 +10,18 @@ const updateInvoice = async (id, data) =>
 const getIndividualInvoice = async (id) =>
   await axios.get(`/admin/crm/api/invoice?invoice=${id}`);
 
+const getGstInvoices = async(gst)=>(axios.get(`/admin/crm/api/invoice?gst=${gst}`))
+
 const removeInvoice = async (id) =>
   await axios.put(`/admin/crm/api/invoice?invoice=${id}`);
+
+
 
 const InvoiceOperations = () => {
   return {
     getInvoices,
     getIndividualInvoice,
+    getGstInvoices,
     updateInvoice,
     createInvoice,
     removeInvoice,

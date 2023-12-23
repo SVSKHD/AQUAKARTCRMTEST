@@ -6,12 +6,11 @@ import AquaInvoices from "@/Backend/models/invoice";
 
 const router = createRouter();
 
-
 function convertDateFormat(dateString) {
   // Check if dateString is valid. If not, use current date
-  const date = moment(dateString, "MM/DD/YYYY").isValid() 
-               ? moment(dateString, "MM/DD/YYYY") 
-               : moment();
+  const date = moment(dateString, "MM/DD/YYYY").isValid()
+    ? moment(dateString, "MM/DD/YYYY")
+    : moment();
 
   return date.format("DD/MM/YYYY");
 }
@@ -35,7 +34,6 @@ router.post(async (req, res) => {
 
     // Send the response
     res.status(200).json(invoice);
-
   } catch (error) {
     console.error("Error in invoice creation:", error);
     res.status(400).json({ message: error.message });
@@ -62,14 +60,20 @@ router.put(async (req, res) => {
 
 router.get(async (req, res) => {
   const { invoice } = req.query;
+  const { gst } = req.query;
   if (invoice) {
     db.connectDb();
     let individualInvoice = await AquaInvoices.findById(invoice);
     res.status(200).json(individualInvoice);
     db.disconnectDb();
-  } else if (!invoice) {
+  } else if (gst) {
     db.connectDb();
-    let invoices = await AquaInvoices.find();
+    let gstInvoices = await AquaInvoices.find({ gst: gst });
+    res.status(200).json(gstInvoices);
+    db.disconnectDb();
+  } else if (!invoice && !gst) {
+    db.connectDb();
+    let invoices = await AquaInvoices.find({gst:false});
     res.status(200).json(invoices);
     db.disconnectDb();
   }
