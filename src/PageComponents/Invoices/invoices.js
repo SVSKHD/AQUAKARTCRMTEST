@@ -117,12 +117,14 @@ const AquaInvoiceComponent = () => {
       component: (
         <>
           {invoices.map((r, i) => (
-            <InvoiceListCard
-              handleEdit={() => handleEdit(i, r)}
-              handleDelete={() => deleteInvoice(i)}
-              handleShare={() => handleShare(r._id)}
-              r={r}
-            />
+            <div key={i}>
+              <InvoiceListCard
+                handleEdit={() => handleEdit(i, r)}
+                handleDelete={() => deleteInvoice(i)}
+                handleShare={() => handleShare(r._id)}
+                r={r}
+              />
+            </div>
           ))}
         </>
       ),
@@ -139,7 +141,7 @@ const AquaInvoiceComponent = () => {
       <AquaLayout>
         <CustomNav>
           <h1>date filter</h1>
-          </CustomNav>
+        </CustomNav>
         <div className="row">
           <div className="col-md-4 col-lg-4 col-xs-12 col-sm-12">
             {!invoices.length ? (

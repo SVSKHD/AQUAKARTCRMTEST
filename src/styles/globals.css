@@ -10,12 +10,16 @@ body {
 }
 
 @keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
-
-
 
 .custom-nav {
   border-top-right-radius: 0px !important;
@@ -49,27 +53,26 @@ body {
 }
 
 .text-gst {
-  color: #D83F31 !important;
+  color: #d83f31 !important;
 }
 
 .text-gst-title {
-  color: #D83F31 !important;
+  color: #d83f31 !important;
 }
 
-.card-layover-align{
+.card-layover-align {
   height: auto;
 }
 
-
-.invoice-terms-title{
+.invoice-terms-title {
   font-size: 14px;
 }
 
-.invoice-condition-title{
+.invoice-condition-title {
   font-size: 12px;
 }
 
-.custom-nav-app{
+.custom-nav-app {
   border-radius: 10px;
   color: #203a43;
   background-color: slategrey;
