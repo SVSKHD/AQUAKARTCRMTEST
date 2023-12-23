@@ -75,8 +75,8 @@ const AquaDyanamicInvoicesComponent = () => {
     doc.text(`Phone: ${customerDetails.phone}`, 20, 160);
 
     // Invoice details on the right
-    doc.text(`Invoice number: ${invoiceNo}`, 150, 100);
-    doc.text(`Date: ${date}`, 150, 120);
+    doc.text(`Invoice number: ${invoiceNo}`, 140, 115);
+    doc.text(`Date: ${date}`, 140, 120);
 
     // Products Table
     let startY = 180;
@@ -87,7 +87,7 @@ const AquaDyanamicInvoicesComponent = () => {
         p.productQuantity,
         `${BasePrice(p.productPrice)}`,
         `${gstValueGenerate(p.productPrice)}`,
-        `${(p.productQuantity * p.productPrice).toFixed(2)}`,
+        `${(p.productPrice).toFixed(2)}`,
       ]),
       startY: startY,
       theme: "grid",
@@ -98,12 +98,12 @@ const AquaDyanamicInvoicesComponent = () => {
     doc.setFontSize(12);
     doc.text(
       `Grand Total: ${products.reduce(
-        (sum, p) => sum + p.productQuantity * p.productPrice,
-        0
+          (sum, p) => sum + p.productPrice,
+          0
       )}`,
       150,
       startY
-    );
+  );
 
     // Terms and Conditions
     doc.setFontSize(10);
