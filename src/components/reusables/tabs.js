@@ -1,12 +1,14 @@
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 
-const AquaCrmTabs = ({tabs , active}) => {
+const AquaCrmTabs = ({tabs , active , onTabChange}) => {
   return (
     <Tabs
       defaultActiveKey="profile"
       id="justify-tab-example"
       className="mb-3"
+      activeKey={active}
+      onSelect={onTabChange}
       justify
     >
       {tabs.map((tab, i) => (

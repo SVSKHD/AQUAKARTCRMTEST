@@ -29,7 +29,11 @@ const AquaInvoiceComponent = () => {
       deliveredBy: "",
       deliveryDate: "",
     },
-    gst: false, // Set an initial value for gst
+    gst: false, // Set an initial value for gst,
+    po: false,
+    aquakartInvoice: false,
+    aquakartOnlineInvoice: false,
+    quotation: false,
     products: [
       {
         productName: "",
@@ -59,10 +63,10 @@ const AquaInvoiceComponent = () => {
     getInvoices()
       .then((res) => {
         setInvoices(res.data);
-        AquaToast("fetched Invoices");
+        AquaToast("fetched Invoices","success");
       })
       .catch(() => {
-        AquaToast("not-fetched", true);
+        AquaToast("not-fetched", "error");
       });
   }, [getInvoices, setInvoices]);
 
@@ -70,12 +74,12 @@ const AquaInvoiceComponent = () => {
     getGstInvoices(true)
       .then((res) => {
         setGstInvoices(res.data);
-        AquaToast("fetched Gst Invoices");
+        AquaToast("fetched Gst Invoices" ,  "success");
       })
       .catch(() => {
-        AquaToast("not-fetched", true);
+        AquaToast("not-fetched", "error");
       });
-  },[getGstInvoices , setGstInvoices]);
+  }, [getGstInvoices, setGstInvoices]);
 
   useEffect(() => {
     loadInvoices();
@@ -125,6 +129,12 @@ const AquaInvoiceComponent = () => {
     router.push(`/invoice/${id}`);
   };
 
+  const [activeTab, setActiveTab] = useState("profile"); // Initial active tab
+
+  const handleTabChange = (key) => {
+    setActiveTab(key);
+  };
+
   const Tabs = [
     {
       title: "customers",
@@ -143,7 +153,6 @@ const AquaInvoiceComponent = () => {
         </>
       ),
       height: "600px",
-      active:true
     },
     {
       title: "GST Customers",
@@ -177,7 +186,11 @@ const AquaInvoiceComponent = () => {
               <h3>No invoices yet</h3>
             ) : (
               <div>
-                <AquaCrmTabs tabs={Tabs}/>
+                <AquaCrmTabs
+                  tabs={Tabs}
+                  active={activeTab}
+                  onTabChange={handleTabChange}
+                />
               </div>
             )}
           </div>

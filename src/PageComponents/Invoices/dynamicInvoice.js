@@ -10,6 +10,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Image from "next/image";
 import InvoiceOperations from "@/services/invoice";
+import GstInvoicePlaceHolder from "@/components/reusables/gstInvoicePlaceholder";
 
 const AquaDyanamicInvoicesComponent = () => {
   const Router = useRouter();
@@ -22,7 +23,7 @@ const AquaDyanamicInvoicesComponent = () => {
     getIndividualInvoice(id).then((res) => {
       setInvoice(res.data);
       if (res) {
-        setGst(res.data.gst);
+        setGst(res.data?.gst);
       }
     });
   }, [getIndividualInvoice, id]);
@@ -33,8 +34,15 @@ const AquaDyanamicInvoicesComponent = () => {
       currency: "INR",
     }).format(number);
 
-  const [gst, setGst] = useState(false);
-  const { customerDetails, products, gstDetails, date, invoiceNo } = invoice;
+  const [Gst, setGst] = useState(false);
+  const {
+    customerDetails,
+    products,
+    gstDetails,
+    date,
+    invoiceNo,
+    gst,
+  } = invoice;
 
   const gstValueGenerate = (price) => {
     let basePrice = Math.floor(price * 0.8474594);
@@ -87,7 +95,7 @@ const AquaDyanamicInvoicesComponent = () => {
         p.productQuantity,
         `${BasePrice(p.productPrice)}`,
         `${gstValueGenerate(p.productPrice)}`,
-        `${(p.productPrice).toFixed(2)}`,
+        `${p.productPrice.toFixed(2)}`,
       ]),
       startY: startY,
       theme: "grid",
@@ -97,13 +105,10 @@ const AquaDyanamicInvoicesComponent = () => {
     startY = doc.autoTable.previous.finalY + 10;
     doc.setFontSize(12);
     doc.text(
-      `Grand Total: ${products.reduce(
-          (sum, p) => sum + p.productPrice,
-          0
-      )}`,
+      `Grand Total: ${products.reduce((sum, p) => sum + p.productPrice, 0)}`,
       150,
       startY
-  );
+    );
 
     // Terms and Conditions
     doc.setFontSize(10);
@@ -154,7 +159,8 @@ const AquaDyanamicInvoicesComponent = () => {
     { title: "Advance policy", description: "100% ADVANCE ALONG WITH PO." },
     {
       title: "Work Monitoring",
-      description: "PLUMBING WORK VERIFICATION , PROGRAMMING AND TRAINING AND WARRANTY UPLOAD WILL BE DONE BY OUR SERVICE ENGINEERS",
+      description:
+        "PLUMBING WORK VERIFICATION , PROGRAMMING AND TRAINING AND WARRANTY UPLOAD WILL BE DONE BY OUR SERVICE ENGINEERS",
     },
   ];
 
@@ -168,7 +174,7 @@ const AquaDyanamicInvoicesComponent = () => {
               <div className="row">
                 <div className="col">
                   <Button onClick={jsPdfButton}>
-                    <FaDownload size={40} />
+                    <FaDownload size={25} />
                   </Button>
                 </div>
                 <div className="col text-end">
@@ -178,10 +184,10 @@ const AquaDyanamicInvoicesComponent = () => {
                       variant="primary"
                       href="mailto:customercare@aquakart.co.in"
                     >
-                      <FaEnvelope size={40} />
+                      <FaEnvelope size={25} />
                     </Button>
                     <Button variant="primary" href="phone:9014774667">
-                      <FaPhone size={40} />
+                      <FaPhone size={25} />
                     </Button>
                     <OverlayTrigger
                       placement="top"
@@ -198,7 +204,7 @@ const AquaDyanamicInvoicesComponent = () => {
                         }
                       >
                         {" "}
-                        <FaWhatsapp size={40} />
+                        <FaWhatsapp size={25} />
                       </Button>
                     </OverlayTrigger>
                   </ButtonGroup>
@@ -208,11 +214,25 @@ const AquaDyanamicInvoicesComponent = () => {
           >
             <div className="row">
               <div className="col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                <div className="text-start">
+                {Gst ? (
+                  <GstInvoicePlaceHolder
+                    heading="Kundana Enterprises"
+                    gst="36AMUPB4451C1Z7"
+                    address="Mehdipatnam"
+                  />
+                ) : (
+                  <GstInvoicePlaceHolder
+                    heading="Aquakart"
+                    gst="36AJOPH6387A1Z2"
+                    address="Gandhamguda , kokapet"
+                  />
+                )}
+
+                {/* <div className="text-start">
                   <h4>Aquakart</h4>
-                  <h5>GST- 36AJOPH6387A1Z2</h5>
+                  <h5>GST- </h5>
                   <h6>Adddress : Gandhamguda , kokapet</h6>
-                </div>
+                </div> */}
               </div>
               <div className="col-md-6 col-lg-6 col-xs-12 col-sm-12 text-start">
                 <div>Date : {date}</div>
@@ -253,7 +273,7 @@ const AquaDyanamicInvoicesComponent = () => {
                   />
                 </div>
                 <div className="col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                  {gst ? (
+                  {Gst ? (
                     <div>
                       <AquaPlaceholder
                         type="Gst-Name"
@@ -288,95 +308,95 @@ const AquaDyanamicInvoicesComponent = () => {
             </div>
             <hr />
             <div className="table-responsive">
-            <table className="table table-borderless text-center">
-              <thead>
-                <tr>
-                  <th>Quantity</th>
-                  <th>Name</th>
-                  <th>Base Price</th>
-                  {gstvalue ? (
-                    <>
+              <table className="table table-borderless text-center">
+                <thead>
+                  <tr>
+                    <th>Quantity</th>
+                    <th>Name</th>
+                    <th>Base Price</th>
+                    {gstvalue ? (
+                      <>
+                        <th scope="col">
+                          <OverlayTrigger
+                            placement="top"
+                            overlay={<Tooltip>click to make it to 18%</Tooltip>}
+                          >
+                            <Button
+                              variant="link"
+                              onClick={() => setGstValue(false)}
+                            >
+                              CGST(9%)
+                            </Button>
+                          </OverlayTrigger>
+                        </th>
+                        <th scope="col">
+                          <OverlayTrigger
+                            placement="top"
+                            overlay={<Tooltip>click to make it to 18%</Tooltip>}
+                          >
+                            <Button
+                              variant="link"
+                              onClick={() => setGstValue(false)}
+                            >
+                              SGST(9%)
+                            </Button>
+                          </OverlayTrigger>
+                        </th>
+                      </>
+                    ) : (
                       <th scope="col">
                         <OverlayTrigger
                           placement="top"
-                          overlay={<Tooltip>click to make it to 18%</Tooltip>}
+                          overlay={
+                            <Tooltip>
+                              click to clear break up for CGST(9%) and SGST(9%)
+                            </Tooltip>
+                          }
                         >
                           <Button
                             variant="link"
-                            onClick={() => setGstValue(false)}
+                            onClick={() => setGstValue(true)}
                           >
-                            CGST(9%)
+                            GST(18%)
                           </Button>
                         </OverlayTrigger>
                       </th>
-                      <th scope="col">
-                        <OverlayTrigger
-                          placement="top"
-                          overlay={<Tooltip>click to make it to 18%</Tooltip>}
-                        >
-                          <Button
-                            variant="link"
-                            onClick={() => setGstValue(false)}
-                          >
-                            SGST(9%)
-                          </Button>
-                        </OverlayTrigger>
-                      </th>
-                    </>
-                  ) : (
-                    <th scope="col">
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={
-                          <Tooltip>
-                            click to clear break up for CGST(9%) and SGST(9%)
-                          </Tooltip>
-                        }
-                      >
-                        <Button
-                          variant="link"
-                          onClick={() => setGstValue(true)}
-                        >
-                          GST(18%)
-                        </Button>
-                      </OverlayTrigger>
-                    </th>
-                  )}
-                  <th>Total-Price</th>
-                </tr>
-              </thead>
+                    )}
+                    <th>Total-Price</th>
+                  </tr>
+                </thead>
 
-              {invoice
-                ? products.map((r, i) => (
-                    <>
-                      <tbody>
-                        <tr>
-                          <td>{r.productQuantity}</td>
-                          <td>{r.productName}</td>
-                          <td className="text-success">
-                            ₹{BasePrice(r.productPrice)}
-                          </td>
-                          {gstvalue ? (
-                            <>
-                              <td className="text-gst">
-                                ₹{gstValueGenerate(r.productPrice) / 2}
-                              </td>
-                              <td className="text-gst">
-                                ₹{gstValueGenerate(r.productPrice) / 2}
-                              </td>
-                            </>
-                          ) : (
-                            <td className="text-gst">
-                              ₹{gstValueGenerate(r.productPrice)}
+                {invoice
+                  ? products.map((r, i) => (
+                      <>
+                        <tbody>
+                          <tr>
+                            <td>{r.productQuantity}</td>
+                            <td>{r.productName}</td>
+                            <td className="text-success">
+                              ₹{BasePrice(r.productPrice)}
                             </td>
-                          )}
-                          <td className="text-success">₹{r.productPrice}</td>
-                        </tr>
-                      </tbody>
-                    </>
-                  ))
-                : ""}
-            </table>
+                            {gstvalue ? (
+                              <>
+                                <td className="text-gst">
+                                  ₹{gstValueGenerate(r.productPrice) / 2}
+                                </td>
+                                <td className="text-gst">
+                                  ₹{gstValueGenerate(r.productPrice) / 2}
+                                </td>
+                              </>
+                            ) : (
+                              <td className="text-gst">
+                                ₹{gstValueGenerate(r.productPrice)}
+                              </td>
+                            )}
+                            <td className="text-success">₹{r.productPrice}</td>
+                          </tr>
+                        </tbody>
+                      </>
+                    ))
+                  : ""}
+              </table>
             </div>
             <hr />
             <h5 className="mb-3 text-danger">Terms & Conditions</h5>
@@ -396,13 +416,13 @@ const AquaDyanamicInvoicesComponent = () => {
                 <h4>Customer Care</h4>
                 <ButtonGroup>
                   <Button variant="secondary" href="phone:9278912345">
-                    <FaPhone size={30} />
+                    <FaPhone size={20} />
                   </Button>
                   <Button
                     variant="secondary"
                     href={`https://wa.me/91${9278912345}`}
                   >
-                    <FaWhatsapp size={30} />
+                    <FaWhatsapp size={20} />
                   </Button>
                 </ButtonGroup>
               </div>

@@ -4,6 +4,8 @@ import AquaInput from "../reusables/input";
 import { FaTrash, FaEdit, FaPlus } from "react-icons/fa";
 import AquaPlaceHolderInput from "../reusables/placeHolderInput";
 import moment from "moment";
+import AquaSelect from "../reusables/select";
+import AquaSwitch from "../reusables/switch";
 
 const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData }) => {
   const [formData, setFormData] = useState(initialData);
@@ -59,10 +61,17 @@ const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData }) => {
     });
   };
 
-  const handleToggleChange = () => {
+  const handlegstToggleChange = () => {
     setFormData((prevData) => ({
       ...prevData,
       gst: !prevData.gst,
+    }));
+  };
+
+  const handlepoToggleChange = () => {
+    setFormData((prevData) => ({
+      ...prevData,
+      po: !prevData.po,
     }));
   };
 
@@ -70,6 +79,26 @@ const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData }) => {
     event.preventDefault();
     onSubmit(formData);
   };
+
+  const TransferOptions = [
+    { label: "Gpay", value: "1" },
+    { label: "Phone Pe", value: "2" },
+    { label: "Neft Kotak", value: "3" },
+    { label: "Imps Kotak", value: "4" },
+    { label: "Neft Icici", value: "5" },
+    { label: "Imps Icici", value: "6" },
+  ];
+
+  const paymentOptions = [
+    { label: "Paid", value: "1" },
+    { label: "Not Paid", value: "2" },
+  ];
+
+  const deliveryOptions = [
+    { label: "delivered", value: "1" },
+    { label: "Not delivered", value: "2" },
+  ];
+
   return (
     <>
       <h4>{mode === "Edit" ? "Edit Invoice" : "Create Invoice"}</h4>
@@ -119,16 +148,19 @@ const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData }) => {
           </div>
           <div className="col-md-6 col-lg-6 col-xs-12 col-sm-12">
             <div className="form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                role="switch"
-                id="flexSwitchCheckDefault"
+              <AquaSwitch
+              label={"GST"}
                 value={formData.gst}
-                onChange={handleToggleChange}
+                onChange={handlegstToggleChange}
+              />
+
+              <AquaSwitch
+                label="Po generation"
+                value={formData.po}
+                onChange={handlepoToggleChange}
               />
             </div>
-            {formData.gst ? (
+            {formData.gst && (
               <>
                 <div>
                   <h6>Customer Gst Details</h6>
@@ -179,10 +211,6 @@ const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData }) => {
                     }
                   />
                 </div>
-              </>
-            ) : (
-              <>
-                <h6>No Gst details yet</h6>
               </>
             )}
           </div>
@@ -264,10 +292,11 @@ const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData }) => {
         <div className="row">
           <div className="col">
             <h6>Transport details</h6>
-            <AquaInput
+            <AquaSelect
               label={"Delivery Status"}
               placeholder={"Enter Delivery Status"}
               type={"text"}
+              options={deliveryOptions}
               value={formData.transport.deliveredBy}
               handleChange={(e) =>
                 handleInputChange(e, "transport", "deliveredBy")
@@ -285,11 +314,12 @@ const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData }) => {
           </div>
           <div className="col">
             <h6>Payment details</h6>
-            <AquaInput
+            <AquaSelect
               label={"Transfer Type"}
               placeholder={"Enter Transfer Type"}
               type={"name"}
               value={formData.paidStatus}
+              options={TransferOptions}
               handleChange={(e) =>
                 setFormData((prevData) => ({
                   ...prevData,
@@ -297,11 +327,12 @@ const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData }) => {
                 }))
               }
             />
-            <AquaInput
+            <AquaSelect
               label={"Paid Status"}
               placeholder={"Enter Paid Status"}
               type={"name"}
               value={formData.paymentType}
+              options={paymentOptions}
               handleChange={(e) =>
                 setFormData((prevData) => ({
                   ...prevData,
