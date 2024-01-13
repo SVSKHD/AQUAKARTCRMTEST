@@ -8,7 +8,7 @@ const AquaToast = (message, type) => {
 
   switch (type) {
     case "success":
-      icon = <FaCheckCircle style={{ color: "#10A881" }} size={15} />;
+      icon = <FaCheckCircle style={{ color: "#10A881" }} size={20} />;
       backgroundColor = "#FFFFFF";
       border = "#10A881";
       break;
@@ -18,7 +18,7 @@ const AquaToast = (message, type) => {
       border = "#EA7773";
       break;
     case "info":
-      icon = <FaExclamation style={{ color: "#2B2B52" }} size={20} />
+      icon = <FaExclamation style={{ color: "#2B2B52" }} size={20} />;
       backgroundColor = "#FFFFFF";
       border = "#2B2B52";
       break;
@@ -29,9 +29,17 @@ const AquaToast = (message, type) => {
   }
 
   toast(
-    `${icon} This toast is super big. I don't think anyone could eat it in one bite.\n\nIt's larger than you expected. You eat it but it does not seem to get smaller.`,
+    <div style={{ color: border, backgroundColor }}>
+      {icon}   {message}
+    </div>,
     {
       duration: 6000,
+      style: {
+        border:`3px solid ${border}`,
+        margin:'12px',
+        width: "300px",
+        fontSize: "0.9rem",
+      },
     }
   );
 };
