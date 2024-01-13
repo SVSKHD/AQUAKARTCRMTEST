@@ -129,7 +129,7 @@ const AquaInvoiceComponent = () => {
     router.push(`/invoice/${id}`);
   };
 
-  const [activeTab, setActiveTab] = useState("profile"); // Initial active tab
+  const [activeTab, setActiveTab] = useState("customers"); // Initial active tab
 
   const handleTabChange = (key) => {
     setActiveTab(key);
@@ -144,7 +144,7 @@ const AquaInvoiceComponent = () => {
             <div key={i}>
               <InvoiceListCard
                 handleEdit={() => handleEdit(i, r)}
-                handleDelete={() => deleteInvoice(i)}
+                handleDelete={() => deleteInvoice(r._id)}
                 handleShare={() => handleShare(r._id)}
                 r={r}
               />
@@ -172,6 +172,14 @@ const AquaInvoiceComponent = () => {
         </>
       ),
     },
+    {
+      title:"Quotations",
+      height:'600px',
+    },
+    {
+      title:"Pro-forma Inovoices",
+      height:'600px'
+    }
   ];
 
   return (
