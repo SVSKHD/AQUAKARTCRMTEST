@@ -60,7 +60,7 @@ router.put(async (req, res) => {
 
 router.get(async (req, res) => {
   const { invoice } = req.query;
-  const { gst } = req.query;
+  const { gst, po, quotation } = req.query;
   if (invoice) {
     db.connectDb();
     let individualInvoice = await AquaInvoices.findById(invoice);
@@ -71,9 +71,21 @@ router.get(async (req, res) => {
     let gstInvoices = await AquaInvoices.find({ gst: gst });
     res.status(200).json(gstInvoices);
     db.disconnectDb();
-  } else if (!invoice && !gst) {
+  } else if (po) {
+    let poInvoices = await AquaInvoices.find({ po: po });
+    res.status(200).json(poInvoices);
+    db.disconnectDb();
+  } else if (quotation) {
+    let quotationInvoices = await AquaInvoices.find({ quotation: quotation });
+    res.status(200).json(quotationInvoices);
+    db.disconnectDb();
+  } else if (!invoice && !gst && !po && !quotation) {
     db.connectDb();
-    let invoices = await AquaInvoices.find({gst:false});
+    let invoices = await AquaInvoices.find({
+      gst: false,
+      po: false,
+      quotation: false,
+    });
     res.status(200).json(invoices);
     db.disconnectDb();
   }
@@ -83,7 +95,7 @@ router.delete(async (req, res) => {
   const { invoice } = req.query;
   if (invoice) {
     db.connectDb();
-    let individualInvoice = await AquaInvoices.findById(invoice);
+    let individualInvoice = await AquaInvoices.findByIdAndDelete(invoice)
     res.status(200).json(individualInvoice);
     db.disconnectDb();
   } else if (!invoice) {

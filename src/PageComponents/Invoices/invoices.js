@@ -8,6 +8,7 @@ import AquaToast from "@/components/reusables/toast";
 import { useRouter } from "next/router";
 import AquaCrmTabs from "@/components/reusables/tabs";
 import CustomNav from "@/components/reusables/customNav";
+import AquaSelect from "@/components/reusables/select";
 
 const AquaInvoiceComponent = () => {
   const router = useRouter();
@@ -50,10 +51,14 @@ const AquaInvoiceComponent = () => {
   const [mode, setMode] = useState("");
   const [invoices, setInvoices] = useState([]);
   const [gstInvoices, setGstInvoices] = useState([]);
+  const [poInvoices, setPoInvoices] = useState([]);
+  const [quotationInvoices, setQuotationInvoices] = useState([]);
   const [editInitData, setEditInitData] = useState({});
   const {
     getInvoices,
     getGstInvoices,
+    getPoInvoices,
+    getQuotationInvoices,
     createInvoice,
     updateInvoice,
     removeInvoice,
@@ -63,7 +68,7 @@ const AquaInvoiceComponent = () => {
     getInvoices()
       .then((res) => {
         setInvoices(res.data);
-        AquaToast("fetched Invoices","success");
+        AquaToast("fetched Invoices", "success");
       })
       .catch(() => {
         AquaToast("not-fetched", "error");
@@ -74,7 +79,29 @@ const AquaInvoiceComponent = () => {
     getGstInvoices(true)
       .then((res) => {
         setGstInvoices(res.data);
-        AquaToast("fetched Gst Invoices" ,  "success");
+        AquaToast("fetched Gst Invoices", "success");
+      })
+      .catch(() => {
+        AquaToast("not-fetched", "error");
+      });
+  }, [getGstInvoices, setGstInvoices]);
+
+  const loadPoInvoices = useCallback(() => {
+    getPoInvoices(true)
+      .then((res) => {
+        setPoInvoices(res.data);
+        AquaToast("fetched Po Invoices", "success");
+      })
+      .catch(() => {
+        AquaToast("not-fetched", "error");
+      });
+  }, [getGstInvoices, setGstInvoices]);
+
+  const loadQuotationInvoices = useCallback(() => {
+    getQuotationInvoices(true)
+      .then((res) => {
+        setQuotationInvoices(res.data);
+        AquaToast("fetched Quotation Invoices", "success");
       })
       .catch(() => {
         AquaToast("not-fetched", "error");
@@ -84,11 +111,12 @@ const AquaInvoiceComponent = () => {
   useEffect(() => {
     loadInvoices();
     loadGstInvoices();
-  }, [loadInvoices, loadGstInvoices]);
+    loadPoInvoices();
+    loadQuotationInvoices();
+  }, [loadInvoices, loadGstInvoices, loadPoInvoices, loadQuotationInvoices]);
 
   const handleFormSubmit = (formData) => {
     if (mode) {
-      console.log("edit", formData);
       updateInvoice(id, formData)
         .then(() => {
           setInvoices([]);
@@ -99,7 +127,6 @@ const AquaInvoiceComponent = () => {
           loadInvoices();
         });
     } else {
-      console.log(formData);
       createInvoice(formData)
         .then(() => {
           AquaToast("created");
@@ -118,11 +145,33 @@ const AquaInvoiceComponent = () => {
     setMode("Edit");
     setEditInitData(data);
     setId(data._id);
-    console.log("edit", mode, i, data, id, editInitData);
   };
 
   const deleteInvoice = (i) => {
-    console.log(i);
+    removeInvoice(i)
+      .then(() => {
+        AquaToast("removed invoice successfully", "success");
+        setInvoices([]);
+        setGstInvoices([]);
+        setPoInvoices([]);
+        setQuotationInvoices([]);
+        loadInvoices();
+        loadGstInvoices();
+        loadPoInvoices();
+        loadQuotationInvoices();
+        AquaToast("All category invoices loaded", "success");
+      })
+      .catch(() => {
+        setInvoices([]);
+        setGstInvoices([]);
+        setPoInvoices([]);
+        setQuotationInvoices([]);
+        loadInvoices();
+        loadGstInvoices();
+        loadPoInvoices();
+        loadQuotationInvoices();
+        AquaToast("invoices error", "error");
+      });
   };
 
   const handleShare = (id) => {
@@ -173,20 +222,54 @@ const AquaInvoiceComponent = () => {
       ),
     },
     {
-      title:"Quotations",
-      height:'600px',
+      title: "Quotations",
+      height: "600px",
+      component: (
+        <>
+          {quotationInvoices.map((r, i) => (
+            <div key={i}>
+              <InvoiceListCard
+                handleEdit={() => handleEdit(i, r)}
+                handleDelete={() => deleteInvoice(r._id)}
+                handleShare={() => handleShare(r._id)}
+                r={r}
+              />
+            </div>
+          ))}
+        </>
+      ),
     },
     {
-      title:"Pro-forma Inovoices",
-      height:'600px'
-    }
+      title:"Po-Invoices", 
+      height: "600px",
+      component: (
+        <>
+          {poInvoices.map((r, i) => (
+            <div key={i}>
+              <InvoiceListCard
+                handleEdit={() => handleEdit(i, r)}
+                handleDelete={() => deleteInvoice(r._id)}
+                handleShare={() => handleShare(r._id)}
+                r={r}
+              />
+            </div>
+          ))}
+        </>
+      ),
+    },
+  ];
+
+  const monthOptions = [
+    { label: "JANUARY", value: "1" },
+    { label: "FEBRUARY", value: "2" },
   ];
 
   return (
     <>
       <AquaLayout>
         <CustomNav>
-          <h1>date filter</h1>
+          <AquaSelect label="Months" options={monthOptions} />
+          <Button>Reset</Button>
         </CustomNav>
         <div className="row">
           <div className="col-md-4 col-lg-4 col-xs-12 col-sm-12">

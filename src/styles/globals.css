@@ -74,6 +74,10 @@ body {
 
 .custom-nav-app {
   border-radius: 10px;
-  color: #203a43;
+  color: #ffffff;
   background-color: slategrey;
+}
+
+.aqua-border {
+  border: 0.5px solid #d83f31;
 }

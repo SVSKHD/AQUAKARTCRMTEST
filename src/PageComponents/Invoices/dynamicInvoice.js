@@ -24,6 +24,7 @@ const AquaDyanamicInvoicesComponent = () => {
       setInvoice(res.data);
       if (res) {
         setGst(res.data?.gst);
+        setPo(res.data?.po);
       }
     });
   }, [getIndividualInvoice, id]);
@@ -35,6 +36,7 @@ const AquaDyanamicInvoicesComponent = () => {
     }).format(number);
 
   const [Gst, setGst] = useState(false);
+  const [PO, setPo] = useState(false);
   const {
     customerDetails,
     products,
@@ -54,6 +56,84 @@ const AquaDyanamicInvoicesComponent = () => {
     let basePrice = Math.floor(price * 0.8474594);
     return basePrice;
   };
+
+
+  const jsTestPdfButton = () =>{
+    // Initialize jsPDF
+const doc = new jsPDF();
+
+// Set the font size for the title
+doc.setFontSize(18);
+doc.text("Invoice", 105, 30, null, null, "center");
+
+// Set the font size for the header details
+doc.setFontSize(10);
+doc.text("May Home Cleaning", 20, 50);
+doc.text("282 Robin Lane, Seattle, WA", 20, 55);
+doc.text("555-185-1659", 20, 60);
+doc.text("Info@mayhomecleaning.com", 20, 65);
+doc.text("www.mayhomecleaning.com", 20, 70);
+
+// Bill to section
+doc.setFontSize(10);
+doc.text("Billed to:", 140, 50);
+doc.text("Rightway Coworking Co.", 140, 55);
+doc.text("192 Merrion St.", 140, 60);
+doc.text("Seattle, WA", 140, 65);
+
+// Invoice details
+doc.text("Ref. Number 22666AS", 140, 75);
+doc.text("Date: May-11-2024", 140, 80);
+doc.text("Terms: 10 Business Days", 140, 85);
+doc.text("Amount due: $101.60", 140, 90);
+
+// Set the font size for table headers
+doc.setFontSize(10);
+
+// Products Table
+doc.autoTable({
+  head: [['Description', 'Qty/Hrs', 'Hr Rate', 'Amount']],
+  body: [
+    ['Full office clean', '2', '$19.50', '$39'],
+    ['Maintenance hallway lights', '1', '$12.50', '$12.50'],
+    ['Staff kitchen deep clean', '3', '$18', '$54']
+  ],
+  startY: 100,
+  theme: 'grid',
+  styles: { fontSize: 10 },
+  columnStyles: {
+    0: { cellWidth: 'auto' },
+    1: { cellWidth: 'auto' },
+    2: { cellWidth: 'auto' },
+    3: { cellWidth: 'auto' }
+  },
+  margin: { left: 20, right: 20 },
+  tableWidth: 'wrap'
+});
+
+// Get the final Y position after the table
+let finalY = doc.lastAutoTable.finalY;
+
+// Subtotal, tax, discount, and total
+doc.setFontSize(10);
+doc.text("Subtotal", 150, finalY + 10);
+doc.text("$105.50", 180, finalY + 10);
+doc.text("Tax Rate (7%)", 150, finalY + 15);
+doc.text("$7.40", 180, finalY + 15);
+doc.text("Discount (10%)", 150, finalY + 20);
+doc.text("-$10.50", 180, finalY + 20);
+doc.text("Total", 150, finalY + 25);
+doc.text("$101.60", 180, finalY + 25);
+
+// Due date
+doc.setFontSize(10);
+doc.text("Due Date: Please pay invoice by May-25-2024", 20, finalY + 40);
+
+// Save the PDF with a specific name
+doc.save('invoice.pdf');
+
+  }
+
 
   const jsPdfButton = () => {
     const doc = new jsPDF();
@@ -177,6 +257,7 @@ const AquaDyanamicInvoicesComponent = () => {
                     <FaDownload size={25} />
                   </Button>
                 </div>
+                {PO ? <div className="col text-center aqua-border"><h4>ProForma-Invoice</h4></div> : ""}
                 <div className="col text-end">
                   {" "}
                   <ButtonGroup aria-label="Basic example">
@@ -227,12 +308,6 @@ const AquaDyanamicInvoicesComponent = () => {
                     address="Gandhamguda , kokapet"
                   />
                 )}
-
-                {/* <div className="text-start">
-                  <h4>Aquakart</h4>
-                  <h5>GST- </h5>
-                  <h6>Adddress : Gandhamguda , kokapet</h6>
-                </div> */}
               </div>
               <div className="col-md-6 col-lg-6 col-xs-12 col-sm-12 text-start">
                 <div>Date : {date}</div>
