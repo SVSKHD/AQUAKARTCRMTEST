@@ -4,7 +4,7 @@ import AquaNav from "./Header";
 const AquaLayout = (props) => {
   return (
     <>
-    <div className="nav-adjust">
+    <div className="nav-adjust container">
       <AquaNav />
       </div>
       <div className="container-fluid mb-1 mt-1">

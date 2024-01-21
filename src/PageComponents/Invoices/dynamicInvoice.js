@@ -57,83 +57,80 @@ const AquaDyanamicInvoicesComponent = () => {
     return basePrice;
   };
 
-
-  const jsTestPdfButton = () =>{
+  const jsTestPdfButton = () => {
     // Initialize jsPDF
-const doc = new jsPDF();
+    const doc = new jsPDF();
 
-// Set the font size for the title
-doc.setFontSize(18);
-doc.text("Invoice", 105, 30, null, null, "center");
+    // Set the font size for the title
+    doc.setFontSize(18);
+    doc.text("Invoice", 105, 30, null, null, "center");
 
-// Set the font size for the header details
-doc.setFontSize(10);
-doc.text("May Home Cleaning", 20, 50);
-doc.text("282 Robin Lane, Seattle, WA", 20, 55);
-doc.text("555-185-1659", 20, 60);
-doc.text("Info@mayhomecleaning.com", 20, 65);
-doc.text("www.mayhomecleaning.com", 20, 70);
+    // Set the font size for the header details
+    doc.setFontSize(10);
+    doc.text("May Home Cleaning", 20, 50);
+    doc.text("282 Robin Lane, Seattle, WA", 20, 55);
+    doc.text("555-185-1659", 20, 60);
+    doc.text("Info@mayhomecleaning.com", 20, 65);
+    doc.text("www.mayhomecleaning.com", 20, 70);
 
-// Bill to section
-doc.setFontSize(10);
-doc.text("Billed to:", 140, 50);
-doc.text("Rightway Coworking Co.", 140, 55);
-doc.text("192 Merrion St.", 140, 60);
-doc.text("Seattle, WA", 140, 65);
+    // Bill to section
+    doc.setFontSize(10);
+    doc.text("Billed to:", 140, 50);
+    doc.text("Rightway Coworking Co.", 140, 55);
+    doc.text("192 Merrion St.", 140, 60);
+    doc.text("Seattle, WA", 140, 65);
 
-// Invoice details
-doc.text("Ref. Number 22666AS", 140, 75);
-doc.text("Date: May-11-2024", 140, 80);
-doc.text("Terms: 10 Business Days", 140, 85);
-doc.text("Amount due: $101.60", 140, 90);
+    // Invoice details
+    doc.text("Ref. Number 22666AS", 140, 75);
+    doc.text("Date: May-11-2024", 140, 80);
+    doc.text("Terms: 10 Business Days", 140, 85);
+    doc.text("Amount due: $101.60", 140, 90);
 
-// Set the font size for table headers
-doc.setFontSize(10);
+    // Set the font size for table headers
+    doc.setFontSize(10);
 
-// Products Table
-doc.autoTable({
-  head: [['Description', 'Qty/Hrs', 'Hr Rate', 'Amount']],
-  body: [
-    ['Full office clean', '2', '$19.50', '$39'],
-    ['Maintenance hallway lights', '1', '$12.50', '$12.50'],
-    ['Staff kitchen deep clean', '3', '$18', '$54']
-  ],
-  startY: 100,
-  theme: 'grid',
-  styles: { fontSize: 10 },
-  columnStyles: {
-    0: { cellWidth: 'auto' },
-    1: { cellWidth: 'auto' },
-    2: { cellWidth: 'auto' },
-    3: { cellWidth: 'auto' }
-  },
-  margin: { left: 20, right: 20 },
-  tableWidth: 'wrap'
-});
+    // Products Table
+    doc.autoTable({
+      head: [["Description", "Qty/Hrs", "Hr Rate", "Amount"]],
+      body: [
+        ["Full office clean", "2", "$19.50", "$39"],
+        ["Maintenance hallway lights", "1", "$12.50", "$12.50"],
+        ["Staff kitchen deep clean", "3", "$18", "$54"],
+      ],
+      startY: 100,
+      theme: "grid",
+      styles: { fontSize: 10 },
+      columnStyles: {
+        0: { cellWidth: "auto" },
+        1: { cellWidth: "auto" },
+        2: { cellWidth: "auto" },
+        3: { cellWidth: "auto" },
+      },
+      margin: { left: 20, right: 20 },
+      tableWidth: "wrap",
+    });
 
-// Get the final Y position after the table
-let finalY = doc.lastAutoTable.finalY;
+    // Get the final Y position after the table
+    let finalY = doc.lastAutoTable.finalY;
 
-// Subtotal, tax, discount, and total
-doc.setFontSize(10);
-doc.text("Subtotal", 150, finalY + 10);
-doc.text("$105.50", 180, finalY + 10);
-doc.text("Tax Rate (7%)", 150, finalY + 15);
-doc.text("$7.40", 180, finalY + 15);
-doc.text("Discount (10%)", 150, finalY + 20);
-doc.text("-$10.50", 180, finalY + 20);
-doc.text("Total", 150, finalY + 25);
-doc.text("$101.60", 180, finalY + 25);
+    // Subtotal, tax, discount, and total
+    doc.setFontSize(10);
+    doc.text("Subtotal", 150, finalY + 10);
+    doc.text("$105.50", 180, finalY + 10);
+    doc.text("Tax Rate (7%)", 150, finalY + 15);
+    doc.text("$7.40", 180, finalY + 15);
+    doc.text("Discount (10%)", 150, finalY + 20);
+    doc.text("-$10.50", 180, finalY + 20);
+    doc.text("Total", 150, finalY + 25);
+    doc.text("$101.60", 180, finalY + 25);
 
-// Due date
-doc.setFontSize(10);
-doc.text("Due Date: Please pay invoice by May-25-2024", 20, finalY + 40);
+    // Due date
+    doc.setFontSize(10);
+    doc.text("Due Date: Please pay invoice by May-25-2024", 20, finalY + 40);
 
-// Save the PDF with a specific name
-doc.save('invoice.pdf');
-
-  }
-
+    // Save the PDF with a specific name
+    doc.save("invoice.pdf");
+  };
 
   const jsPdfButton = () => {
     const doc = new jsPDF();
@@ -257,7 +254,13 @@ doc.save('invoice.pdf');
                     <FaDownload size={25} />
                   </Button>
                 </div>
-                {PO ? <div className="col text-center aqua-border"><h4>ProForma-Invoice</h4></div> : ""}
+                {PO ? (
+                  <div className="col text-center aqua-border">
+                    <h4>ProForma-Invoice</h4>
+                  </div>
+                ) : (
+                  ""
+                )}
                 <div className="col text-end">
                   {" "}
                   <ButtonGroup aria-label="Basic example">
@@ -472,8 +475,16 @@ doc.save('invoice.pdf');
                     ))
                   : ""}
               </table>
+              <hr />
+              <div className="text-success text-end m-2 text-bold total-font">
+                <h6 className="total-align">
+                  GRAND TOTAL :{" "}
+                  {products?.reduce((a, b) => a + b.productPrice, 0)}{" "}
+                </h6>
+              </div>
+              <hr />
             </div>
-            <hr />
+           
             <h5 className="mb-3 text-danger">Terms & Conditions</h5>
 
             {termsAndConditions.map((r, i) => (

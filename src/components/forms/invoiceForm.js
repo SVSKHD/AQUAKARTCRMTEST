@@ -99,6 +99,16 @@ const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData }) => {
     { label: "Not delivered", value: "2" },
   ];
 
+  const productOptions = [
+    { label: "Select any product", value: "0" },
+    { label: "KENT AUTO 25", value: "1" },
+    { label: "KENT AUTO 40", value: "2" },
+    { label: "KENT BATHROOM SOFTENER", value: "3" },
+    { label: "KENT AUTO 8L", value: "4" },
+    { label: "KENt SANDFILTER", value: "5" },
+    { label: "KENT IRONFILTER", value: "6" },
+  ];
+
   return (
     <>
       <h4>{mode === "Edit" ? "Edit Invoice" : "Create Invoice"}</h4>
@@ -149,7 +159,7 @@ const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData }) => {
           <div className="col-md-6 col-lg-6 col-xs-12 col-sm-12">
             <div className="form-check form-switch">
               <AquaSwitch
-              label={"GST"}
+                label={"GST"}
                 value={formData.gst}
                 onChange={handlegstToggleChange}
               />
@@ -228,10 +238,10 @@ const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData }) => {
           <>
             <div className="row" key={i}>
               <div className="col-lg-2 col-md-2">
-                <AquaPlaceHolderInput
-                  type="text"
-                  class="form-control"
+                <AquaSelect
                   placeholder="Product Name"
+                  type={"text"}
+                  options={productOptions}
                   value={r.productName}
                   handleChange={(e) =>
                     handleInputChange(e, "products", "productName", i)

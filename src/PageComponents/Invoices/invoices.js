@@ -7,8 +7,7 @@ import { Button } from "react-bootstrap";
 import AquaToast from "@/components/reusables/toast";
 import { useRouter } from "next/router";
 import AquaCrmTabs from "@/components/reusables/tabs";
-import CustomNav from "@/components/reusables/customNav";
-import AquaSelect from "@/components/reusables/select";
+
 
 const AquaInvoiceComponent = () => {
   const router = useRouter();
@@ -267,10 +266,6 @@ const AquaInvoiceComponent = () => {
   return (
     <>
       <AquaLayout>
-        <CustomNav>
-          <AquaSelect label="Months" options={monthOptions} />
-          <Button>Reset</Button>
-        </CustomNav>
         <div className="row">
           <div className="col-md-4 col-lg-4 col-xs-12 col-sm-12">
             {!invoices.length ? (
