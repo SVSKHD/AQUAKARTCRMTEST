@@ -24,7 +24,7 @@ export const config = {
 // create category
 Router.post(async (req, res) => {
     try {
-        db.connectDb()
+        await db.connectDb()
         let files = Object.values(req.files).flat();
         let photos = [];
 
