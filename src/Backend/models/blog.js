@@ -93,4 +93,4 @@ const BlogSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.models.AquaBlog ||
-    mongoose.model("AquaBlog", AquaInvoiceSchema);
+    mongoose.model("AquaBlog", BlogSchema);

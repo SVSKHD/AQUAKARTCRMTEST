@@ -2,7 +2,7 @@ import AquaLayout from "@/components/Layout/Layout"
 import AquaRegularCard from "@/components/reusables/card"
 import AquaPlaceholder from "@/components/reusables/placeHolder"
 import Link from "next/link"
-import { FaFile, FaList, FaListCheck, FaBarsStaggered, FaHeart, FaBagShopping, FaUsers , FaDollarSign} from "react-icons/fa6"
+import { FaFile, FaList, FaListCheck, FaBarsStaggered, FaHeart, FaBagShopping, FaUsers , FaDollarSign , FaRegFile} from "react-icons/fa6"
 
 const HomeComponent = () => {
     const onlineMenu = [
@@ -20,6 +20,11 @@ const HomeComponent = () => {
             name: "Sub-Categories",
             path: "/subcategory",
             icon: <FaListCheck size={30} />
+        },
+        {
+            name: "Blogs",
+            path: "/blogs",
+            icon: <FaRegFile size={30} />
         },
         {
             name: "Products",
