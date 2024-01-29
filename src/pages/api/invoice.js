@@ -68,15 +68,17 @@ router.get(async (req, res) => {
     db.disconnectDb();
   } else if (gst) {
     db.connectDb();
-    let gstInvoices = await AquaInvoices.find({ gst: gst });
+    let gstInvoices = await AquaInvoices.find({ gst: gst }).sort({ createdAt: -1 });
     res.status(200).json(gstInvoices);
     db.disconnectDb();
   } else if (po) {
-    let poInvoices = await AquaInvoices.find({ po: po });
+    db.connectDb();
+    let poInvoices = await AquaInvoices.find({ po: po }).sort({ createdAt: -1 });
     res.status(200).json(poInvoices);
     db.disconnectDb();
   } else if (quotation) {
-    let quotationInvoices = await AquaInvoices.find({ quotation: quotation });
+    db.connectDb();
+    let quotationInvoices = await AquaInvoices.find({ quotation: quotation }).sort({ createdAt: -1 });
     res.status(200).json(quotationInvoices);
     db.disconnectDb();
   } else if (!invoice && !gst && !po && !quotation) {
@@ -85,11 +87,12 @@ router.get(async (req, res) => {
       gst: false,
       po: false,
       quotation: false,
-    });
+    }).sort({ createdAt: -1 });
     res.status(200).json(invoices);
     db.disconnectDb();
   }
 });
+
 
 router.delete(async (req, res) => {
   const { invoice } = req.query;
