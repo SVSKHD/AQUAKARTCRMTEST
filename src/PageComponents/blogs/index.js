@@ -31,7 +31,7 @@ return(
             <h4>Blogs list</h4>
           </div>
           <div className="col-8">
-            <AquaBlogForm data={formValues} onSubmit={handleSubmit} handleChange={handleChange}/>
+            <AquaBlogForm data={formValues} onSubmit={handleSubmit}/>
           </div>
         </div>
     </AquaLayout>
