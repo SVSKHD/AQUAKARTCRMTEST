@@ -161,7 +161,6 @@ const AquaDyanamicInvoicesComponent = () => {
 
     
     if(gst){
-      doc.setFont('bold')
       doc.setFontSize(12)
       doc.text(`Gst Details`, 120, 90);
       doc.setFontSize(10)
