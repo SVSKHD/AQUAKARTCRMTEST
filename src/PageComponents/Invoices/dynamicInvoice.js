@@ -137,31 +137,43 @@ const AquaDyanamicInvoicesComponent = () => {
 
     // Set the font size for headers
     doc.setFontSize(18);
-    doc.text("AQUAKART ENTERPRISES", 105, 30, null, null, "center");
+    doc.text("AQUAKART ENTERPRISES", 105, 20, null, null, "center");
 
     // Set the font size for body
     doc.setFontSize(10);
     doc.text(`GST- 36AJOPH6387A1Z2`, 20, 50);
-    doc.text(
-      `Authorized Dealers of: Kent, Grundfos Pressure Pumps, Hitech Solar systems, Solar Power systems`,
-      20,
-      60
-    );
-    doc.text(`Gandhamguda ,kokapet`, 20, 70);
-    doc.text(`Call us at: 9812118942`, 20, 80);
-    doc.text(`Email us at: kundanakent@gmail.com`, 20, 90);
+    const authorizedDealersText = `Authorized Dealers of: Kent, Grundfos Pressure Pumps, Hitech Solar systems, Solar Power systems`;
+    const splitAuthorizedDealers = doc.splitTextToSize(authorizedDealersText, 180); // Adjust width as needed
+    splitAuthorizedDealers.forEach((line, index) => {
+        doc.text(line, 20, 55 + (5 * index));
+    });
+    doc.text(`Gandhamguda ,kokapet`, 20, 60);
+    doc.text(`Call us at: 9812118942`, 20, 65);
+    doc.text(`Email us at: kundanakent@gmail.com`, 20, 70);
 
     // Buyer details
-    doc.text(`Customer Details`, 20, 110);
-    doc.text(`Billing Address:`, 20, 120);
-    doc.text(gstDetails.gstAddress, 20, 130);
-    doc.text(`Shipping Address:`, 20, 140);
-    doc.text(customerDetails.address, 20, 150);
-    doc.text(`Phone: ${customerDetails.phone}`, 20, 160);
+    doc.setFontSize(12)
+    doc.text(`Customer Details`, 20, 90);
+    doc.setFontSize(10)
+    doc.text(`Name: ${customerDetails.name}`, 20, 100);
+    doc.text(`Shipping Address: ${customerDetails.address}`, 20, 105);
+    doc.text(`Phone: ${customerDetails.phone}`, 20, 110);
+
+    
+    if(gst){
+      doc.setFont('bold')
+      doc.setFontSize(12)
+      doc.text(`Gst Details`, 120, 90);
+      doc.setFontSize(10)
+      doc.text(`Gst Name: ${gstDetails.gstName}`, 120, 100);
+      doc.text(`Gst No: ${gstDetails.gstNo}`, 120, 105);
+      doc.text(`Billing Address: ${gstDetails.gstAddress}`, 120, 110);
+      doc.text(`Phone: ${gstDetails.gstNo}`, 120, 115);
+    }
 
     // Invoice details on the right
-    doc.text(`Invoice number: ${invoiceNo}`, 140, 115);
-    doc.text(`Date: ${date}`, 140, 120);
+    doc.text(`Invoice number: ${invoiceNo}`, 145, 30);
+    doc.text(`Date: ${date}`, 145, 35);
 
     // Products Table
     let startY = 180;
@@ -479,7 +491,7 @@ const AquaDyanamicInvoicesComponent = () => {
               <div className="text-success text-end m-2 text-bold total-font">
                 <h6 className="total-align">
                   GRAND TOTAL :{" "}
-                  {products?.reduce((a, b) => a + b.productPrice, 0)}{" "}
+                  ₹{products?.reduce((a, b) => a + b.productPrice, 0)}{" "}/-
                 </h6>
               </div>
               <hr />

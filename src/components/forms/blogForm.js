@@ -5,10 +5,10 @@ import { default as AquaInput } from "../reusables/input";
 const AquaBlogForm = ({ edit, onSubmit, data }) => {
     const [formValues, setFormValues] = useState(data);
 
-    const handleChange = (fieldName, value) => {
+    const handleChange = (fieldName, e) => {
         setFormValues({
             ...formValues,
-            [fieldName]: value
+            [fieldName]: e.target.value
         });
     };
 
@@ -26,7 +26,7 @@ const AquaBlogForm = ({ edit, onSubmit, data }) => {
             <h1>{edit ? "Edit" : "Create"} Blog</h1>
             <hr />
             <form onSubmit={handleSubmit}>
-                <AquaInput label="Title" name="title" value={formValues.title} handleChange={(value) => handleChange('title', value)} />
+                <AquaInput label="Title" name="title" value={formValues.title} handleChange={(e) => handleChange('title', e)} />
                 
                 
 
