@@ -14,6 +14,9 @@ const AquaProductSchema = new mongoose.Schema({
     discountPrice: {
         type: Number
     },
+    keywords:{
+        type:String
+    },
     price: {
         type: Number,
         required: [true, "please provide product price"],
