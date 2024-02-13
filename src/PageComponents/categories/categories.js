@@ -7,11 +7,8 @@ import AquaToast from "@/components/reusables/toast";
 import AquaSpinner from "@/components/reusables/aquaSpinner";
 
 const AquaCategoryPageComponent = () => {
-  const {
-    getCategories,
-    createCategory,
-    updatedCategory,
-  } = categoryOperations();
+  const { getCategories, createCategory, updatedCategory } =
+    categoryOperations();
   const [categories, setCategories] = useState([]);
 
   const loadCategories = useCallback(() => {

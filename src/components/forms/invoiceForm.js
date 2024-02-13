@@ -26,7 +26,7 @@ const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData }) => {
     // Check if the input is a date and format it
 
     formData.transport.deliveryDate = moment(
-      formData.transport.deliveryDate
+      formData.transport.deliveryDate,
     ).format("DD/MM/YYYY");
 
     if (section === "products") {

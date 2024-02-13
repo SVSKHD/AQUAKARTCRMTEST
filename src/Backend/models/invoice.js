@@ -96,7 +96,7 @@ const AquaInvoiceSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const AquaInvoice =

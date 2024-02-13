@@ -1,6 +1,6 @@
-export const DrawerReducer = (state = false, action) => {
+export const userSignupReducer = (state = false, action) => {
   switch (action.type) {
-    case "SET_DRAWER_VISIBLE":
+    case "SET_SIGNUP_STATUS":
       return action.payload;
     default:
       return state;

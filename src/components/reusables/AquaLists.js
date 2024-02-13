@@ -10,8 +10,12 @@ const AquaLists = ({ title, description, number }) => {
       >
         {number}.
         <div className="ms-2 me-auto">
-          <div className="fw-bold text text-muted invoice-terms-title">{title}</div>
-          <div className="text-muted invoice-condition-title">{description}</div>
+          <div className="fw-bold text text-muted invoice-terms-title">
+            {title}
+          </div>
+          <div className="text-muted invoice-condition-title">
+            {description}
+          </div>
         </div>
       </ListGroup.Item>
     </ListGroup>

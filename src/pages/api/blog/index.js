@@ -1,22 +1,13 @@
 import { createRouter } from "next-connect";
 
-const Router = createRouter()
-
+const Router = createRouter();
 
 Router.post(async (req, res) => {
+  const body = req.body;
+  console.log(body);
+  res.status().json({ data: body });
+});
 
-  const body = req.body
-  console.log(body)
-  res.status().json({"data": body})
+Router.put(async (req, res) => {});
 
-})
-
-Router.put(async (req, res) => {
-
-})
-
-
-
-
-
-export default Router.handler()
+export default Router.handler();

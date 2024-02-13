@@ -11,7 +11,7 @@ const Router = createRouter();
 Router.use(
   fileUpload({
     useTempFiles: true,
-  })
+  }),
 ).use(imgMiddleware);
 
 export const config = {
@@ -63,7 +63,7 @@ Router.put(async (req, res) => {
     const updatedCategory = await AquaProduct.findOneAndUpdate(
       { _id: id },
       req.body,
-      { new: true } // Return the updated document
+      { new: true }, // Return the updated document
     );
 
     // Check if the category was found and updated

@@ -1,8 +1,4 @@
-const AquaSignup = () =>{
-    return(
-        <>
-        
-        </>
-    )
-    }
-    export default AquaSignup
+const AquaSignup = () => {
+  return <></>;
+};
+export default AquaSignup;

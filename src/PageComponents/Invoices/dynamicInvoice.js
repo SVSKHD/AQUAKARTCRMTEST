@@ -37,14 +37,8 @@ const AquaDyanamicInvoicesComponent = () => {
 
   const [Gst, setGst] = useState(false);
   const [PO, setPo] = useState(false);
-  const {
-    customerDetails,
-    products,
-    gstDetails,
-    date,
-    invoiceNo,
-    gst,
-  } = invoice;
+  const { customerDetails, products, gstDetails, date, invoiceNo, gst } =
+    invoice;
 
   const gstValueGenerate = (price) => {
     let basePrice = Math.floor(price * 0.8474594);
@@ -143,27 +137,29 @@ const AquaDyanamicInvoicesComponent = () => {
     doc.setFontSize(10);
     doc.text(`GST- 36AJOPH6387A1Z2`, 20, 50);
     const authorizedDealersText = `Authorized Dealers of: Kent, Grundfos Pressure Pumps, Hitech Solar systems, Solar Power systems`;
-    const splitAuthorizedDealers = doc.splitTextToSize(authorizedDealersText, 180); // Adjust width as needed
+    const splitAuthorizedDealers = doc.splitTextToSize(
+      authorizedDealersText,
+      180,
+    ); // Adjust width as needed
     splitAuthorizedDealers.forEach((line, index) => {
-        doc.text(line, 20, 55 + (5 * index));
+      doc.text(line, 20, 55 + 5 * index);
     });
     doc.text(`Gandhamguda ,kokapet`, 20, 60);
     doc.text(`Call us at: 9812118942`, 20, 65);
     doc.text(`Email us at: kundanakent@gmail.com`, 20, 70);
 
     // Buyer details
-    doc.setFontSize(12)
+    doc.setFontSize(12);
     doc.text(`Customer Details`, 20, 90);
-    doc.setFontSize(10)
+    doc.setFontSize(10);
     doc.text(`Name: ${customerDetails.name}`, 20, 100);
     doc.text(`Shipping Address: ${customerDetails.address}`, 20, 105);
     doc.text(`Phone: ${customerDetails.phone}`, 20, 110);
 
-    
-    if(gst){
-      doc.setFontSize(12)
+    if (gst) {
+      doc.setFontSize(12);
       doc.text(`Gst Details`, 120, 90);
-      doc.setFontSize(10)
+      doc.setFontSize(10);
       doc.text(`Gst Name: ${gstDetails.gstName}`, 120, 100);
       doc.text(`Gst No: ${gstDetails.gstNo}`, 120, 105);
       doc.text(`Billing Address: ${gstDetails.gstAddress}`, 120, 110);
@@ -195,7 +191,7 @@ const AquaDyanamicInvoicesComponent = () => {
     doc.text(
       `Grand Total: ${products.reduce((sum, p) => sum + p.productPrice, 0)}`,
       150,
-      startY
+      startY,
     );
 
     // Terms and Conditions
@@ -205,7 +201,7 @@ const AquaDyanamicInvoicesComponent = () => {
     doc.text(
       `1. TRANSPORT/LIFTING CHARGES WILL BE BORN BY THE CUSTOMER.`,
       20,
-      termsStartY + 10
+      termsStartY + 10,
     );
     // ... Add all terms and conditions
 
@@ -489,13 +485,13 @@ const AquaDyanamicInvoicesComponent = () => {
               <hr />
               <div className="text-success text-end m-2 text-bold total-font">
                 <h6 className="total-align">
-                  GRAND TOTAL :{" "}
-                  ₹{products?.reduce((a, b) => a + b.productPrice, 0)}{" "}/-
+                  GRAND TOTAL : ₹
+                  {products?.reduce((a, b) => a + b.productPrice, 0)} /-
                 </h6>
               </div>
               <hr />
             </div>
-           
+
             <h5 className="mb-3 text-danger">Terms & Conditions</h5>
 
             {termsAndConditions.map((r, i) => (

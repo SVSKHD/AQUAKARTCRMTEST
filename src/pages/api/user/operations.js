@@ -17,7 +17,6 @@ const userLogin = async (email, password) => {
   return { message: "Logged in successfully.", token };
 };
 
-
 const userLoginEmail = () => {};
 
 const userSignupEmail = () => {};

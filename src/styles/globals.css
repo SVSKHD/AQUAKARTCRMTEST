@@ -82,12 +82,11 @@ body {
   border: 0.5px solid #d83f31;
 }
 
-
-.total-font{
-font-size: 1.5rem;
-font-weight: bolder;
+.total-font {
+  font-size: 1.5rem;
+  font-weight: bolder;
 }
 
-.total-align{
+.total-align {
   margin-right: 75px;
 }

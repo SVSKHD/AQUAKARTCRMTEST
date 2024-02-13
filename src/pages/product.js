@@ -1,10 +1,10 @@
-import AquaProductPageComponent from "@/PageComponents/products/products"
+import AquaProductPageComponent from "@/PageComponents/products/products";
 
 const AquaProductPage = () => {
-    return (
-        <>
-            <AquaProductPageComponent />
-        </>
-    )
-}
-export default AquaProductPage
+  return (
+    <>
+      <AquaProductPageComponent />
+    </>
+  );
+};
+export default AquaProductPage;

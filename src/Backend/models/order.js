@@ -18,98 +18,97 @@ import mongoose from "mongoose";
 // - product
 
 const orderSchema = new mongoose.Schema({
-    shippingInfo: {
-        address: {
-            type: String,
-            required: true,
-        },
-        city: {
-            type: String,
-            required: true,
-        },
-        phoneNo: {
-            type: String,
-            required: true,
-        },
-        postalCode: {
-            type: String,
-            required: true,
-        },
-        state: {
-            type: String,
-            // required: true,
-        },
-        country: {
-            type: String,
-            required: true,
-        },
+  shippingInfo: {
+    address: {
+      type: String,
+      required: true,
     },
-    user: {
-        type: mongoose.Schema.ObjectId, //mongoose.Schema.Types.ObjectId
-        ref: "AquaUser",
-        required: true,
+    city: {
+      type: String,
+      required: true,
     },
-    orderItems: [
-        {
-            name: {
-                type: String,
-                required: true,
-            },
-            quantity: {
-                type: Number,
-                required: true,
-            },
-            image: {
-                type: String,
-                required: true,
-            },
-            price: {
-                type: Number,
-                required: true,
-            },
-            product: {
-                type: mongoose.Schema.ObjectId, //mongoose.Schema.Types.ObjectId
-                ref: "Product",
-                required: true,
-            },
-        },
-    ],
-    paymentInfo: {
-        id: {
-            type: String,
-        },
+    phoneNo: {
+      type: String,
+      required: true,
     },
-    taxAmount: {
-        type: Number,
-        required: true,
+    postalCode: {
+      type: String,
+      required: true,
     },
-    shippingAmount: {
-        type: Number,
-        required: true,
+    state: {
+      type: String,
+      // required: true,
     },
-    totalAmount: {
-        type: Number,
-        required: true,
+    country: {
+      type: String,
+      required: true,
     },
-    orderStatus: {
+  },
+  user: {
+    type: mongoose.Schema.ObjectId, //mongoose.Schema.Types.ObjectId
+    ref: "AquaUser",
+    required: true,
+  },
+  orderItems: [
+    {
+      name: {
         type: String,
         required: true,
-        default: "processing",
+      },
+      quantity: {
+        type: Number,
+        required: true,
+      },
+      image: {
+        type: String,
+        required: true,
+      },
+      price: {
+        type: Number,
+        required: true,
+      },
+      product: {
+        type: mongoose.Schema.ObjectId, //mongoose.Schema.Types.ObjectId
+        ref: "Product",
+        required: true,
+      },
     },
-    deliveredAt: {
-        type: Date,
+  ],
+  paymentInfo: {
+    id: {
+      type: String,
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
+  },
+  taxAmount: {
+    type: Number,
+    required: true,
+  },
+  shippingAmount: {
+    type: Number,
+    required: true,
+  },
+  totalAmount: {
+    type: Number,
+    required: true,
+  },
+  orderStatus: {
+    type: String,
+    required: true,
+    default: "processing",
+  },
+  deliveredAt: {
+    type: Date,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const AquaUsers =
-    mongoose.models.AquaUser ||
-    mongoose.model("AquaUsers", orderSchema);
+  mongoose.models.AquaUser || mongoose.model("AquaUsers", orderSchema);
 
-export default AquaUsers
+export default AquaUsers;
 
 // ref link
 // https://stackoverflow.com/questions/28997636/should-i-use-schema-types-objectid-or-schema-objectid-when-defining-a-mongoose-s

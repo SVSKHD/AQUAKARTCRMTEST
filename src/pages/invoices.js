@@ -1,12 +1,11 @@
-import AquaInvoiceComponent from "@/PageComponents/Invoices/invoices"
-
+import AquaInvoiceComponent from "@/PageComponents/Invoices/invoices";
 
 const AquaInvoices = () => {
-    return (
-        <>
-            <AquaInvoiceComponent />
-        </>
-    )
-}
+  return (
+    <>
+      <AquaInvoiceComponent />
+    </>
+  );
+};
 
-export default AquaInvoices
+export default AquaInvoices;

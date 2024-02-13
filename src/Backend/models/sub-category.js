@@ -26,7 +26,7 @@ const AquaSubCategorySchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const AquaSubCategory =

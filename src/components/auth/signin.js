@@ -1,8 +1,4 @@
-const AquaSignin = () =>{
-return(
-    <>
-    
-    </>
-)
-}
-export default AquaSignin
+const AquaSignin = () => {
+  return <></>;
+};
+export default AquaSignin;

@@ -1,12 +1,10 @@
 import axios from "axios";
 
-const userLogin = () => {};
+const userLogin = (data) => axios.post("/api/login", data);
 
-const userRegister = () => {};
 const userOperations = () => {
   return {
     userLogin,
-    userRegister,
   };
 };
 

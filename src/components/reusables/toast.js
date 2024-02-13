@@ -25,22 +25,22 @@ const AquaToast = (message, type) => {
     default:
       icon = null;
       backgroundColor = "#FFFFFF";
-      border = "initial";  // Set a default border color or leave it as initial
+      border = "initial"; // Set a default border color or leave it as initial
   }
 
   toast(
     <div style={{ color: border, backgroundColor }}>
-      {icon}   {message}
+      {icon} {message}
     </div>,
     {
       duration: 6000,
       style: {
-        border:`3px solid ${border}`,
-        margin:'12px',
+        border: `3px solid ${border}`,
+        margin: "12px",
         width: "300px",
         fontSize: "0.9rem",
       },
-    }
+    },
   );
 };
 

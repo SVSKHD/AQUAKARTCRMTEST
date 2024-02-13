@@ -8,7 +8,6 @@ import AquaToast from "@/components/reusables/toast";
 import { useRouter } from "next/router";
 import AquaCrmTabs from "@/components/reusables/tabs";
 
-
 const AquaInvoiceComponent = () => {
   const router = useRouter();
   let initialData = {
@@ -239,7 +238,7 @@ const AquaInvoiceComponent = () => {
       ),
     },
     {
-      title:"Po-Invoices", 
+      title: "Po-Invoices",
       height: "600px",
       component: (
         <>
