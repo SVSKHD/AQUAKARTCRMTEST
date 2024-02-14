@@ -93,7 +93,7 @@ const AquaInvoiceComponent = () => {
       .catch(() => {
         AquaToast("not-fetched", "error");
       });
-  }, [getGstInvoices, setGstInvoices]);
+  }, [getPoInvoices, setPoInvoices]);
 
   const loadQuotationInvoices = useCallback(() => {
     getQuotationInvoices(true)
@@ -104,7 +104,7 @@ const AquaInvoiceComponent = () => {
       .catch(() => {
         AquaToast("not-fetched", "error");
       });
-  }, [getGstInvoices, setGstInvoices]);
+  }, [getQuotationInvoices, setQuotationInvoices]);
 
   useEffect(() => {
     loadInvoices();

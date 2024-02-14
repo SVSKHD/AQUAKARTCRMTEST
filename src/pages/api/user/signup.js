@@ -6,7 +6,10 @@ import bcrypt from "bcrypt";
 const Router = createRouter();
 
 Router.post(async (req, res) => {
-  db.connectDb();
+  await db.connectDb();
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   const { email, password } = req.body;
   const existingUser = await AquaUser.findOne({ email });
   if (existingUser) {

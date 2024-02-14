@@ -7,6 +7,9 @@ import jwt from "jsonwebtoken"; // Make sure to import jwt
 const Router = createRouter();
 
 Router.post(async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   try {
     await db.connectDb(); // Assume this is an async function
     const { email, password } = req.body;
