@@ -81,6 +81,7 @@ const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData }) => {
   };
 
   const TransferOptions = [
+    { label: "none", value: "0" },
     { label: "Gpay", value: "1" },
     { label: "Phone Pe", value: "2" },
     { label: "Neft Kotak", value: "3" },
@@ -107,6 +108,8 @@ const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData }) => {
     { label: "KENT AUTO 8L", value: "4" },
     { label: "KENt SANDFILTER", value: "5" },
     { label: "KENT IRONFILTER", value: "6" },
+    { label: "KENT RO (Wall-Mount) GrandStar", value: "7" },
+    { label: "KENT RO (under the counter) Sterling", value: "8" },
   ];
 
   return (
