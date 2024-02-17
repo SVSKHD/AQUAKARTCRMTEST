@@ -66,7 +66,6 @@ const AquaInvoiceComponent = () => {
     getInvoices()
       .then((res) => {
         setInvoices(res.data);
-        AquaToast("fetched Invoices", "success");
       })
       .catch(() => {
         AquaToast("not-fetched", "error");
@@ -77,7 +76,6 @@ const AquaInvoiceComponent = () => {
     getGstInvoices(true)
       .then((res) => {
         setGstInvoices(res.data);
-        AquaToast("fetched Gst Invoices", "success");
       })
       .catch(() => {
         AquaToast("not-fetched", "error");
@@ -88,7 +86,6 @@ const AquaInvoiceComponent = () => {
     getPoInvoices(true)
       .then((res) => {
         setPoInvoices(res.data);
-        AquaToast("fetched Po Invoices", "success");
       })
       .catch(() => {
         AquaToast("not-fetched", "error");
@@ -99,7 +96,6 @@ const AquaInvoiceComponent = () => {
     getQuotationInvoices(true)
       .then((res) => {
         setQuotationInvoices(res.data);
-        AquaToast("fetched Quotation Invoices", "success");
       })
       .catch(() => {
         AquaToast("not-fetched", "error");
@@ -157,7 +153,6 @@ const AquaInvoiceComponent = () => {
         loadGstInvoices();
         loadPoInvoices();
         loadQuotationInvoices();
-        AquaToast("All category invoices loaded", "success");
       })
       .catch(() => {
         setInvoices([]);
@@ -180,6 +175,12 @@ const AquaInvoiceComponent = () => {
 
   const handleTabChange = (key) => {
     setActiveTab(key);
+  };
+
+  const clearForm = () => { // Reset form data to initial state
+    if (mode==="Edit") {
+      setMode("Create"); // Switch to "Create" mode if setMode function is provided
+    }
   };
 
   const Tabs = [
@@ -287,11 +288,13 @@ const AquaInvoiceComponent = () => {
             <></>
           )}
           <div className="col-md-8 col-lg-8 col-xs-12 col-sm-12">
+
             <AquaInvoiceForm
               initialData={initialData}
               mode={mode}
               onSubmit={handleFormSubmit}
               editData={editInitData}
+              clearForm={clearForm}
             />
           </div>
         </div>
