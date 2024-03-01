@@ -12,9 +12,9 @@ Router.get(async (req, res) => {
   if (id) {
     const productById = await AquaProduct.findById(id);
     res.status(200).json(productById);
-  }else if(categoryId){
-    const productByCategory = await AquaProduct.find({"category":categoryId})
-    res.status(200).json(productByCategory)
+  } else if (categoryId) {
+    const productByCategory = await AquaProduct.find({ category: categoryId });
+    res.status(200).json(productByCategory);
   } else {
     const allProducts = await AquaProduct.find();
     res.status(200).json(allProducts);

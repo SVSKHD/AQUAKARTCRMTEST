@@ -20,6 +20,12 @@ const getPoInvoices = async (po) =>
 const getQuotationInvoices = async (quotation) =>
   axios.get(`/admin/crm/api/invoice?quotation=${quotation}`);
 
+const getMonthlyInvoices = async (data) =>
+  axios.get(`/admin/crm/api/invoice?monthly=${data}`);
+
+const getYearlyInvoices = async (data) =>
+  axios.get(`/admin/crm/api/invoice?year=${data}`);
+
 const removeInvoice = async (id) =>
   await axios.delete(`/admin/crm/api/invoice?invoice=${id}`);
 
@@ -27,6 +33,8 @@ const InvoiceOperations = () => {
   return {
     getInvoices,
     getIndividualInvoice,
+    getMonthlyInvoices,
+    getYearlyInvoices,
     getGstInvoices,
     getPoInvoices,
     getQuotationInvoices,

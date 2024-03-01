@@ -7,6 +7,9 @@ import { Button } from "react-bootstrap";
 import AquaToast from "@/components/reusables/toast";
 import { useRouter } from "next/router";
 import AquaCrmTabs from "@/components/reusables/tabs";
+import AquaDialog from "@/components/reusables/dialog";
+import CustomInvoiceCard from "@/components/cards/customInvoiceCard";
+import React from "react";
 
 const AquaInvoiceComponent = () => {
   const router = useRouter();
@@ -52,13 +55,18 @@ const AquaInvoiceComponent = () => {
   const [poInvoices, setPoInvoices] = useState([]);
   const [quotationInvoices, setQuotationInvoices] = useState([]);
   const [editInitData, setEditInitData] = useState({});
-  const [monthly , setMonthly] = useState("")
-  const [yearly , setYearly] = useState("")
+  const [customMonth, setCustomMonth] = useState("");
+  const [customYear, setCustomYear] = useState("");
+  const [customInvoiceDialog, setCustomInvoicesDialog] = useState(false);
+  const [customInvoicesLoading, setCustomInvoicesLoading] = useState(false);
+  const [customInvoicesLoad, setCustomInvoicesLoad] = useState([]);
   const {
     getInvoices,
     getGstInvoices,
     getPoInvoices,
     getQuotationInvoices,
+    getMonthlyInvoices,
+    getYearlyInvoices,
     createInvoice,
     updateInvoice,
     removeInvoice,
@@ -179,7 +187,8 @@ const AquaInvoiceComponent = () => {
     setActiveTab(key);
   };
 
-  const clearForm = () => { // Reset form data to initial state
+  const clearForm = () => {
+    // Reset form data to initial state
     if (mode === "Edit") {
       setMode("Create"); // Switch to "Create" mode if setMode function is provided
     }
@@ -275,20 +284,64 @@ const AquaInvoiceComponent = () => {
     { label: "DECEMBER", value: 12 },
   ];
 
-  const handleMonthChange = (data) =>{
-    console.log(data)
-  }
+  const handleMonthChange = (event) => {
+    const year = new Date().getFullYear();
+    let selectedMonth = `${year}-${event.target.value}`;
+    setCustomMonth(selectedMonth);
+  };
+
+  const loadCustomInvoices = () => {
+    setCustomInvoicesDialog(true);
+    setCustomInvoicesLoading(true);
+    getMonthlyInvoices(customMonth)
+      .then((res) => {
+        setCustomInvoicesLoad([...res.data]);
+        setCustomInvoicesLoading(false);
+      })
+      .catch(() => {
+        AquaToast("not-fetched", "error");
+      });
+  };
+
+  const separateInvoices = (data) => {
+    switch (data) {
+      case data.gst:
+        return (
+          <div className="col">
+            <CustomInvoiceCard r={data} />
+          </div>
+        );
+      default:
+        return (
+          <div className="col">
+            <CustomInvoiceCard r={data} />
+          </div>
+        );
+    }
+  };
 
   return (
     <>
       <AquaLayout>
         <div className="card-body mb-2">
-          <select class="form-select" aria-label="Default select example" style={{ width: "300px" }}>
-            <option selected>Open this select menu</option>
-            {monthOptions.map((r)=>(
-              <option key={r} value={monthly} onChange={()=>handleMonthChange(r)}>{r.label}</option>
-            ))}
-          </select>
+          <div className="d-flex">
+            <select
+              class="form-select me-2"
+              aria-label="Default select example"
+              style={{ width: "300px" }}
+              onChange={handleMonthChange}
+            >
+              <option selected>Open this select menu</option>
+              {monthOptions.map((r) => (
+                <option key={r} value={r.value}>
+                  {r.label}
+                </option>
+              ))}
+            </select>
+            <button className="btn btn-base" onClick={loadCustomInvoices}>
+              Load Invoices
+            </button>
+          </div>
         </div>
         <div className="row">
           <div className="col-md-4 col-lg-4 col-xs-12 col-sm-12">
@@ -312,7 +365,6 @@ const AquaInvoiceComponent = () => {
             <></>
           )}
           <div className="col-md-8 col-lg-8 col-xs-12 col-sm-12">
-
             <AquaInvoiceForm
               initialData={initialData}
               mode={mode}
@@ -322,6 +374,39 @@ const AquaInvoiceComponent = () => {
             />
           </div>
         </div>
+        <AquaDialog
+          show={customInvoiceDialog}
+          hide={() => setCustomInvoicesDialog(false)}
+          title="Custom date invoices"
+          fullscreen={true}
+        >
+          <div className="row">
+            {customInvoicesLoad.length > 0 ? (
+              <>
+                <div className="col">
+                  <h4>Gst Invoices</h4>
+                  <hr />
+                  {customInvoicesLoad.map((r, index) => {
+                    return r.gst ? (
+                      <CustomInvoiceCard key={index} r={r} />
+                    ) : null;
+                  })}
+                </div>
+                <div className="col">
+                  <h4>Normal Invoices</h4>
+                  <hr />
+                  {customInvoicesLoad.map((r, index) => {
+                    return !r.gst ? (
+                      <CustomInvoiceCard key={index} r={r} />
+                    ) : null;
+                  })}
+                </div>
+              </>
+            ) : (
+              "No Invoices for selected month"
+            )}
+          </div>
+        </AquaDialog>
       </AquaLayout>
     </>
   );

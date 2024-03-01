@@ -1,5 +1,12 @@
 import { Form } from "react-bootstrap";
-const AquaSwitch = ({ id, label, disabled = false, onChange,value ,...props  }) => {
+const AquaSwitch = ({
+  id,
+  label,
+  disabled = false,
+  onChange,
+  value,
+  ...props
+}) => {
   return (
     <Form.Check
       type="switch"

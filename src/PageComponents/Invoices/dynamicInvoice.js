@@ -129,49 +129,93 @@ const AquaDyanamicInvoicesComponent = () => {
   const jsPdfButton = () => {
     const doc = new jsPDF();
 
-    // Set the font size for headers
+    // Header
     doc.setFontSize(18);
     doc.text("AQUAKART ENTERPRISES", 105, 20, null, null, "center");
 
-    // Set the font size for body
+    // Company Info
     doc.setFontSize(10);
     doc.text(`GST- 36AJOPH6387A1Z2`, 20, 50);
     const authorizedDealersText = `Authorized Dealers of: Kent, Grundfos Pressure Pumps, Hitech Solar systems, Solar Power systems`;
     const splitAuthorizedDealers = doc.splitTextToSize(
       authorizedDealersText,
       180,
-    ); // Adjust width as needed
+    );
     splitAuthorizedDealers.forEach((line, index) => {
       doc.text(line, 20, 55 + 5 * index);
     });
-    doc.text(`Gandhamguda ,kokapet`, 20, 60);
-    doc.text(`Call us at: 9812118942`, 20, 65);
-    doc.text(`Email us at: kundanakent@gmail.com`, 20, 70);
+    doc.text(
+      `Gandhamguda, kokapet`,
+      20,
+      60 + 5 * splitAuthorizedDealers.length,
+    );
+    doc.text(
+      `Call us at: 9812118942`,
+      20,
+      65 + 5 * splitAuthorizedDealers.length,
+    );
+    doc.text(
+      `Email us at: kundanakent@gmail.com`,
+      20,
+      70 + 5 * splitAuthorizedDealers.length,
+    );
 
-    // Buyer details
+    // Customer Details
     doc.setFontSize(12);
-    doc.text(`Customer Details`, 20, 90);
+    doc.text(`Customer Details`, 20, 90 + 5 * splitAuthorizedDealers.length);
     doc.setFontSize(10);
-    doc.text(`Name: ${customerDetails.name}`, 20, 100);
-    doc.text(`Shipping Address: ${customerDetails.address}`, 20, 105);
-    doc.text(`Phone: ${customerDetails.phone}`, 20, 110);
+    doc.text(
+      `Name: ${customerDetails.name}`,
+      20,
+      100 + 5 * splitAuthorizedDealers.length,
+    );
 
+    // Split customer address
+    const customerAddressLines = doc.splitTextToSize(
+      customerDetails.address,
+      180,
+    );
+    let customerAddressY = 105 + 5 * splitAuthorizedDealers.length; // Adjust Y position for the address
+    customerAddressLines.forEach((line) => {
+      doc.text(line, 20, customerAddressY);
+      customerAddressY += 5; // Increment Y position for each new line
+    });
+
+    doc.text(`Phone: ${customerDetails.phone}`, 20, customerAddressY + 5);
+
+    // GST Details (if applicable)
     if (gst) {
       doc.setFontSize(12);
-      doc.text(`Gst Details`, 120, 90);
+      doc.text(`Gst Details`, 120, 90 + 5 * splitAuthorizedDealers.length);
       doc.setFontSize(10);
-      doc.text(`Gst Name: ${gstDetails.gstName}`, 120, 100);
-      doc.text(`Gst No: ${gstDetails.gstNo}`, 120, 105);
-      doc.text(`Billing Address: ${gstDetails.gstAddress}`, 120, 110);
-      doc.text(`Phone: ${gstDetails.gstNo}`, 120, 115);
+      doc.text(
+        `Gst Name: ${gstDetails.gstName}`,
+        120,
+        100 + 5 * splitAuthorizedDealers.length,
+      );
+      doc.text(
+        `Gst No: ${gstDetails.gstNo}`,
+        120,
+        105 + 5 * splitAuthorizedDealers.length,
+      );
+
+      // Split GST address
+      const gstAddressLines = doc.splitTextToSize(gstDetails.gstAddress, 180);
+      let gstAddressY = 110 + 5 * splitAuthorizedDealers.length; // Adjust Y position for the GST address
+      gstAddressLines.forEach((line) => {
+        doc.text(line, 120, gstAddressY);
+        gstAddressY += 5; // Increment Y position for each new line
+      });
+
+      doc.text(`Phone: ${gstDetails.gstNo}`, 120, gstAddressY + 5);
     }
 
-    // Invoice details on the right
+    // Invoice Details
     doc.text(`Invoice number: ${invoiceNo}`, 145, 30);
     doc.text(`Date: ${date}`, 145, 35);
 
     // Products Table
-    let startY = 180;
+    let startY = customerAddressY + 20; // Adjust startY based on the last text's Y position
     doc.autoTable({
       head: [["Item Description", "QTY", "BASE-PRICE", "GST(18%)", "TOTAL"]],
       body: products.map((p) => [
@@ -185,11 +229,11 @@ const AquaDyanamicInvoicesComponent = () => {
       theme: "grid",
     });
 
-    // Grand total
+    // Grand Total
     startY = doc.autoTable.previous.finalY + 10;
     doc.setFontSize(12);
     doc.text(
-      `Grand Total: ${products.reduce((sum, p) => sum + p.productPrice, 0)}`,
+      `Grand Total: ${products.reduce((sum, p) => sum + p.productPrice, 0).toFixed(2)}`,
       150,
       startY,
     );
@@ -198,22 +242,16 @@ const AquaDyanamicInvoicesComponent = () => {
     doc.setFontSize(10);
     let termsStartY = startY + 20;
     doc.text(`Terms & Conditions`, 20, termsStartY);
-    doc.text(
-      `1. TRANSPORT/LIFTING CHARGES WILL BE BORN BY THE CUSTOMER.`,
-      20,
-      termsStartY + 10,
-    );
-    // ... Add all terms and conditions
+    // Add your terms and conditions here...
 
-    // Contact details at the bottom
-    doc.setFontSize(10);
-    let contactStartY = termsStartY + 60; // adjust according to the length of the terms and conditions
+    // Contact Details
+    let contactStartY = termsStartY + 60; // adjust based on the length of terms and conditions
     doc.text(`Kent Customer Care`, 20, contactStartY);
     doc.text(`9278912345`, 20, contactStartY + 10);
     doc.text(`Grundfos Customer Care`, 20, contactStartY + 20);
     doc.text(`1800 102 2535`, 20, contactStartY + 30);
 
-    // Save the PDF with a specific name
+    // Save PDF
     doc.save(`${customerDetails.name}_invoice.pdf`);
   };
 

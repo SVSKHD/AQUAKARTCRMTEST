@@ -7,7 +7,13 @@ import moment from "moment";
 import AquaSelect from "../reusables/select";
 import AquaSwitch from "../reusables/switch";
 
-const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData , clearForm}) => {
+const AquaInvoiceForm = ({
+  initialData,
+  mode,
+  onSubmit,
+  editData,
+  clearForm,
+}) => {
   const [formData, setFormData] = useState(initialData);
 
   useEffect(() => {
@@ -114,15 +120,17 @@ const AquaInvoiceForm = ({ initialData, mode, onSubmit, editData , clearForm}) =
 
   return (
     <>
-   <div className="d-flex justify-content-between align-items-center">
-  <h4>{mode === "Edit" ? "Edit Invoice" : "Create Invoice"}</h4>
-  {mode === "Edit" && (
-    <>
-      <span>{formData.name}</span>
-      <Button onClick={clearForm} className="ml-auto">Clear</Button>
-    </>
-  )}
-</div>
+      <div className="d-flex justify-content-between align-items-center">
+        <h4>{mode === "Edit" ? "Edit Invoice" : "Create Invoice"}</h4>
+        {mode === "Edit" && (
+          <>
+            <span>{formData.name}</span>
+            <Button onClick={clearForm} className="ml-auto">
+              Clear
+            </Button>
+          </>
+        )}
+      </div>
 
       <hr />
       <form onSubmit={handleSubmit}>

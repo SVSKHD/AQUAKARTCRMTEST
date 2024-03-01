@@ -7,7 +7,10 @@ import { Button, Badge } from "react-bootstrap";
 
 const AuthDialog = () => {
   const [userData, setUserData] = useState({ email: "", password: "" });
-  const [errorStatus, setErrorStatus] = useState({ error: false, errorMessage: "" });
+  const [errorStatus, setErrorStatus] = useState({
+    error: false,
+    errorMessage: "",
+  });
   const { userLogin } = userOperations();
   const dispatch = useDispatch();
   const { authDialog, userSignupStatus } = useSelector((state) => state);
@@ -28,7 +31,10 @@ const AuthDialog = () => {
   const handleSignupData = (event) => {
     event.preventDefault();
     if (!userData.email && !userData.password) {
-      setErrorStatus({ error: true, errorMessage: "Please provide email and password" });
+      setErrorStatus({
+        error: true,
+        errorMessage: "Please provide email and password",
+      });
     } else if (!userData.email) {
       setErrorStatus({ error: true, errorMessage: "Please provide email" });
     } else if (!userData.password) {
@@ -51,7 +57,11 @@ const AuthDialog = () => {
       show={authDialog}
       hide={handleDialogClose}
     >
-      {errorStatus.error && <h4><Badge bg="danger">{errorStatus.errorMessage}</Badge></h4>}
+      {errorStatus.error && (
+        <h4>
+          <Badge bg="danger">{errorStatus.errorMessage}</Badge>
+        </h4>
+      )}
       <div>
         <form onSubmit={handleSignupData}>
           <AquaInput
