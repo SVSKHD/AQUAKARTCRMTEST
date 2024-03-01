@@ -52,6 +52,8 @@ const AquaInvoiceComponent = () => {
   const [poInvoices, setPoInvoices] = useState([]);
   const [quotationInvoices, setQuotationInvoices] = useState([]);
   const [editInitData, setEditInitData] = useState({});
+  const [monthly , setMonthly] = useState("")
+  const [yearly , setYearly] = useState("")
   const {
     getInvoices,
     getGstInvoices,
@@ -178,7 +180,7 @@ const AquaInvoiceComponent = () => {
   };
 
   const clearForm = () => { // Reset form data to initial state
-    if (mode==="Edit") {
+    if (mode === "Edit") {
       setMode("Create"); // Switch to "Create" mode if setMode function is provided
     }
   };
@@ -259,13 +261,35 @@ const AquaInvoiceComponent = () => {
   ];
 
   const monthOptions = [
-    { label: "JANUARY", value: "1" },
-    { label: "FEBRUARY", value: "2" },
+    { label: "JANUARY", value: 1 },
+    { label: "FEBRUARY", value: 2 },
+    { label: "MARCH", value: 3 },
+    { label: "APRIL", value: 4 },
+    { label: "MAY", value: 5 },
+    { label: "JUNE", value: 6 },
+    { label: "JULY", value: 7 },
+    { label: "AUGUST", value: 8 },
+    { label: "SEPTEMBER", value: 9 },
+    { label: "OCTOBER", value: 10 },
+    { label: "NOVEMBER", value: 11 },
+    { label: "DECEMBER", value: 12 },
   ];
+
+  const handleMonthChange = (data) =>{
+    console.log(data)
+  }
 
   return (
     <>
       <AquaLayout>
+        <div className="card-body mb-2">
+          <select class="form-select" aria-label="Default select example" style={{ width: "300px" }}>
+            <option selected>Open this select menu</option>
+            {monthOptions.map((r)=>(
+              <option value={monthly} onChange={()=>handleMonthChange(r)}>{r.label}</option>
+            ))}
+          </select>
+        </div>
         <div className="row">
           <div className="col-md-4 col-lg-4 col-xs-12 col-sm-12">
             {!invoices.length ? (
