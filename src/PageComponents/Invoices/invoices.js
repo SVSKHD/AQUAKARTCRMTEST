@@ -286,7 +286,7 @@ const AquaInvoiceComponent = () => {
           <select class="form-select" aria-label="Default select example" style={{ width: "300px" }}>
             <option selected>Open this select menu</option>
             {monthOptions.map((r)=>(
-              <option value={monthly} onChange={()=>handleMonthChange(r)}>{r.label}</option>
+              <option key={r} value={monthly} onChange={()=>handleMonthChange(r)}>{r.label}</option>
             ))}
           </select>
         </div>
