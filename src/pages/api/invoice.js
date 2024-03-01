@@ -60,7 +60,8 @@ router.put(async (req, res) => {
 
 router.get(async (req, res) => {
   const { invoice } = req.query;
-  const { gst, po, quotation } = req.query;
+  const { gst, po, quotation, monthly, year } = req.query;
+
   if (invoice) {
     db.connectDb();
     let individualInvoice = await AquaInvoices.findById(invoice);
@@ -68,36 +69,58 @@ router.get(async (req, res) => {
     db.disconnectDb();
   } else if (gst) {
     db.connectDb();
-    let gstInvoices = await AquaInvoices.find({ gst: gst }).sort({
-      createdAt: -1,
-    });
+    let gstInvoices = await AquaInvoices.find({ gst: gst }).sort({ createdAt: -1 }).limit(10);
     res.status(200).json(gstInvoices);
     db.disconnectDb();
   } else if (po) {
     db.connectDb();
-    let poInvoices = await AquaInvoices.find({ po: po }).sort({
-      createdAt: -1,
-    });
+    let poInvoices = await AquaInvoices.find({ po: po }).sort({ createdAt: -1 }).limit(10);
     res.status(200).json(poInvoices);
     db.disconnectDb();
   } else if (quotation) {
     db.connectDb();
-    let quotationInvoices = await AquaInvoices.find({
-      quotation: quotation,
-    }).sort({ createdAt: -1 });
+    let quotationInvoices = await AquaInvoices.find({ quotation: quotation }).sort({ createdAt: -1 }).limit(10);
     res.status(200).json(quotationInvoices);
     db.disconnectDb();
-  } else if (!invoice && !gst && !po && !quotation) {
+  } else if (monthly) {
+    // Assuming monthly is in format YYYY-MM
+    const yearMonth = monthly.split('-');
+    const year = parseInt(yearMonth[0]);
+    const month = parseInt(yearMonth[1]);
+    const startDate = new Date(year, month - 1, 1);
+    const endDate = new Date(year, month, 0, 23, 59, 59);
+
     db.connectDb();
-    let invoices = await AquaInvoices.find({
-      gst: false,
-      po: false,
-      quotation: false,
-    }).sort({ createdAt: -1 });
+    let monthlyInvoices = await AquaInvoices.find({
+      createdAt: {
+        $gte: startDate,
+        $lte: endDate
+      }
+    }).sort({ createdAt: -1 }).limit(10);
+    res.status(200).json(monthlyInvoices);
+    db.disconnectDb();
+  } else if (year) {
+    const startDate = new Date(year, 0, 1); // January 1st of the given year
+    const endDate = new Date(year, 11, 31, 23, 59, 59); // December 31st of the given year
+
+    db.connectDb();
+    let yearInvoices = await AquaInvoices.find({
+      createdAt: {
+        $gte: startDate,
+        $lte: endDate
+      }
+    }).sort({ createdAt: -1 }).limit(10);
+    res.status(200).json(yearInvoices);
+    db.disconnectDb();
+  } else {
+    db.connectDb();
+    let invoices = await AquaInvoices.find({ gst: false, po: false, quotation: false }).sort({ createdAt: -1 }).limit(10);
     res.status(200).json(invoices);
     db.disconnectDb();
   }
 });
+
+
 
 router.delete(async (req, res) => {
   const { invoice } = req.query;

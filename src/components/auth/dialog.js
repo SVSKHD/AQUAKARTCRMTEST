@@ -2,16 +2,16 @@ import { useDispatch, useSelector } from "react-redux";
 import userOperations from "@/services/user";
 import AquaDialog from "../reusables/dialog";
 import AquaInput from "../reusables/input";
-import { Button , Badge} from "react-bootstrap";
+import { Button, Badge } from "react-bootstrap";
 import { useState } from "react";
 
 
 const AuthDialog = () => {
   const [userData, setUserData] = useState({ email: "", password: "" });
-  const [success , setSuccess] = useState(false)
-  const [errorStatus , setErrorStatus] = useState({error:false , errorMessage:""})
+  const [success, setSuccess] = useState(false)
+  const [errorStatus, setErrorStatus] = useState({ error: false, errorMessage: "" })
   const { userLogin } = userOperations();
-  
+
   const dispatch = useDispatch();
   const { authDialog, userSignupStatus } = useSelector((state) => ({
     ...state,
@@ -24,7 +24,7 @@ const AuthDialog = () => {
   };
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setErrorStatus({error:false , errorMessage:""})
+    setErrorStatus({ error: false, errorMessage: "" })
     setUserData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -32,20 +32,19 @@ const AuthDialog = () => {
   };
   const handleSignupData = (event) => {
     event.preventDefault()
-    if(!userData.email && !userData.password){
-      setErrorStatus({error:true,errorMessage:"please provide email and password"})
-    }else if(!userData.email){
-     setErrorStatus({error:true , errorMessage:"Pleae provide email"})
-    }else if(!userData.password){
-      setErrorStatus({error:true , errorMessage:"Please Provide Password"})
-    }else{
-        console.log(userData)
-      userLogin(userData).then(()=>{
-        console.log("data",res.data)
+    if (!userData.email && !userData.password) {
+      setErrorStatus({ error: true, errorMessage: "please provide email and password" })
+    } else if (!userData.email) {
+      setErrorStatus({ error: true, errorMessage: "Pleae provide email" })
+    } else if (!userData.password) {
+      setErrorStatus({ error: true, errorMessage: "Please Provide Password" })
+    } else {
+      console.log(userData)
+      userLogin(userData).then(() => {
         setSuccess(true)
         dispatch({
-            type:"LOGGED_IN_USER",
-            payload:res.data
+          type: "LOGGED_IN_USER",
+          payload: res.data
         })
       })
     }
@@ -57,7 +56,7 @@ const AuthDialog = () => {
         show={authDialog}
         hide={handleDialogClose}
       >
-{errorStatus.error ?(<h4><Badge bg="danger">{errorStatus.errorMessage}</Badge></h4>) : "" }
+        {errorStatus.error ? (<h4><Badge bg="danger">{errorStatus.errorMessage}</Badge></h4>) : ""}
         <div>
           <form onSubmit={handleSignupData}>
             <AquaInput
