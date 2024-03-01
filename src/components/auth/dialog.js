@@ -46,7 +46,14 @@ const AuthDialog = () => {
           type: "LOGGED_IN_USER",
           payload: res.data
         })
+        dispatch({
+          type: "SET_AUTH_DIALOG_VISIBLE",
+          payload: false,
+        });
       })
+        .catch((err) => {
+          setErrorStatus({ error: true, errorMessage: err.message })
+        })
     }
   };
   return (
