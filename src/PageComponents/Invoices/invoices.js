@@ -377,9 +377,26 @@ const AquaInvoiceComponent = () => {
         <AquaDialog
           show={customInvoiceDialog}
           hide={() => setCustomInvoicesDialog(false)}
-          title="Custom date invoices"
+          title={`Custom date invoices-${customInvoicesLoad.length}`}
           fullscreen={true}
         >
+        <h4>Total Invoices - {customInvoicesLoad.length}</h4>
+        <h5 className="text-success">
+  Total value - ₹{
+    new Intl.NumberFormat('en-IN').format(
+      customInvoicesLoad.reduce((total, invoice) => {
+        // Sum up the productPrice for each product in the invoice
+        const invoiceTotal = invoice.products.reduce((invoiceSum, product) => {
+          return invoiceSum + product.productPrice;
+        }, 0);
+
+        // Add the total for this invoice to the running total for all invoices
+        return total + invoiceTotal;
+      }, 0) // Start with 0 total
+    )
+  }
+</h5>
+
           <div className="row">
             {customInvoicesLoad.length > 0 ? (
               <>
