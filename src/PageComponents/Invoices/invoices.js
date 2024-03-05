@@ -60,6 +60,7 @@ const AquaInvoiceComponent = () => {
   const [customInvoiceDialog, setCustomInvoicesDialog] = useState(false);
   const [customInvoicesLoading, setCustomInvoicesLoading] = useState(false);
   const [customInvoicesLoad, setCustomInvoicesLoad] = useState([]);
+  const [DialogSelctedInvoice, setDialogSelectedInvoice] = useState({})
   const {
     getInvoices,
     getGstInvoices,
@@ -303,6 +304,13 @@ const AquaInvoiceComponent = () => {
       });
   };
 
+  const loadDialogInvoice = (data) => {
+    setDialogSelectedInvoice(data); // Update the state with the selected invoice details
+
+    // The console.log here will not immediately reflect the updated state due to async nature of setState
+    console.log("Selected invoice data:", data);
+  }
+
   const separateInvoices = (data) => {
     switch (data) {
       case data.gst:
@@ -380,22 +388,22 @@ const AquaInvoiceComponent = () => {
           title={`Custom date invoices-${customInvoicesLoad.length}`}
           fullscreen={true}
         >
-        <h4>Total Invoices - {customInvoicesLoad.length}</h4>
-        <h5 className="text-success">
-  Total value - ₹{
-    new Intl.NumberFormat('en-IN').format(
-      customInvoicesLoad.reduce((total, invoice) => {
-        // Sum up the productPrice for each product in the invoice
-        const invoiceTotal = invoice.products.reduce((invoiceSum, product) => {
-          return invoiceSum + product.productPrice;
-        }, 0);
+          <h4>Total Invoices - {customInvoicesLoad.length}</h4>
+          <h5 className="text-success">
+            Total value - ₹{
+              new Intl.NumberFormat('en-IN').format(
+                customInvoicesLoad.reduce((total, invoice) => {
+                  // Sum up the productPrice for each product in the invoice
+                  const invoiceTotal = invoice.products.reduce((invoiceSum, product) => {
+                    return invoiceSum + product.productPrice;
+                  }, 0);
 
-        // Add the total for this invoice to the running total for all invoices
-        return total + invoiceTotal;
-      }, 0) // Start with 0 total
-    )
-  }
-</h5>
+                  // Add the total for this invoice to the running total for all invoices
+                  return total + invoiceTotal;
+                }, 0) // Start with 0 total
+              )
+            }
+          </h5>
 
           <div className="row">
             {customInvoicesLoad.length > 0 ? (
@@ -405,7 +413,7 @@ const AquaInvoiceComponent = () => {
                   <hr />
                   {customInvoicesLoad.map((r, index) => {
                     return r.gst ? (
-                      <CustomInvoiceCard key={index} r={r} />
+                      <CustomInvoiceCard key={index} r={r} handleClick={() => loadDialogInvoice(r)} />
                     ) : null;
                   })}
                 </div>
@@ -414,7 +422,7 @@ const AquaInvoiceComponent = () => {
                   <hr />
                   {customInvoicesLoad.map((r, index) => {
                     return !r.gst ? (
-                      <CustomInvoiceCard key={index} r={r} />
+                      <CustomInvoiceCard key={index} r={r} handleClick={() => loadDialogInvoice(r)} />
                     ) : null;
                   })}
                 </div>
@@ -422,6 +430,29 @@ const AquaInvoiceComponent = () => {
             ) : (
               "No Invoices for selected month"
             )}
+          </div>
+          <div>
+            {DialogSelctedInvoice ? (<><div className="container card shadow-lg">
+              <div className="card-body">
+                <h5>Selected Customer Details</h5>
+                <hr/>
+                <div>
+                <div className="row">
+                  <div className="col">
+                  <h2>Customer Name : {DialogSelctedInvoice.customerDetails.name}</h2>
+                  <h3>Customer Phone : {DialogSelctedInvoice.customerDetails.phone}</h3>
+                  <p>Customer Address : <span className="text-muted">{DialogSelctedInvoice.customerDetails.address}</span></p>
+                  </div>
+                  <div className="col">
+                  <h2>Gst Name : {DialogSelctedInvoice.gstDetails.gstName}</h2>
+                  <h3>Gst no : {DialogSelctedInvoice.gstDetails.gstNo}</h3>
+                  <h3>Gst phone No : {DialogSelctedInvoice.gstDetails.gstPhone}</h3>
+                  <p>Gst Address : <span className="text-muted">{DialogSelctedInvoice.gstDetails.gstAddress}</span></p>
+                  </div>
+                </div>
+                </div>               
+              </div>
+            </div></>) : <h4>No Invoice selectedyet</h4>}
           </div>
         </AquaDialog>
       </AquaLayout>
