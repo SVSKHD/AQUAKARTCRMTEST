@@ -311,22 +311,17 @@ const AquaInvoiceComponent = () => {
     console.log("Selected invoice data:", data);
   }
 
-  const separateInvoices = (data) => {
-    switch (data) {
-      case data.gst:
-        return (
-          <div className="col">
-            <CustomInvoiceCard r={data} />
-          </div>
-        );
-      default:
-        return (
-          <div className="col">
-            <CustomInvoiceCard r={data} />
-          </div>
-        );
-    }
+  const gstValueGenerate = (price) => {
+    let basePrice = Math.floor(price * 0.8474594);
+    let gst = Math.floor(basePrice * 0.18);
+    return gst;
   };
+
+  const BasePrice = (price) => {
+    let basePrice = Math.floor(price * 0.8474594);
+    return basePrice;
+  };
+
 
   return (
     <>
@@ -439,17 +434,43 @@ const AquaInvoiceComponent = () => {
                 <div>
                 <div className="row">
                   <div className="col">
-                  <h2>Customer Name : {DialogSelctedInvoice.customerDetails.name}</h2>
-                  <h3>Customer Phone : {DialogSelctedInvoice.customerDetails.phone}</h3>
-                  <p>Customer Address : <span className="text-muted">{DialogSelctedInvoice.customerDetails.address}</span></p>
+                  <h2>Customer Name : {DialogSelctedInvoice?.customerDetails?.name}</h2>
+                  <h3>Customer Phone : {DialogSelctedInvoice?.customerDetails?.phone}</h3>
+                  <p>Customer Address : <span className="text-muted">{DialogSelctedInvoice?.customerDetails?.address}</span></p>
                   </div>
                   <div className="col">
-                  <h2>Gst Name : {DialogSelctedInvoice.gstDetails.gstName}</h2>
-                  <h3>Gst no : {DialogSelctedInvoice.gstDetails.gstNo}</h3>
-                  <h3>Gst phone No : {DialogSelctedInvoice.gstDetails.gstPhone}</h3>
-                  <p>Gst Address : <span className="text-muted">{DialogSelctedInvoice.gstDetails.gstAddress}</span></p>
+                  {DialogSelctedInvoice.gst? (<div>
+                  <h2>Gst Name : {DialogSelctedInvoice?.gstDetails?.gstName}</h2>
+                  <h3>Gst no : {DialogSelctedInvoice?.gstDetails?.gstNo}</h3>
+                  <h3>Gst phone No : {DialogSelctedInvoice?.gstDetails?.gstPhone}</h3>
+                  <p>Gst Address : <span className="text-muted">{DialogSelctedInvoice?.gstDetails?.gstAddress}</span></p>
+                  </div>) :"Not a Gst claimed invoice"}
+                  
                   </div>
                 </div>
+                <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Serial</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Base-Price</th>
+      <th scope="col">Gst</th>
+      <th scope="col">Total Price</th>
+    </tr>
+  </thead>
+  {DialogSelctedInvoice?.products.map((r,i)=>(
+    <tbody>
+    <tr>
+      <th scope="row">{i+1}</th>
+      <td>{r.productName}</td>
+      <td>₹{BasePrice(r.productPrice)}</td>
+      <td className="text-danger"> ₹{gstValueGenerate(r.productPrice)}</td>
+      <td className="text-success">₹{r.productPrice}</td>
+    </tr>
+  </tbody>
+  ))}
+  
+</table>
                 </div>               
               </div>
             </div></>) : <h4>No Invoice selectedyet</h4>}
