@@ -459,7 +459,7 @@ const AquaInvoiceComponent = () => {
     </tr>
   </thead>
   {DialogSelctedInvoice?.products.map((r,i)=>(
-    <tbody>
+    <tbody key={i}>
     <tr>
       <th scope="row">{i+1}</th>
       <td>{r.productName}</td>
