@@ -10,6 +10,7 @@ import AquaCrmTabs from "@/components/reusables/tabs";
 import AquaDialog from "@/components/reusables/dialog";
 import CustomInvoiceCard from "@/components/cards/customInvoiceCard";
 import React from "react";
+import AquaExportToExcel from "@/components/conversions/excel";
 
 const AquaInvoiceComponent = () => {
   const router = useRouter();
@@ -426,6 +427,7 @@ const AquaInvoiceComponent = () => {
               "No Invoices for selected month"
             )}
           </div>
+          <AquaExportToExcel invoices={customInvoicesLoad} />
           <div>
             {DialogSelctedInvoice ? (<><div className="container card shadow-lg">
               <div className="card-body">
