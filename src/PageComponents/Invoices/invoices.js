@@ -61,7 +61,7 @@ const AquaInvoiceComponent = () => {
   const [customInvoiceDialog, setCustomInvoicesDialog] = useState(false);
   const [customInvoicesLoading, setCustomInvoicesLoading] = useState(false);
   const [customInvoicesLoad, setCustomInvoicesLoad] = useState([]);
-  const [DialogSelctedInvoice, setDialogSelectedInvoice] = useState({})
+  const [DialogSelctedInvoice, setDialogSelectedInvoice] = useState({});
   const {
     getInvoices,
     getGstInvoices,
@@ -310,7 +310,7 @@ const AquaInvoiceComponent = () => {
 
     // The console.log here will not immediately reflect the updated state due to async nature of setState
     console.log("Selected invoice data:", data);
-  }
+  };
 
   const gstValueGenerate = (price) => {
     let basePrice = Math.floor(price * 0.8474594);
@@ -322,7 +322,6 @@ const AquaInvoiceComponent = () => {
     let basePrice = Math.floor(price * 0.8474594);
     return basePrice;
   };
-
 
   return (
     <>
@@ -386,19 +385,21 @@ const AquaInvoiceComponent = () => {
         >
           <h4>Total Invoices - {customInvoicesLoad.length}</h4>
           <h5 className="text-success">
-            Total value - ₹{
-              new Intl.NumberFormat('en-IN').format(
-                customInvoicesLoad.reduce((total, invoice) => {
-                  // Sum up the productPrice for each product in the invoice
-                  const invoiceTotal = invoice.products.reduce((invoiceSum, product) => {
+            Total value - ₹
+            {new Intl.NumberFormat("en-IN").format(
+              customInvoicesLoad.reduce((total, invoice) => {
+                // Sum up the productPrice for each product in the invoice
+                const invoiceTotal = invoice.products.reduce(
+                  (invoiceSum, product) => {
                     return invoiceSum + product.productPrice;
-                  }, 0);
+                  },
+                  0,
+                );
 
-                  // Add the total for this invoice to the running total for all invoices
-                  return total + invoiceTotal;
-                }, 0) // Start with 0 total
-              )
-            }
+                // Add the total for this invoice to the running total for all invoices
+                return total + invoiceTotal;
+              }, 0), // Start with 0 total
+            )}
           </h5>
 
           <div className="row">
@@ -409,7 +410,11 @@ const AquaInvoiceComponent = () => {
                   <hr />
                   {customInvoicesLoad.map((r, index) => {
                     return r.gst ? (
-                      <CustomInvoiceCard key={index} r={r} handleClick={() => loadDialogInvoice(r)} />
+                      <CustomInvoiceCard
+                        key={index}
+                        r={r}
+                        handleClick={() => loadDialogInvoice(r)}
+                      />
                     ) : null;
                   })}
                 </div>
@@ -418,7 +423,11 @@ const AquaInvoiceComponent = () => {
                   <hr />
                   {customInvoicesLoad.map((r, index) => {
                     return !r.gst ? (
-                      <CustomInvoiceCard key={index} r={r} handleClick={() => loadDialogInvoice(r)} />
+                      <CustomInvoiceCard
+                        key={index}
+                        r={r}
+                        handleClick={() => loadDialogInvoice(r)}
+                      />
                     ) : null;
                   })}
                 </div>
@@ -429,53 +438,91 @@ const AquaInvoiceComponent = () => {
           </div>
           <AquaExportToExcel invoices={customInvoicesLoad} />
           <div>
-            {DialogSelctedInvoice ? (<><div className="container card shadow-lg">
-              <div className="card-body">
-                <h5>Selected Customer Details</h5>
-                <hr/>
-                <div>
-                <div className="row">
-                  <div className="col">
-                  <h2>Customer Name : {DialogSelctedInvoice?.customerDetails?.name}</h2>
-                  <h3>Customer Phone : {DialogSelctedInvoice?.customerDetails?.phone}</h3>
-                  <p>Customer Address : <span className="text-muted">{DialogSelctedInvoice?.customerDetails?.address}</span></p>
-                  </div>
-                  <div className="col">
-                  {DialogSelctedInvoice.gst? (<div>
-                  <h2>Gst Name : {DialogSelctedInvoice?.gstDetails?.gstName}</h2>
-                  <h3>Gst no : {DialogSelctedInvoice?.gstDetails?.gstNo}</h3>
-                  <h3>Gst phone No : {DialogSelctedInvoice?.gstDetails?.gstPhone}</h3>
-                  <p>Gst Address : <span className="text-muted">{DialogSelctedInvoice?.gstDetails?.gstAddress}</span></p>
-                  </div>) :"Not a Gst claimed invoice"}
-                  
+            {DialogSelctedInvoice ? (
+              <>
+                <div className="container card shadow-lg">
+                  <div className="card-body">
+                    <h5>Selected Customer Details</h5>
+                    <hr />
+                    <div>
+                      <div className="row">
+                        <div className="col">
+                          <h2>
+                            Customer Name :{" "}
+                            {DialogSelctedInvoice?.customerDetails?.name}
+                          </h2>
+                          <h3>
+                            Customer Phone :{" "}
+                            {DialogSelctedInvoice?.customerDetails?.phone}
+                          </h3>
+                          <p>
+                            Customer Address :{" "}
+                            <span className="text-muted">
+                              {DialogSelctedInvoice?.customerDetails?.address}
+                            </span>
+                          </p>
+                        </div>
+                        <div className="col">
+                          {DialogSelctedInvoice.gst ? (
+                            <div>
+                              <h2>
+                                Gst Name :{" "}
+                                {DialogSelctedInvoice?.gstDetails?.gstName}
+                              </h2>
+                              <h3>
+                                Gst no :{" "}
+                                {DialogSelctedInvoice?.gstDetails?.gstNo}
+                              </h3>
+                              <h3>
+                                Gst phone No :{" "}
+                                {DialogSelctedInvoice?.gstDetails?.gstPhone}
+                              </h3>
+                              <p>
+                                Gst Address :{" "}
+                                <span className="text-muted">
+                                  {DialogSelctedInvoice?.gstDetails?.gstAddress}
+                                </span>
+                              </p>
+                            </div>
+                          ) : (
+                            "Not a Gst claimed invoice"
+                          )}
+                        </div>
+                      </div>
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Serial</th>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Base-Price</th>
+                            <th scope="col">Gst</th>
+                            <th scope="col">Total Price</th>
+                          </tr>
+                        </thead>
+                        {DialogSelctedInvoice?.products?.map((r, i) => (
+                          <tbody key={i}>
+                            <tr>
+                              <th scope="row">{i + 1}</th>
+                              <td>{r.productName}</td>
+                              <td>₹{BasePrice(r.productPrice)}</td>
+                              <td className="text-danger">
+                                {" "}
+                                ₹{gstValueGenerate(r.productPrice)}
+                              </td>
+                              <td className="text-success">
+                                ₹{r.productPrice}
+                              </td>
+                            </tr>
+                          </tbody>
+                        ))}
+                      </table>
+                    </div>
                   </div>
                 </div>
-                <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Serial</th>
-      <th scope="col">Product Name</th>
-      <th scope="col">Base-Price</th>
-      <th scope="col">Gst</th>
-      <th scope="col">Total Price</th>
-    </tr>
-  </thead>
-  {DialogSelctedInvoice?.products?.map((r,i)=>(
-    <tbody key={i}>
-    <tr>
-      <th scope="row">{i+1}</th>
-      <td>{r.productName}</td>
-      <td>₹{BasePrice(r.productPrice)}</td>
-      <td className="text-danger"> ₹{gstValueGenerate(r.productPrice)}</td>
-      <td className="text-success">₹{r.productPrice}</td>
-    </tr>
-  </tbody>
-  ))}
-  
-</table>
-                </div>               
-              </div>
-            </div></>) : <h4>No Invoice selectedyet</h4>}
+              </>
+            ) : (
+              <h4>No Invoice selectedyet</h4>
+            )}
           </div>
         </AquaDialog>
       </AquaLayout>

@@ -1,7 +1,7 @@
 // components/ExportToExcel.js
 
-import React from 'react';
-import * as XLSX from 'xlsx';
+import React from "react";
+import * as XLSX from "xlsx";
 
 // Assuming 'invoices' is your array of invoice objects
 
@@ -22,34 +22,38 @@ const AquaExportToExcel = ({ invoices }) => {
       const enhancedProducts = invoice.products.map((product) => ({
         ...product,
         basePrice: BasePrice(product.productPrice),
-        gst: gstValueGenerate(product.productPrice)
+        gst: gstValueGenerate(product.productPrice),
       }));
 
       return {
         ...invoice,
-        products: enhancedProducts
+        products: enhancedProducts,
       };
     });
 
-    const exportData = enhancedInvoices.flatMap(invoice =>
-      invoice.products.map(product => ({
+    const exportData = enhancedInvoices.flatMap((invoice) =>
+      invoice.products.map((product) => ({
         InvoiceNo: invoice.invoiceNo,
         CustomerName: invoice.customerDetails.name,
         ProductName: product.productName,
         ProductQuantity: product.productQuantity,
         ProductPrice: product.productPrice,
         BasePrice: product.basePrice,
-        GST: product.gst
-      }))
+        GST: product.gst,
+      })),
     );
 
     const worksheet = XLSX.utils.json_to_sheet(exportData);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Invoices');
-    XLSX.writeFile(workbook, 'EnhancedInvoices.xlsx');
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Invoices");
+    XLSX.writeFile(workbook, "EnhancedInvoices.xlsx");
   };
 
-  return <button className='btn btn-primary' onClick={exportToExcel}>Export to Excel</button>;
+  return (
+    <button className="btn btn-primary" onClick={exportToExcel}>
+      Export to Excel
+    </button>
+  );
 };
 
 export default AquaExportToExcel;

@@ -7,9 +7,10 @@ const CustomInvoiceCard = ({ r, handleClick }) => {
           {gst ? (
             <>
               <h3 class="card-title">{gstDetails.gstName}</h3>
-              <h4><span class="badge text-bg-success">
-                Gst : {gstDetails.gstNo}
-              </span>
+              <h4>
+                <span class="badge text-bg-success">
+                  Gst : {gstDetails.gstNo}
+                </span>
               </h4>
             </>
           ) : (
@@ -20,9 +21,10 @@ const CustomInvoiceCard = ({ r, handleClick }) => {
               </h6>
             </>
           )}
-          <button className="btn btn-base" onClick={(r) => handleClick(r)}>Show More</button>
+          <button className="btn btn-base" onClick={(r) => handleClick(r)}>
+            Show More
+          </button>
         </div>
-
       </div>
     </>
   );

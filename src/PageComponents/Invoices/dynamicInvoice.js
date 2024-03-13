@@ -11,6 +11,7 @@ import "jspdf-autotable";
 import Image from "next/image";
 import InvoiceOperations from "@/services/invoice";
 import GstInvoicePlaceHolder from "@/components/reusables/gstInvoicePlaceholder";
+import AquaToast from "@/components/reusables/toast";
 
 const AquaDyanamicInvoicesComponent = () => {
   const Router = useRouter();
@@ -254,6 +255,25 @@ const AquaDyanamicInvoicesComponent = () => {
     // Save PDF
     doc.save(`${customerDetails.name}_invoice.pdf`);
   };
+
+
+  const copyToClipboard = (elementId) => {
+    const element = document.getElementById(elementId);
+    // Create a new div element to process the innerHTML
+    const div = document.createElement('div');
+    div.innerHTML = element.innerHTML;
+    // Replace <br> tags with newline characters
+    let textToCopy = div.innerText;
+
+    navigator.clipboard.writeText(textToCopy)
+      .then(() => {
+       AquaToast("Successfully Copied", "Success")
+      })
+      .catch(err => {
+        console.error('Error in copying text: ', err);
+      });
+  };
+
 
   let termsAndConditions = [
     {
@@ -530,6 +550,62 @@ const AquaDyanamicInvoicesComponent = () => {
               <hr />
             </div>
 
+            {PO ? (
+              <>
+                <div className="card">
+                  <div className="card-body">
+                    <div className="row">
+                      <div className="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                        <h5>Our ICICI Bank</h5>
+                        <hr />
+                        {/* Clickable div for ICICI details */}
+                        <div
+                          id="iciciDetails"
+                          onClick={() => copyToClipboard("iciciDetails")}
+                        >
+                          A/c-name: Kundana Enterprises
+                          <br />
+                          A/c-no: 8813356673
+                          <br />
+                          IFSC: KKBK0007463
+                        </div>
+                      </div>
+                      <div className="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                        <h5>Our KOTAK Bank</h5>
+                        <hr />
+                        {/* Clickable div for KOTAK details */}
+                        <div
+                          id="kotakDetails"
+                          onClick={() => copyToClipboard("kotakDetails")}
+                        >
+                          A/c-name: Kundana Enterprises
+                          <br />
+                          A/c-no: 131605003314
+                          <br />
+                          IFSC: ICIC0001316
+                        </div>
+                      </div>
+                      <div className="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                        <h5>UPI</h5>
+                        <hr />
+                        {/* Clickable div for UPI details */}
+                        <div
+                          id="upiDetails"
+                          onClick={() => copyToClipboard("upiDetails")}
+                        >
+                          Gpay: 9182119842
+                          <br />
+                          PhonePe: 9182119842
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr/>
+              </>
+            ) : (
+              ""
+            )}
             <h5 className="mb-3 text-danger">Terms & Conditions</h5>
 
             {termsAndConditions.map((r, i) => (

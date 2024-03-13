@@ -10,19 +10,19 @@ Router.get(async (req, res) => {
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   await db.connectDb();
-  
+
   const { categoryId, id } = req.query;
-  
+
   if (id) {
     const productById = await AquaProduct.findById(id);
     // Find related products by category, excluding the current product by ID
     const relatedProducts = await AquaProduct.find({
       category: productById.category,
-      _id: { $ne: id }
+      _id: { $ne: id },
     });
     const productWithRelated = {
       ...productById.toObject(), // Convert the Mongoose document to a plain JavaScript object
-      relatedProducts
+      relatedProducts,
     };
     res.status(200).json(productWithRelated);
   } else if (categoryId) {
@@ -35,6 +35,5 @@ Router.get(async (req, res) => {
 
   db.disconnectDb();
 });
-
 
 export default Router.handler();

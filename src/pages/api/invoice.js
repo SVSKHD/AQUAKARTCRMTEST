@@ -102,8 +102,7 @@ router.get(async (req, res) => {
         $gte: startDate,
         $lte: endDate,
       },
-    })
-      .sort({ createdAt: -1 })
+    }).sort({ createdAt: -1 });
     res.status(200).json(monthlyInvoices);
     db.disconnectDb();
   } else if (year) {
