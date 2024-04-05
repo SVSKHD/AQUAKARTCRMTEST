@@ -218,12 +218,14 @@ const AquaDyanamicInvoicesComponent = () => {
     // Products Table
     let startY = customerAddressY + 20; // Adjust startY based on the last text's Y position
     doc.autoTable({
-      head: [["Item Description", "QTY", "BASE-PRICE", "GST(18%)", "TOTAL"]],
+      head: [["Item Description", "QTY", "BASE-PRICE", "GST(18%)", "CGST (9%)", "SGST(9%)" "TOTAL"]],
       body: products.map((p) => [
         p.productName,
         p.productQuantity,
         `${BasePrice(p.productPrice)}`,
         `${gstValueGenerate(p.productPrice)}`,
+        `${gstValueGenerate(p.productPrice)/2}`,
+        `${gstValueGenerate(p.productPrice)/2}`,
         `${p.productPrice.toFixed(2)}`,
       ]),
       startY: startY,
