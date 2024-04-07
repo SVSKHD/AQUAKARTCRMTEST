@@ -151,7 +151,7 @@ const AquaDyanamicInvoicesComponent = () => {
       60 + 5 * splitAuthorizedDealers.length,
     );
     doc.text(
-      `Call us at: 9812118942`,
+      `Call us at: 9014774667`,
       20,
       65 + 5 * splitAuthorizedDealers.length,
     );
