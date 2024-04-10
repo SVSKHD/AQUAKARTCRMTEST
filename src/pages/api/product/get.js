@@ -6,9 +6,16 @@ import AquaCategory from "@/Backend/models/category";
 const Router = createRouter();
 
 Router.get(async (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://www.aquakart.co.in", "http://localhost:3000");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  const allowedOrigins = ['https://www.aquakart.co.in', 'http://localhost:3000'];
+  const origin = req.headers.origin;
+
+  // If the request's origin is in our list of allowed origins, set the header.
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   await db.connectDb();
 
   const { categoryId, id } = req.query;
