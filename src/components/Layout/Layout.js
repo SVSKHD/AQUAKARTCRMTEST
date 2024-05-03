@@ -9,7 +9,7 @@ const AquaLayout = (props) => {
   const { user } = useSelector((state) => ({ ...state }));
   useEffect(() => {
     if (!user) {
-     console.log("user", user)
+      console.log("user", user);
       dispatch({
         type: "SET_AUTH_DIALOG_VISIBLE",
         payload: true,
@@ -24,11 +24,23 @@ const AquaLayout = (props) => {
       </div>
       <div className="container-fluid mb-1 mt-1">
         <AquaCardLayover>
-          {user ? ( <div className="body-adjust">{props.children}</div>) : (<div className="text-center"><button onClick={()=> dispatch({
-        type: "SET_AUTH_DIALOG_VISIBLE",
-        payload: true,
-      })} className="btn btn-outline-dark">Login to access</button></div>)}
-         
+          {user ? (
+            <div className="body-adjust">{props.children}</div>
+          ) : (
+            <div className="text-center">
+              <button
+                onClick={() =>
+                  dispatch({
+                    type: "SET_AUTH_DIALOG_VISIBLE",
+                    payload: true,
+                  })
+                }
+                className="btn btn-outline-dark"
+              >
+                Login to access
+              </button>
+            </div>
+          )}
         </AquaCardLayover>
       </div>
     </>

@@ -218,14 +218,24 @@ const AquaDyanamicInvoicesComponent = () => {
     // Products Table
     let startY = customerAddressY + 20; // Adjust startY based on the last text's Y position
     doc.autoTable({
-      head: [["Item Description", "QTY", "BASE-PRICE", "GST(18%)", "CGST (9%)", "SGST(9%)" , "TOTAL"]],
+      head: [
+        [
+          "Item Description",
+          "QTY",
+          "BASE-PRICE",
+          "GST(18%)",
+          "CGST (9%)",
+          "SGST(9%)",
+          "TOTAL",
+        ],
+      ],
       body: products.map((p) => [
         p.productName,
         p.productQuantity,
         `${BasePrice(p.productPrice)}`,
         `${gstValueGenerate(p.productPrice)}`,
-        `${gstValueGenerate(p.productPrice)/2}`,
-        `${gstValueGenerate(p.productPrice)/2}`,
+        `${gstValueGenerate(p.productPrice) / 2}`,
+        `${gstValueGenerate(p.productPrice) / 2}`,
         `${p.productPrice.toFixed(2)}`,
       ]),
       startY: startY,
@@ -258,24 +268,23 @@ const AquaDyanamicInvoicesComponent = () => {
     doc.save(`${customerDetails.name}_invoice.pdf`);
   };
 
-
   const copyToClipboard = (elementId) => {
     const element = document.getElementById(elementId);
     // Create a new div element to process the innerHTML
-    const div = document.createElement('div');
+    const div = document.createElement("div");
     div.innerHTML = element.innerHTML;
     // Replace <br> tags with newline characters
     let textToCopy = div.innerText;
 
-    navigator.clipboard.writeText(textToCopy)
+    navigator.clipboard
+      .writeText(textToCopy)
       .then(() => {
-       AquaToast("Successfully Copied", "Success")
+        AquaToast("Successfully Copied", "Success");
       })
-      .catch(err => {
-        console.error('Error in copying text: ', err);
+      .catch((err) => {
+        console.error("Error in copying text: ", err);
       });
   };
-
 
   let termsAndConditions = [
     {
@@ -603,7 +612,7 @@ const AquaDyanamicInvoicesComponent = () => {
                     </div>
                   </div>
                 </div>
-                <hr/>
+                <hr />
               </>
             ) : (
               ""

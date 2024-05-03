@@ -1,7 +1,8 @@
-import { Nav, Container, Button } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
 import Image from "next/image";
 import { useSelector } from "react-redux";
+import { FaArrowRightFromBracket } from "react-icons/fa";
 
 const AquaNav = () => {
   const { user } = useSelector((state) => ({ ...state }));
@@ -24,7 +25,9 @@ const AquaNav = () => {
                 <Navbar.Text>
                   Signed in as: <a href="#login">{user.user.name}</a>
                 </Navbar.Text>
-                <Button className="ms-2" variant="outline-success">Search</Button>
+                <button className="ms-2" variant="outline-danger">
+                  <FaArrowRightFromBracket size={30} />
+                </button>
               </>
             ) : (
               ""

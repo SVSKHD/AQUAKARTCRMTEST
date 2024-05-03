@@ -33,9 +33,9 @@ const AquaCrmLogin = () => {
         router.push("/home");
         console.log(res.data);
         dispatch({
-            type:"LOGGED_IN_USER",
-            payload:res.data
-        })
+          type: "LOGGED_IN_USER",
+          payload: res.data,
+        });
       })
       .catch((err) => {
         AquaToast("sorry try again", "error");
