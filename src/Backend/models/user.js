@@ -35,6 +35,7 @@ const UserSchema = new mongoose.Schema({
   ],
   referral: String,
   profilePic: String,
+  token: String,
 });
 
 UserSchema.pre("save", function (next) {

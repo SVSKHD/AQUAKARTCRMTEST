@@ -1,13 +1,15 @@
-import Nav from "react-bootstrap/Nav";
+import { Nav, Container , Button} from "react-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
 import Image from "next/image";
+import { useSelector } from "react-redux";
 
 const AquaNav = () => {
+  const { user } = useSelector((state) => ({ ...state }));
   return (
     <div className="custom-nav shadow-lg mb-3">
-      <Navbar expand="lg" className="custom-nav bg-body-tertiary">
-        <div className="container-fluid">
-          <Navbar.Brand href="/admin/crm">
+      <Navbar className="custom-nav bg-body-tertiary">
+        <Container>
+          <Navbar.Brand href="#home">
             <Image
               src="https://res.cloudinary.com/aquakartproducts/image/upload/v1695408027/apple-touch-icon_zzuye9.png"
               height="50"
@@ -15,15 +17,20 @@ const AquaNav = () => {
               alt="Aquakart"
             />
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarScroll" />
-          <Navbar.Collapse id="navbarScroll">
-            <Nav
-              className="me-auto my-2 my-lg-0"
-              style={{ maxHeight: "100px" }}
-              navbarScroll
-            ></Nav>
+          <Navbar.Toggle />
+          <Navbar.Collapse className="justify-content-end">
+            {user ? (
+              <>
+              <Navbar.Text>
+                Signed in as: <a href="#login">{user.user.name}</a>
+              </Navbar.Text>
+              <Button variant="outline-success">Search</Button>
+              </>
+            ) : (
+              ""
+            )}
           </Navbar.Collapse>
-        </div>
+        </Container>
       </Navbar>
     </div>
   );

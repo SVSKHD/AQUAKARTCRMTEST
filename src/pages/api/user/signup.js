@@ -15,7 +15,7 @@ Router.use((req, res, next) => {
 
   res.setHeader(
     "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, OPTIONS",
+    "GET, POST, PUT, DELETE, OPTIONS"
   );
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
@@ -30,7 +30,7 @@ Router.use((req, res, next) => {
 
 Router.post(async (req, res) => {
   await db.connectDb();
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:4000");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   const { email, password } = req.body;
@@ -47,6 +47,7 @@ Router.post(async (req, res) => {
     email,
     password: hashedPassword,
     username: username,
+    role: "admin",
   });
 
   await newUser.save();

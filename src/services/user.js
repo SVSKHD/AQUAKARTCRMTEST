@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const userLogin = (data) => axios.post("/api/login", data);
+const userLogin = (data) => axios.post("/admin/crm/api/user/login", data);
 
 const userOperations = () => {
   return {

@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 const AquaInput = ({
   label,
   placeholder,
@@ -9,6 +10,7 @@ const AquaInput = ({
   maxlength,
   error,
 }) => {
+  const inputId = nanoid(3);
   return (
     <>
       {Address ? (
@@ -22,9 +24,10 @@ const AquaInput = ({
             </label>
             <div className="col-sm-12 col-xs-12 col-lg-8 col-md-8">
               <textarea
+                id={`textarea-${inputId}`}
                 className="form-control"
                 placeholder={placeholder}
-                onChange={handleChange}
+                onChange={handleChange} 
                 name={name}
                 maxLength={maxlength}
                 value={value}
@@ -45,7 +48,7 @@ const AquaInput = ({
             <div className="col-sm-12 col-xs-12 col-lg-8 col-md-8">
               <input
                 className="form-control"
-                id="inputEmail3"
+                id={inputId}
                 placeholder={placeholder}
                 onChange={handleChange}
                 name={name}
