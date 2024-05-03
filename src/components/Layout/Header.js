@@ -1,4 +1,4 @@
-import { Nav, Container , Button} from "react-bootstrap";
+import { Nav, Container, Button } from "react-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
 import Image from "next/image";
 import { useSelector } from "react-redux";
@@ -21,10 +21,10 @@ const AquaNav = () => {
           <Navbar.Collapse className="justify-content-end">
             {user ? (
               <>
-              <Navbar.Text>
-                Signed in as: <a href="#login">{user.user.name}</a>
-              </Navbar.Text>
-              <Button variant="outline-success">Search</Button>
+                <Navbar.Text>
+                  Signed in as: <a href="#login">{user.user.name}</a>
+                </Navbar.Text>
+                <Button className="ms-2" variant="outline-success">Search</Button>
               </>
             ) : (
               ""
