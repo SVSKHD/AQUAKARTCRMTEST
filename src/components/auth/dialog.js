@@ -85,7 +85,7 @@ const AuthDialog = () => {
             handleChange={handleChange}
             placeholder="Enter password"
           />
-          <Button variant="dark" type="submit">
+          <Button variant="dark" type="submit" disabled={errorStatus.loading}>
             {errorStatus.loading ? (
               <>
                 <div class="spinner-border" role="status" />
