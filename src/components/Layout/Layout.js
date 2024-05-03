@@ -10,10 +10,10 @@ const AquaLayout = (props) => {
   useEffect(() => {
     if (!user) {
      console.log("user", user)
-      // dispatch({
-      //   type: "SET_AUTH_DIALOG_VISIBLE",
-      //   payload: true,
-      // });
+      dispatch({
+        type: "SET_AUTH_DIALOG_VISIBLE",
+        payload: true,
+      });
     }
   }, [user, dispatch]);
   return (
