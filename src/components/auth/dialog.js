@@ -8,6 +8,7 @@ import { Button, Badge } from "react-bootstrap";
 const AuthDialog = () => {
   const [userData, setUserData] = useState({ email: "", password: "" });
   const [errorStatus, setErrorStatus] = useState({
+    loading: false,
     error: false,
     errorMessage: "",
   });
@@ -30,6 +31,7 @@ const AuthDialog = () => {
 
   const handleSignupData = (event) => {
     event.preventDefault();
+    setErrorStatus({ ...errorStatus, loading: true });
     if (!userData.email && !userData.password) {
       setErrorStatus({
         error: true,
@@ -44,9 +46,14 @@ const AuthDialog = () => {
         .then((res) => {
           dispatch({ type: "LOGGED_IN_USER", payload: res.data });
           dispatch({ type: "SET_AUTH_DIALOG_VISIBLE", payload: false });
+          setErrorStatus({ ...errorStatus, loading: false });
         })
         .catch((err) => {
-          setErrorStatus({ error: true, errorMessage: err.message });
+          setErrorStatus({
+            error: true,
+            errorMessage: err.message,
+            loading: false,
+          });
         });
     }
   };
@@ -79,7 +86,13 @@ const AuthDialog = () => {
             placeholder="Enter password"
           />
           <Button variant="dark" type="submit">
-            {userSignupStatus ? "Signup" : "Signin"}
+            {errorStatus.loading ? (
+              <>
+                <div class="spinner-border" role="status" />
+              </>
+            ) : (
+              <> {userSignupStatus ? "Signup" : "Signin"}</>
+            )}
           </Button>
         </form>
       </div>

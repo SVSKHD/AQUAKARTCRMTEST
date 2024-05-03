@@ -1,10 +1,11 @@
 import { Container, Button } from "react-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
 import Image from "next/image";
-import { useSelector } from "react-redux";
-import { FaArrowRightFromBracket } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
+import { FaArrowRightFromBracket } from "react-icons/fa6";
 
 const AquaNav = () => {
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => ({ ...state }));
   return (
     <div className="custom-nav shadow-lg mb-3">
@@ -25,8 +26,11 @@ const AquaNav = () => {
                 <Navbar.Text>
                   Signed in as: <a href="#login">{user.user.name}</a>
                 </Navbar.Text>
-                <button className="ms-2" variant="outline-danger">
-                  <FaArrowRightFromBracket size={30} />
+                <button
+                  className="ms-2 btn btn-danger"
+                  onClick={() => dispatch({ type: "LOGOUT", payload: null })}
+                >
+                  <FaArrowRightFromBracket size={25} />
                 </button>
               </>
             ) : (
