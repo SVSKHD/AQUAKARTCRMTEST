@@ -78,7 +78,7 @@ Router.put(async (req, res) => {
 
       for (const file of files) {
         const result = await cloudinary.uploader.upload(file.tempFilePath, {
-          folder: "blogs",
+          folder: "Blogs",
         });
         photos.push({
           id: result.public_id,
