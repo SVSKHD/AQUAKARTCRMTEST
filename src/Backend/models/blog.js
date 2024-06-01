@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const BlogSchema = new mongoose.Schema({
-  photos: [
+  titleImage: [
     {
       id: {
         type: String,
@@ -56,7 +56,7 @@ const BlogSchema = new mongoose.Schema({
   },
   brand: {
     type: String,
-    required: [true, "please add a brand for clothing"],
+    required: [true, "please add a brand"],
   },
   ratings: {
     type: Number,
