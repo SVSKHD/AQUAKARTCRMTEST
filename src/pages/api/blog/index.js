@@ -39,10 +39,10 @@ Router.post(async (req, res) => {
     }
 
     req.body.photos = photos;
-    const Product = await AquaBlog.create(req.body);
+    const Blog = await AquaBlog.create(req.body);
     res
       .status(201)
-      .json({ message: "Product created successfully", data: Product });
+      .json({ message: "Blog created successfully", data: Blog });
   } catch (error) {
     res.status(500).json({ error: `Server error: ${error.message}` });
   } finally {
@@ -68,7 +68,7 @@ Router.put(async (req, res) => {
 
     // Check if the category was found and updated
     if (!updatedProduct) {
-      return res.status(404).json({ error: "Product not found" });
+      return res.status(404).json({ error: "Blog not found" });
     }
 
     // Handle multiple file uploads to Cloudinary if needed
@@ -78,7 +78,7 @@ Router.put(async (req, res) => {
 
       for (const file of files) {
         const result = await cloudinary.uploader.upload(file.tempFilePath, {
-          folder: "products",
+          folder: "blogs",
         });
         photos.push({
           id: result.public_id,
@@ -103,5 +103,35 @@ Router.put(async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+
+
+Router.delete(async (req, res) => {
+  try {
+    const { id } = req.query;
+
+    await db.connectDb();
+
+    const blogToDelete = await AquaBlog.findById(id);
+    if (!blogToDelete) {
+      return res.status(404).json({ error: "Blog not found" });
+    }
+
+    // Delete associated images from Cloudinary
+    for (const photo of blogToDelete.photos) {
+      await cloudinary.uploader.destroy(photo.id);
+    }
+
+    // Remove the blog post from MongoDB
+    await AquaBlog.deleteOne({ _id: id });
+
+    db.disconnectDb();
+
+    res.status(200).json({ message: "Blog deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 
 export default Router.handler();
