@@ -38,10 +38,9 @@ const BlogSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "AquaSubCategory",
   },
-  //this field was updated in order videos later
-  stock: {
-    type: Number,
-    required: [true, "please add a number in stock"],
+  product: {
+    type: mongoose.Schema.ObjectId,
+    ref: "AquaProduct",
   },
   brand: {
     type: String,
