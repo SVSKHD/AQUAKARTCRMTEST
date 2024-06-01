@@ -30,7 +30,7 @@ Router.post(async (req, res) => {
     // Handle multiple file uploads to Cloudinary
     for (const file of files) {
       const result = await cloudinary.uploader.upload(file.tempFilePath, {
-        folder: "products",
+        folder: "Blogs",
       });
       photos.push({
         id: result.public_id,
@@ -95,7 +95,7 @@ Router.put(async (req, res) => {
     db.disconnectDb();
 
     res.status(200).json({
-      message: "Product Updated successfully",
+      message: "Blog Updated successfully",
       data: updatedProduct,
     });
   } catch (error) {
@@ -103,35 +103,5 @@ Router.put(async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
-
-
-Router.delete(async (req, res) => {
-  try {
-    const { id } = req.query;
-
-    await db.connectDb();
-
-    const blogToDelete = await AquaBlog.findById(id);
-    if (!blogToDelete) {
-      return res.status(404).json({ error: "Blog not found" });
-    }
-
-    // Delete associated images from Cloudinary
-    for (const photo of blogToDelete.photos) {
-      await cloudinary.uploader.destroy(photo.id);
-    }
-
-    // Remove the blog post from MongoDB
-    await AquaBlog.deleteOne({ _id: id });
-
-    db.disconnectDb();
-
-    res.status(200).json({ message: "Blog deleted successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
-  }
-});
-
 
 export default Router.handler();
