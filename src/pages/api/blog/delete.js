@@ -22,8 +22,7 @@ Router.get(async (req, res) => {
   
       // Delete associated images from Cloudinary
       const deleteImagesPromises = blogToDelete.photos.map(photo => {
-        const publicId = photo.id.split('/').pop();
-        return cloudinary.uploader.destroy(publicId);
+        return cloudinary.uploader.destroy(photo.id);
       });
       await Promise.all(deleteImagesPromises);
   

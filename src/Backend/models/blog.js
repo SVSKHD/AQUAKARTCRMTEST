@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const BlogSchema = new mongoose.Schema({
-  titleImage: [
+  titleImages: [
     {
       id: {
         type: String,
