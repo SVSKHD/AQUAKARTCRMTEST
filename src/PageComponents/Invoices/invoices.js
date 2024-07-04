@@ -11,6 +11,8 @@ import AquaDialog from "@/components/reusables/dialog";
 import CustomInvoiceCard from "@/components/cards/customInvoiceCard";
 import React from "react";
 import AquaExportToExcel from "@/components/conversions/excel";
+import notifyServiceOperarations from "@/services/send";
+import { useSelector } from "react-redux";
 
 const AquaInvoiceComponent = () => {
   const router = useRouter();
@@ -48,6 +50,7 @@ const AquaInvoiceComponent = () => {
     paidStatus: "",
     paymentType: "",
   };
+  const {user} = useSelector((state)=>({...state}))
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState("");
   const [mode, setMode] = useState("");
@@ -183,6 +186,13 @@ const AquaInvoiceComponent = () => {
     router.push(`/invoice/${id}`);
   };
 
+  const handleSend = (id) => {
+    const invoiceId = id._id
+    const invoice = `https://aquakart.co.in/admin/crm/invoice/${invoiceId}`;
+    const message = `Hello Dear "${id.customerDetails.name}" we welcome you to Aquakart Family and here is your live invoice link ${invoice} and we offer you more discounts at aquakart.co.in`;
+    notifyServiceOperarations.sendWhatsAppMessage(user.token, 9553419654, message)
+  }
+
   const [activeTab, setActiveTab] = useState("customers"); // Initial active tab
 
   const handleTabChange = (key) => {
@@ -207,6 +217,7 @@ const AquaInvoiceComponent = () => {
                 handleEdit={() => handleEdit(i, r)}
                 handleDelete={() => deleteInvoice(r._id)}
                 handleShare={() => handleShare(r._id)}
+                handleSend={()=>handleSend(r)}
                 r={r}
               />
             </div>
@@ -226,6 +237,7 @@ const AquaInvoiceComponent = () => {
                 handleEdit={() => handleEdit(i, r)}
                 handleDelete={() => deleteInvoice(i)}
                 handleShare={() => handleShare(r._id)}
+                handleSend={()=>handleSend(r)}
                 r={r}
               />
             </div>
@@ -244,6 +256,7 @@ const AquaInvoiceComponent = () => {
                 handleEdit={() => handleEdit(i, r)}
                 handleDelete={() => deleteInvoice(r._id)}
                 handleShare={() => handleShare(r._id)}
+                handleSend={()=>handleSend(r)}
                 r={r}
               />
             </div>
@@ -262,6 +275,7 @@ const AquaInvoiceComponent = () => {
                 handleEdit={() => handleEdit(i, r)}
                 handleDelete={() => deleteInvoice(r._id)}
                 handleShare={() => handleShare(r._id)}
+                handleSend={()=>handleSend(r)}
                 r={r}
               />
             </div>

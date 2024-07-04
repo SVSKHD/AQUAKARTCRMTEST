@@ -22,7 +22,7 @@ const AquaLayout = (props) => {
         <AquaNav />
         <AuthDialog />
       </div>
-      <div className="container-fluid mb-1 mt-1">
+      <div className="container mb-1 mt-1">
         <AquaCardLayover>
           {user ? (
             <div className="body-adjust">{props.children}</div>
