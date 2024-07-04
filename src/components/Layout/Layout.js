@@ -8,7 +8,7 @@ const AquaLayout = (props) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => ({ ...state }));
   useEffect(() => {
-    console.log("api", process.env.NEXT_PUBLIC_API_URL)
+    console.log("api", process.env.NEXT_PUBLIC_API_URL , process.env.NEXT_PUBLIC_API_DB)
     if (!user) {
       console.log("user", user);
       dispatch({
