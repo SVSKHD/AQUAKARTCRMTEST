@@ -62,6 +62,7 @@ const HomeComponent = () => {
       icon: <FaDollarSign size={30} />,
     },
   ];
+  console.log("api-home", process.env.NEXT_PUBLIC_API_URL , process.env.NEXT_PUBLIC_API_DB)
   return (
     <>
       <AquaLayout>
