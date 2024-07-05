@@ -1,24 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Roboto:wght@500&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Anton+SC&display=swap');
 
 body {
   height: 100%;
   background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364);
-  background-size: cover; /* Ensure background covers entire screen */
-  animation: gradientBG 15s ease infinite;
-  font-family: "Poppins", sans-serif !important; /* Specify font family correctly */
+  font-family: "Anton SC", sans-serif;
 }
 
-@keyframes gradientBG {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
 
 .custom-nav {
   border-top-right-radius: 0px !important;
