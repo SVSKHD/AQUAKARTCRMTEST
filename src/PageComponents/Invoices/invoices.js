@@ -382,8 +382,8 @@ const AquaInvoiceComponent = () => {
           ) : (
             <></>
           )}
-          <div className="col-md-7 col-lg-8 col-xs-12 col-sm-12">
-            <div className="m-2">
+          <div className="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+            <div>
             <AquaInvoiceForm
               initialData={initialData}
               mode={mode}
