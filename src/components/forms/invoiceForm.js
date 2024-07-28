@@ -94,6 +94,8 @@ const AquaInvoiceForm = ({
     { label: "Imps Kotak", value: "4" },
     { label: "Neft Icici", value: "5" },
     { label: "Imps Icici", value: "6" },
+    { label: "Phone pe Gateway", value: "7" },
+    { label: "Razorpay Gateway", value: "8" },
   ];
 
   const paymentOptions = [
@@ -108,14 +110,16 @@ const AquaInvoiceForm = ({
 
   const productOptions = [
     { label: "Select any product", value: "0" },
-    { label: "KENT AUTO 25", value: "1" },
-    { label: "KENT AUTO 40", value: "2" },
-    { label: "KENT BATHROOM SOFTENER", value: "3" },
-    { label: "KENT AUTO 8L", value: "4" },
-    { label: "KENt SANDFILTER", value: "5" },
-    { label: "KENT IRONFILTER", value: "6" },
-    { label: "KENT RO (Wall-Mount) GrandStar", value: "7" },
-    { label: "KENT RO (under the counter) Sterling", value: "8" },
+    { label: "KENT AUTO 8L", value: "1" },
+    { label: "KENT AUTO 25L", value: "2" },
+    { label: "KENT AUTO 40L", value: "3" },
+    { label: "KENT AUTO 100L", value: "4" },
+    { label: "KENT BATHROOM SOFTENER", value: "5" },
+    { label: "KENT WASHING SOFTENER", value: "6" },
+    { label: "KENt SANDFILTER", value: "7" },
+    { label: "KENT IRONFILTER", value: "8" },
+    { label: "KENT RO (Wall-Mount) GrandStar", value: "8" },
+    { label: "KENT RO (under the counter) Sterling", value: "9" },
   ];
 
   return (
