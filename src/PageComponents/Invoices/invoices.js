@@ -59,7 +59,10 @@ const AquaInvoiceComponent = () => {
   const [poInvoices, setPoInvoices] = useState([]);
   const [quotationInvoices, setQuotationInvoices] = useState([]);
   const [editInitData, setEditInitData] = useState({});
-  const [customMonth, setCustomMonth] = useState("");
+   const [customMonth, setCustomMonth] = useState({
+     year: new Date().getFullYear(),
+     month: "",
+   });
   const [customYear, setCustomYear] = useState("");
   const [customInvoiceDialog, setCustomInvoicesDialog] = useState(false);
   const [customInvoicesLoading, setCustomInvoicesLoading] = useState(false);
@@ -307,16 +310,36 @@ const AquaInvoiceComponent = () => {
     { label: "DECEMBER", value: 12 },
   ];
 
-  const handleMonthChange = (event) => {
-    const year = new Date().getFullYear();
-    let selectedMonth = `${year}-${event.target.value}`;
-    setCustomMonth(selectedMonth);
-  };
+
+  const years = [
+    { label: "2024", value: 2024 },
+    { label: "2025", value: 2025 },
+  ];
+
+ const handleMonthChange = (event) => {
+   const selectedMonth = event.target.value;
+   setCustomMonth((prevState) => ({
+     ...prevState,
+     month: selectedMonth,
+   }));
+ };
+
+ const handleYearChange = (event) => {
+   const selectedYear = event.target.value;
+   setCustomMonth((prevState) => ({
+     ...prevState,
+     year: selectedYear,
+   }));
+ };
+
 
   const loadCustomInvoices = () => {
     setCustomInvoicesDialog(true);
     setCustomInvoicesLoading(true);
-    getMonthlyInvoices(customMonth)
+   
+    const flatten =`${customMonth.year}-${customMonth.month}`
+     console.log(customMonth, flatten);
+    getMonthlyInvoices(flatten)
       .then((res) => {
         setCustomInvoicesLoad([...res.data]);
         setCustomInvoicesLoading(false);
@@ -350,25 +373,41 @@ const AquaInvoiceComponent = () => {
         <div className="card-body mb-2">
           <div className="d-flex">
             <select
-              class="form-select me-2"
-              aria-label="Default select example"
+              className="form-select me-2"
+              aria-label="Select Month"
               style={{ width: "300px" }}
+              value={customMonth.month}
               onChange={handleMonthChange}
             >
-              <option selected>Open this select menu</option>
+              <option value="">Select Month</option>
               {monthOptions.map((r) => (
-                <option key={r} value={r.value}>
+                <option key={r.value} value={r.value}>
                   {r.label}
                 </option>
               ))}
             </select>
+
+            <select
+              className="form-select me-2"
+              aria-label="Select Year"
+              style={{ width: "300px" }}
+              value={customMonth.year}
+              onChange={handleYearChange}
+            >
+              <option value="">Select Year</option>
+              {years.map((r) => (
+                <option key={r.value} value={r.value}>
+                  {r.label}
+                </option>
+              ))}
+            </select>
+
             <button className="btn btn-base" onClick={loadCustomInvoices}>
               Load Invoices
             </button>
           </div>
         </div>
         <div className="row">
-          
           <div className="col-md-5 col-lg-5 col-xs-12 col-sm-12">
             {!invoices.length ? (
               <h3>No invoices yet</h3>
@@ -391,16 +430,15 @@ const AquaInvoiceComponent = () => {
           )}
           <div className="col-md-6 col-lg-6 col-xs-12 col-sm-12">
             <div>
-            <AquaInvoiceForm
-              initialData={initialData}
-              mode={mode}
-              onSubmit={handleFormSubmit}
-              editData={editInitData}
-              clearForm={clearForm}
-            />
+              <AquaInvoiceForm
+                initialData={initialData}
+                mode={mode}
+                onSubmit={handleFormSubmit}
+                editData={editInitData}
+                clearForm={clearForm}
+              />
             </div>
           </div>
-
         </div>
         <AquaDialog
           show={customInvoiceDialog}
@@ -418,12 +456,12 @@ const AquaInvoiceComponent = () => {
                   (invoiceSum, product) => {
                     return invoiceSum + product.productPrice;
                   },
-                  0,
+                  0
                 );
 
                 // Add the total for this invoice to the running total for all invoices
                 return total + invoiceTotal;
-              }, 0), // Start with 0 total
+              }, 0) // Start with 0 total
             )}
           </h5>
 
