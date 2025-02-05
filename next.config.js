@@ -1,5 +1,5 @@
 const nextConfig = {
-  // basePath: "/admin/crm",
+  basePath: "/admin/crm",
   reactStrictMode: true,
   images: {
     domains: ["res.cloudinary.com"],
