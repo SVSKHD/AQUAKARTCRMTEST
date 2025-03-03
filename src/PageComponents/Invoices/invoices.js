@@ -192,7 +192,14 @@ const AquaInvoiceComponent = () => {
   const handleSend = (id) => {
     const invoiceId = id._id
     const invoice = `https://admin.aquakart.co.in/invoice/${invoiceId}`;
-    const message = `Hello Dear "${id.customerDetails.name}" we welcome you to Aquakart Family and here is your live invoice link ${invoice} and we offer you more discounts at aquakart.co.in`;
+    const message = `Hello Dear "${id.customerDetails.name}",  
+we welcome you to **Aquakart Family**.  
+
+Here is your live invoice link: ${invoice}.  
+
+**Please save contact to access the invoice.**  
+
+We also offer you more discounts at [aquakart.co.in](https://aquakart.co.in).`;
     notifyServiceOperarations.sendWhatsAppMessage(user.token, id.customerDetails.phone, message).then((res)=>{
       if(res){
         AquaToast("succesfully Sent Invoice", "success")
