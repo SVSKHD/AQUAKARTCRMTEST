@@ -561,62 +561,84 @@ const AquaDyanamicInvoicesComponent = () => {
               <hr />
             </div>
 
-            {PO ? (
-              <>
-                <div className="card">
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                        <h5>Our ICICI Bank</h5>
-                        <hr />
-                        {/* Clickable div for ICICI details */}
-                        <div
-                          id="iciciDetails"
-                          onClick={() => copyToClipboard("iciciDetails")}
-                        >
-                          A/c-name: Kundana Enterprises
-                          <br />
-                          A/c-no: 8813356673
-                          <br />
-                          IFSC: KKBK0007463
-                        </div>
-                      </div>
-                      <div className="col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                        <h5>Our KOTAK Bank</h5>
-                        <hr />
-                        {/* Clickable div for KOTAK details */}
-                        <div
-                          id="kotakDetails"
-                          onClick={() => copyToClipboard("kotakDetails")}
-                        >
-                          A/c-name: Kundana Enterprises
-                          <br />
-                          A/c-no: 131605003314
-                          <br />
-                          IFSC: ICIC0001316
-                        </div>
-                      </div>
-                      <div className="col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                        <h5>UPI</h5>
-                        <hr />
-                        {/* Clickable div for UPI details */}
-                        <div
-                          id="upiDetails"
-                          onClick={() => copyToClipboard("upiDetails")}
-                        >
-                          Gpay: 9182119842
-                          <br />
-                          PhonePe: 9182119842
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+            {
+  PO && (
+    <div className="container my-4">
+      <div className="card shadow-sm">
+        <div className="card-header bg-primary text-white">
+          <h5 className="mb-0">Payment Details</h5>
+        </div>
+        <div className="card-body">
+          <div className="row">
+            {/* ICICI Bank Details */}
+            <div className="col-md-4 col-sm-12 mb-3">
+              <div
+                className="card border-secondary h-100 clickable"
+                role="button"
+                onClick={() => copyToClipboard("iciciDetails")}
+              >
+                <div className="card-body">
+                  <h6 className="card-title">ICICI Bank</h6>
+                  <hr />
+                  <p className="card-text">
+                    <strong>A/c Name:</strong> Kundana Enterprises
+                    <br />
+                    <strong>A/c No:</strong> 8813356673
+                    <br />
+                    <strong>IFSC:</strong> KKBK0007463
+                  </p>
                 </div>
-                <hr />
-              </>
-            ) : (
-              ""
-            )}
+              </div>
+            </div>
+
+            {/* KOTAK Bank Details */}
+            <div className="col-md-4 col-sm-12 mb-3">
+              <div
+                className="card border-secondary h-100 clickable"
+                role="button"
+                onClick={() => copyToClipboard("kotakDetails")}
+              >
+                <div className="card-body">
+                  <h6 className="card-title">KOTAK Bank</h6>
+                  <hr />
+                  <p className="card-text">
+                    <strong>A/c Name:</strong> Kundana Enterprises
+                    <br />
+                    <strong>A/c No:</strong> 131605003314
+                    <br />
+                    <strong>IFSC:</strong> ICIC0001316
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* UPI Details */}
+            <div className="col-md-4 col-sm-12 mb-3">
+              <div
+                className="card border-secondary h-100 clickable"
+                role="button"
+                onClick={() => copyToClipboard("upiDetails")}
+              >
+                <div className="card-body">
+                  <h6 className="card-title">UPI</h6>
+                  <hr />
+                  <p className="card-text">
+                    <strong>GPay:</strong> 9182119842
+                    <br />
+                    <strong>PhonePe:</strong> 9182119842
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="card-footer text-muted text-center">
+          Click on the cards to copy the details
+        </div>
+      </div>
+    </div>
+  );
+}
             <h5 className="mb-3 text-danger">Terms & Conditions</h5>
 
             {termsAndConditions.map((r, i) => (
