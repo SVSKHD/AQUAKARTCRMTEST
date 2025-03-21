@@ -637,7 +637,7 @@ const AquaDyanamicInvoicesComponent = () => {
         </div>
       </div>
     </div>
-  );
+  )
 }
             <h5 className="mb-3 text-danger">Terms & Conditions</h5>
 
